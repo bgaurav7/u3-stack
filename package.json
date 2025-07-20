@@ -19,6 +19,7 @@
     "validate": "turbo run typecheck lint format:check",
     "validate:fix": "turbo run typecheck lint:fix format",
     "validate:workspace": "node scripts/validate-workspace.js",
+    "validate:env": "node scripts/validate-env.js",
     "prepare": "husky install",
     "postinstall": "pnpm run prepare"
   },
@@ -38,5 +39,9 @@
     "*.{js,jsx,ts,tsx,json,jsonc}": [
       "biome check --write --no-errors-on-unmatched"
     ]
+  },
+  "dependencies": {
+    "dotenv-flow": "^4.1.0",
+    "env-var": "^7.5.0"
   }
 }

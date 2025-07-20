@@ -225,40 +225,67 @@ npx expo start           # mobile
 
 ## Environment Management
 
-U3 Stack uses a unified, type-safe, and scalable approach to manage environment variables across Web, Mobile, and Backend.
+U3 Stack uses a unified, type-safe, and scalable approach to manage environment variables across Web, Mobile, and Backend with layered configuration files.
 
 ### ✅ Strategy
-- Uses **dotenv-flow** to load layered .env files (`.env`, `.env.development`, `.env.local`, etc.)
-- Uses **env-var** for type-safe access to environment variables
-- Supports separate env files per platform (web, native, backend) with shared fallback config
+- Uses **dotenv-flow** to load layered .env files with proper precedence
+- Uses **env-var** for type-safe access and validation of environment variables
+- Supports environment-specific overrides with fallback defaults
 - Secrets are injected at runtime via CI/CD pipelines for production (e.g., Vercel, EAS, Fly.io, GitHub Actions)
 
 ### 🧱 Folder Structure
 ```bash
 /env
-  .env
-  .env.development
-  .env.production
-  .env.local        # (gitignored for local overrides)
+  .env.defaults      # Default values for all environments
+  .env.development   # Development environment overrides
+  .env.production    # Production environment overrides
+  .env.local.example # Example local overrides (copy to .env.local)
+  .env.local         # Local overrides (git-ignored)
 
 /packages/config
-  config.ts         # Loads + validates env vars
+  config.ts          # Type-safe configuration loader
+  config.js          # JavaScript export wrapper
 ```
+
+### 📋 Loading Order (Precedence)
+Environment variables are loaded in the following order (highest to lowest precedence):
+
+1. **`.env.local`** - Local overrides (git-ignored, for personal settings)
+2. **`.env.{NODE_ENV}`** - Environment-specific values (e.g., `.env.development`)
+3. **`.env.defaults`** - Default fallback values
 
 ### 🛠 Usage
 ```typescript
-// packages/config/config.ts
-import dotenvFlow from 'dotenv-flow';
-import env from 'env-var';
+// Type-safe configuration access
+import { config, validateConfig, isDevelopment } from '@u3/config/config';
 
-dotenvFlow.config({ path: '../../env' });
+// Access configuration values
+console.log(config.app.name);        // "U3-Stack"
+console.log(config.server.port);     // 3000
+console.log(config.database.url);    // "postgresql://..."
 
-export const config = {
-  nodeEnv: env.get('NODE_ENV').default('development').asEnum(['development', 'production', 'test']),
-  publicApiUrl: env.get('PUBLIC_API_URL').required().asUrlString(),
-  secretKey: env.get('SECRET_KEY').required().asString(),
-  port: env.get('PORT').default('3000').asPortNumber(),
-};
+// Environment detection
+if (isDevelopment) {
+  console.log('Running in development mode');
+}
+
+// Validate configuration (call during app startup)
+validateConfig(); // Throws error if validation fails
+```
+
+### 🔧 Local Development Setup
+1. Copy `env/.env.local.example` to `env/.env.local`
+2. Customize values as needed for your local environment
+3. The `.env.local` file is git-ignored and won't be committed
+
+### 🧪 Validation
+The configuration system includes comprehensive validation:
+```bash
+# Test environment configuration
+pnpm run validate:env
+
+# Test all systems
+pnpm run validate && pnpm run validate:workspace && pnpm run validate:env
 ```
 
 ### 🚀 Access in Apps

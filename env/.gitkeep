@@ -1,0 +1,7 @@
+# Environment configuration directory
+# Contains layered .env files for different environments
+# 
+# File precedence (highest to lowest):
+# 1. .env.local (git-ignored, for local overrides)
+# 2. .env.{NODE_ENV} (environment-specific)
+# 3. .env.defaults (fallback values)

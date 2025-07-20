@@ -202,6 +202,9 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
+# Local environment overrides (dotenv-flow)
+env/.env.local
+
 # Package manager lock files (keep pnpm-lock.yaml)
 package-lock.json
 yarn.lock

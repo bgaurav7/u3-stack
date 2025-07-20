@@ -12,6 +12,10 @@
     "./typescript": {
       "types": "./tsconfig.d.ts",
       "default": "./tsconfig.base.json"
+    },
+    "./config": {
+      "types": "./config.d.ts",
+      "default": "./config.js"
     }
   },
   "files": ["*.js", "*.d.ts", "*.json"],
@@ -24,7 +28,9 @@
     "format:check": "biome format ."
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "dotenv-flow": "^4.1.0",
+    "env-var": "^7.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",

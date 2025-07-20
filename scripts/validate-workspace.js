@@ -5,8 +5,8 @@
  * This script validates that all packages can communicate and import from each other
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
+const { execSync } = require('node:child_process');
+const fs = require('node:fs');
 
 console.log('🔍 Starting workspace validation...\n');
 
@@ -111,16 +111,58 @@ async function validateWorkspace() {
     });
   }
 
+  // 6. Test environment management system
+  log('\n6️⃣ Testing environment management system...', colors.yellow);
+  try {
+    // Check if env folder exists
+    if (!fs.existsSync('env')) {
+      throw new Error('env/ folder not found');
+    }
+
+    // Check if required env files exist
+    const requiredEnvFiles = [
+      'env/.env.defaults',
+      'env/.env.development',
+      'env/.env.production',
+    ];
+    for (const file of requiredEnvFiles) {
+      if (!fs.existsSync(file)) {
+        throw new Error(`${file} not found`);
+      }
+    }
+
+    // Test configuration loading
+    const { config } = require('../packages/config/config.js');
+    if (config?.app?.name) {
+      log('  ✅ Environment configuration loads correctly', colors.green);
+      log(`  ✅ App name: ${config.app.name}`, colors.green);
+      log(`  ✅ Environment: ${config.app.nodeEnv}`, colors.green);
+      results.push({ test: 'Environment management system', success: true });
+    } else {
+      throw new Error('Configuration object is invalid');
+    }
+  } catch (error) {
+    log(
+      `  ❌ Environment management system error: ${error.message}`,
+      colors.red
+    );
+    results.push({
+      test: 'Environment management system',
+      success: false,
+      error: error.message,
+    });
+  }
+
   // Summary
   log('\n📊 Validation Summary:', colors.yellow);
   const successful = results.filter(r => r.success).length;
   const total = results.length;
 
-  results.forEach(result => {
+  for (const result of results) {
     const status = result.success ? '✅' : '❌';
     const color = result.success ? colors.green : colors.red;
     log(`  ${status} ${result.test}`, color);
-  });
+  }
 
   log(
     `\n🎯 Results: ${successful}/${total} tests passed`,

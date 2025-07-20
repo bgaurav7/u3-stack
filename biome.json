@@ -55,7 +55,8 @@
       ".turbo/**",
       "coverage/**",
       "*.d.ts",
-      "**/tsconfig*.json"
+      "**/tsconfig*.json",
+      "examples/**"
     ]
   }
 }
