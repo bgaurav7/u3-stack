@@ -88,6 +88,78 @@ The U3 Stack uses a **React Query + useState** approach to state management:
 - Server as source of truth
 - Simple mental model: server data vs UI state
 
+## Core UI Requirements (MVP)
+
+The U3 Stack includes a comprehensive chat application MVP with the following core features:
+
+### 🔐 1. Authentication (Clerk)
+- Sign In / Sign Up screen using Clerk
+- Authenticated Layout that wraps the app once user is logged in
+- [Optional] Profile section with Sign Out button in sidebar
+
+### 🗂 2. Thread Sidebar
+- App title or logo
+- List of existing threads
+- Show basic title (Thread #1, Untitled, or editable)
+- Highlight the selected/active thread
+- Create new thread button
+- Immediately adds a thread and navigates to it
+- Scrollable if threads overflow
+- Compact layout for mobile
+
+### 💬 3. Chat Panel
+**Header**
+- Thread title
+- [Optional] Edit title
+- [Optional] Show message count or timestamp
+
+**Messages Area**
+- Scrollable message list
+- Chat bubbles for:
+  - User messages (right-aligned, blue)
+  - Assistant messages (left-aligned, gray)
+- Smooth auto-scroll to bottom on new message
+
+**Input Box**
+- Multiline input field
+- "Send" button (or Enter to send)
+- Disable input while waiting for assistant reply
+- Loading spinner or "Assistant is thinking..." indicator
+
+### 🌓 4. Theme / Responsiveness
+- Responsive layout (Tamagui handles this)
+- Dark/light theme support (Tamagui Theme)
+- Keyboard-safe input on mobile (Tamagui KeyboardAvoidingView if needed)
+
+### 🧪 Testing & Error Handling (MVP-level polish)
+- Error toast if thread creation or message sending fails
+- Loading indicators:
+  - When sending message
+  - When threads/messages are being fetched
+- Empty state:
+  - No threads → "Start your first conversation"
+  - No messages in thread → "Say something to begin"
+- Disabled UI state while waiting for assistant reply
+
+### 🧠 Optional (but low-effort additions)
+These are easy to add with Tamagui and improve UX significantly:
+- Rename thread title
+- Delete thread (via long-press or context menu)
+- User avatar in sidebar footer (with Clerk profile)
+- Mobile bottom tab layout (threads/chat/profile)
+- Typing indicator for assistant
+- Toast system for errors and actions
+
+### ✅ Summary of Screens / UI Views
+| Screen / View | Platform | Description |
+|---------------|----------|-------------|
+| Clerk Auth | Web + Mobile | Sign in / Sign up |
+| Main App Layout | Web + Mobile | Two-pane (sidebar + chat) |
+| Sidebar Threads | Web + Mobile | List + Add |
+| Chat View | Web + Mobile | Messages + Input |
+| Empty / Loading States | Web + Mobile | Fallbacks |
+| Optional Profile | Web + Mobile | Avatar + Sign out |
+
 ## Clean Architecture Overview
 
 The project follows Clean Architecture and is divided into well-defined layers:

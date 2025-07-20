@@ -257,7 +257,77 @@
 
 - [ ] Cross-platform build works via OTA.
 
-## Phase 8: Unified UI Testing with Maestro
+## Phase 8: Core UI Implementation (MVP)
+
+**Goal**: Build the complete chat application MVP with authentication, thread management, and real-time messaging.
+
+### Tasks:
+
+#### 8.1: Authentication UI (Clerk)
+- [ ] Implement Sign In / Sign Up screens using Clerk components
+- [ ] Create authenticated layout wrapper
+- [ ] Add optional profile section with sign out functionality
+- [ ] Test authentication flow on both web and mobile
+
+#### 8.2: Thread Sidebar
+- [ ] Create thread sidebar component with app title/logo
+- [ ] Implement thread list with basic titles (Thread #1, Untitled, editable)
+- [ ] Add active thread highlighting
+- [ ] Create "new thread" button with immediate navigation
+- [ ] Make sidebar scrollable for thread overflow
+- [ ] Optimize layout for mobile (compact design)
+
+#### 8.3: Chat Panel
+- [ ] Build chat header with thread title and optional edit functionality
+- [ ] Create scrollable messages area with chat bubbles:
+  - [ ] User messages (right-aligned, blue)
+  - [ ] Assistant messages (left-aligned, gray)
+- [ ] Implement smooth auto-scroll to bottom on new messages
+- [ ] Create multiline input field with send button
+- [ ] Add loading states and disable input during assistant replies
+
+#### 8.4: Theme & Responsiveness
+- [ ] Implement responsive layout using Tamagui
+- [ ] Add dark/light theme support with Tamagui Theme
+- [ ] Configure keyboard-safe input for mobile
+- [ ] Test across different screen sizes and orientations
+
+#### 8.5: Error Handling & Polish
+- [ ] Add error toasts for failed operations
+- [ ] Implement loading indicators for all async operations
+- [ ] Create empty states:
+  - [ ] "Start your first conversation" (no threads)
+  - [ ] "Say something to begin" (no messages)
+- [ ] Add disabled UI states during assistant replies
+
+#### 8.6: Optional Enhancements
+- [ ] Thread title rename functionality
+- [ ] Thread deletion (long-press/context menu)
+- [ ] User avatar in sidebar footer
+- [ ] Mobile bottom tab layout
+- [ ] Typing indicator for assistant
+- [ ] Toast system for actions and errors
+
+### Test Process:
+
+- [ ] Test authentication flow on web and mobile
+- [ ] Validate thread creation and navigation
+- [ ] Test message sending and receiving
+- [ ] Verify responsive design across devices
+- [ ] Test dark/light theme switching
+- [ ] Validate error handling and loading states
+- [ ] Test empty states and edge cases
+- [ ] Verify keyboard behavior on mobile
+
+### Exit Criteria:
+
+- [ ] Complete chat application MVP functional on web and mobile
+- [ ] All core features working: auth, threads, messaging
+- [ ] Responsive design with proper theme support
+- [ ] Error handling and loading states implemented
+- [ ] Smooth user experience across platforms
+
+## Phase 9: Unified UI Testing with Maestro
 
 **Goal**: Implement a cross-platform UI testing framework using Maestro to automate end-to-end tests
 for Web, iOS, and Android with a single test suite.
@@ -287,7 +357,7 @@ for Web, iOS, and Android with a single test suite.
 - [ ] Automated test runs on every code change across web and mobile.
 - [ ] Reliable UI regression detection and reporting.
 
-## Phase 9: CI/CD + DevOps
+## Phase 10: CI/CD + DevOps
 
 **Goal**: Automate builds, tests, and deployments.
 
@@ -313,7 +383,7 @@ for Web, iOS, and Android with a single test suite.
 - [ ] Fully automated CI/CD.
 - [ ] Fast feedback on all code changes.
 
-## Phase 10: Observability + Analytics
+## Phase 11: Observability + Analytics
 
 **Goal**: Add Sentry and PostHog for tracking and debugging.
 
@@ -331,7 +401,7 @@ for Web, iOS, and Android with a single test suite.
 
 - [ ] Error tracking and analytics live across all surfaces.
 
-## Phase 11: Production Readiness
+## Phase 12: Production Readiness
 
 **Goal**: Final hardening for launch.
 
