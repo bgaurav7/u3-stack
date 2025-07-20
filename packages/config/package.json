@@ -9,33 +9,25 @@
       "types": "./index.d.ts",
       "default": "./index.js"
     },
-    "./eslint": {
-      "types": "./eslint.config.d.ts",
-      "default": "./eslint.config.js"
-    },
-    "./prettier": {
-      "types": "./prettier.config.d.ts",
-      "default": "./prettier.config.js"
-    },
     "./typescript": {
       "types": "./tsconfig.d.ts",
-      "default": "./tsconfig.json"
+      "default": "./tsconfig.base.json"
     }
   },
-  "files": [
-    "*.js",
-    "*.d.ts",
-    "*.json"
-  ],
+  "files": ["*.js", "*.d.ts", "*.json"],
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
   },
   "dependencies": {
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.5",
-    "typescript": "^5.3.3"
+    "@types/node": "^22.10.1",
+    "typescript": "~5.8.3"
   }
 }

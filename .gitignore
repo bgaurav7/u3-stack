@@ -210,6 +210,9 @@ yarn.lock
 .rush/
 .pnpm-debug.log*
 
+# Turborepo
+.turbo/
+
 # AI Editory
 .kiro/*
 .cursor/*

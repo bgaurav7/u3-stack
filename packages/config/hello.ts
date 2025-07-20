@@ -18,5 +18,5 @@ export function getConfigInfo() {
 export { loadEnv, getEnv, requireEnv } from './src/env.js';
 
 // Re-export configurations for testing
-// Note: These require statements are for testing purposes only
-// In a real implementation, these would be properly typed imports
+// Note: Only TypeScript and environment utilities are available
+// ESLint and Prettier have been replaced with Biome

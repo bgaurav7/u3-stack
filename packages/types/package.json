@@ -14,13 +14,14 @@
       "default": "./hello.js"
     }
   },
-  "files": [
-    "*.js",
-    "*.d.ts"
-  ],
+  "files": ["*.js", "*.d.ts"],
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
   },
   "devDependencies": {
     "@u3/config": "workspace:*",

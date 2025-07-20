@@ -1,5 +1,5 @@
 const { config } = require('dotenv');
-const path = require('path');
+const path = require('node:path');
 
 /**
  * Environment variable utilities for U3-Stack
