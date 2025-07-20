@@ -126,28 +126,28 @@
 
 - [ ] Backend server runs locally and exposes typed tRPC APIs.
 
-## Phase 3: Database Integration (Prisma + Neon)
+## Phase 3: Database Integration (Drizzle + Neon)
 
-**Goal**: Integrate PostgreSQL using Prisma (hosted on Neon).
+**Goal**: Integrate PostgreSQL using Drizzle ORM (hosted on Neon).
 
 ### Tasks:
 
-- [ ] Add `packages/db` for schema and Prisma client.
-- [ ] Define first model: User.
-- [ ] Generate and migrate DB.
+- [ ] Add `packages/db` for schema and Drizzle client.
+- [ ] Define first schema: User table using Drizzle schema.
+- [ ] Setup Drizzle migrations and generate types.
 - [ ] Create `src/features/user/` folder in backend.
-- [ ] Wire backend to DB with feature-based service layer.
+- [ ] Wire backend to DB with feature-based service layer using Drizzle queries.
 
 ### Test Process:
 
 - [ ] Seed DB and query User via route.
-- [ ] Write test to create and fetch User.
-- [ ] DB schema validated by `prisma validate`.
+- [ ] Write test to create and fetch User using Drizzle queries.
+- [ ] DB schema validated by `drizzle-kit check`.
 
 ### Exit Criteria:
 
-- [ ] Connected backend to Neon DB.
-- [ ] Type-safe query functions generated.
+- [ ] Connected backend to Neon DB via Drizzle.
+- [ ] Type-safe schema and query functions generated.
 
 ## Phase 4: Auth Integration (Clerk)
 
@@ -300,7 +300,7 @@
 ### Tasks:
 
 - [ ] Add rate limiting, request logging.
-- [ ] Lock Prisma migrations.
+- [ ] Lock Drizzle migrations for production.
 - [ ] Verify all env vars are set via CI/CD secrets.
 
 ### Test Process:

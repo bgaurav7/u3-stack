@@ -65,7 +65,7 @@ The project follows Clean Architecture and is divided into well-defined layers:
 - **Application Layer**: Server state (React Query as primary state manager), validation (Zod),
   business logic.
 - **Domain Layer**: Shared logic, types, and contracts.
-- **Infrastructure Layer**: Prisma, Neon, Clerk, Sentry, PostHog integrations.
+- **Infrastructure Layer**: Drizzle ORM, Neon, Clerk, Sentry, PostHog integrations.
 - **Interface Layer**: Fastify + tRPC exposed APIs, which connect to Application services.
 
 Each service and feature is encapsulated for modular scalability and testability.
@@ -81,7 +81,7 @@ Each service and feature is encapsulated for modular scalability and testability
 
 /packages
   /ui          → Tamagui-based universal components
-  /db          → Prisma schema + Neon client + DB utils
+  /db          → Drizzle schema + Neon client + DB utils
   /config      → ESLint, tsconfig, env helpers
   /types       → Global types and interfaces
 ```
@@ -101,11 +101,11 @@ cd apps/mobile
 npx expo install tamagui
 ```
 
-Generate Prisma client:
+Generate Drizzle types:
 
 ```bash
 cd packages/db
-pnpm prisma generate
+pnpm drizzle-kit generate
 ```
 
 Start local development:
@@ -220,7 +220,8 @@ pre-built themes and design tokens.
 ✅ **Universal Routing**: Expo Router provides consistent navigation patterns between web and
 mobile.  
 ✅ **Feature-Based APIs**: tRPC routers colocated with features for better domain separation.  
-✅ **Database as Code**: Prisma + Neon make schema management safe, and scalable.  
+✅ **Database as Code**: Drizzle ORM + Neon make schema management safe, lightweight, and
+scalable.  
 ✅ **Dev/Prod Isolation**: Environment variables scoped to apps.  
 ✅ **CI/CD**: GitHub Actions configured for linting, testing, deployment (Fly, Vercel, Expo).  
 ✅ **Observability**: Sentry for error tracking, PostHog for product analytics.  
