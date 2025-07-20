@@ -1,0 +1,59 @@
+{
+  "name": "u3-stack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Universal Stack - A modern, type-safe, scalable monorepo stack for Android, iOS, and Web applications",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Development scripts will be added in later phases'",
+    "build": "pnpm recursive run build",
+    "test": "pnpm recursive run test",
+    "test:watch": "pnpm recursive run test:watch",
+    "lint": "pnpm recursive exec -- eslint .",
+    "lint:fix": "pnpm recursive exec -- eslint . --fix",
+    "format": "pnpm recursive exec -- prettier --write \"**/*.{js,jsx,ts,tsx,json,md,yaml,yml}\"",
+    "format:check": "pnpm recursive exec -- prettier --check \"**/*.{js,jsx,ts,tsx,json,md,yaml,yml}\"",
+    "typecheck": "pnpm recursive exec -- tsc --noEmit",
+    "clean": "pnpm recursive exec -- rm -rf node_modules dist build .next .turbo coverage",
+    "clean:install": "pnpm run clean && pnpm install",
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check",
+    "validate:fix": "pnpm run typecheck && pnpm run lint:fix && pnpm run format",
+    "validate:workspace": "node scripts/validate-workspace.js",
+    "prepare": "husky install",
+    "postinstall": "pnpm run prepare"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.1",
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ],
+    "package.json": [
+      "prettier --write"
+    ]
+  }
+}

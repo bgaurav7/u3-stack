@@ -1,0 +1,41 @@
+{
+  "name": "@u3/config",
+  "version": "0.1.0",
+  "description": "Shared configuration for U3-Stack monorepo",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./eslint": {
+      "types": "./eslint.config.d.ts",
+      "default": "./eslint.config.js"
+    },
+    "./prettier": {
+      "types": "./prettier.config.d.ts",
+      "default": "./prettier.config.js"
+    },
+    "./typescript": {
+      "types": "./tsconfig.d.ts",
+      "default": "./tsconfig.json"
+    }
+  },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "*.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}
