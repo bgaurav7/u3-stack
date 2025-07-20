@@ -186,7 +186,7 @@ Each service and feature is encapsulated for modular scalability and testability
 /packages
   /ui          → Tamagui-based universal components
   /db          → Drizzle schema + Neon client + DB utils
-  /config      → Biome, tsconfig, env helpers
+  /config      → Biome, tsconfig, type-safe env management
   /types       → Global types and interfaces
 ```
 
@@ -223,33 +223,57 @@ cd apps/mobile
 npx expo start           # mobile
 ```
 
-## Environment Variables
+## Environment Management
 
-Setup `.env` files at relevant layers.
+U3 Stack uses a unified, type-safe, and scalable approach to manage environment variables across Web, Mobile, and Backend.
 
-**apps/backend/.env**
+### ✅ Strategy
+- Uses **dotenv-flow** to load layered .env files (`.env`, `.env.development`, `.env.local`, etc.)
+- Uses **env-var** for type-safe access to environment variables
+- Supports separate env files per platform (web, native, backend) with shared fallback config
+- Secrets are injected at runtime via CI/CD pipelines for production (e.g., Vercel, EAS, Fly.io, GitHub Actions)
 
+### 🧱 Folder Structure
+```bash
+/env
+  .env
+  .env.development
+  .env.production
+  .env.local        # (gitignored for local overrides)
+
+/packages/config
+  config.ts         # Loads + validates env vars
 ```
-DATABASE_URL=Neon PostgreSQL URL
-CLERK_SECRET_KEY=
-SENTRY_DSN=
-POSTHOG_API_KEY=
-POSTHOG_HOST=
+
+### 🛠 Usage
+```typescript
+// packages/config/config.ts
+import dotenvFlow from 'dotenv-flow';
+import env from 'env-var';
+
+dotenvFlow.config({ path: '../../env' });
+
+export const config = {
+  nodeEnv: env.get('NODE_ENV').default('development').asEnum(['development', 'production', 'test']),
+  publicApiUrl: env.get('PUBLIC_API_URL').required().asUrlString(),
+  secretKey: env.get('SECRET_KEY').required().asString(),
+  port: env.get('PORT').default('3000').asPortNumber(),
+};
 ```
 
-**apps/web/.env**
+### 🚀 Access in Apps
 
-```
-CLERK_PUBLISHABLE_KEY=
-NEXT_PUBLIC_API_URL=
-```
+**Web (Next.js)**
+- Expose env vars with `NEXT_PUBLIC_` prefix
+- Managed via `.env.web`, Vercel dashboard, or CI
 
-**apps/mobile/.env**
+**Mobile (Expo / React Native)**
+- Expose using `EXPO_PUBLIC_` prefix
+- Loaded via `extra` in `app.config.ts` or EAS
 
-```
-CLERK_PUBLISHABLE_KEY=
-EXPO_PUBLIC_API_URL=
-```
+**Backend (Fastify)**
+- Fully secure access to secrets and private envs
+- `config.port`, `config.secretKey`, etc. used in server startup
 
 ## Backend Deployment (Fly.io)
 
@@ -329,7 +353,7 @@ mobile.
 ✅ **Feature-Based APIs**: tRPC routers colocated with features for better domain separation.  
 ✅ **Database as Code**: Drizzle ORM + Neon make schema management safe, lightweight, and
 scalable.  
-✅ **Dev/Prod Isolation**: Environment variables scoped to apps.  
+✅ **Type-Safe Environment Management**: Unified, layered environment configuration with runtime validation.  
 ✅ **Unified Testing**: Maestro provides cross-platform UI testing with single test suite for web
 and mobile.  
 ✅ **CI/CD**: GitHub Actions configured for linting, testing, deployment (Fly, Vercel, Expo).  
