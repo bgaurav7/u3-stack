@@ -34,6 +34,22 @@ export default config;
 This keeps theme logic out of your UI package, reducing mental overhead while providing professional
 defaults.
 
+## Testing Strategy
+
+The U3 Stack uses **Maestro** for unified cross-platform UI testing:
+
+- **🎯 Single Test Suite**: Write once, test everywhere (web, iOS, Android)
+- **📝 YAML Configuration**: Simple, readable test scenarios in YAML format
+- **🔄 CI Integration**: Automated testing on every PR and deployment
+- **📊 Comprehensive Coverage**: End-to-end user flows across all platforms
+
+**Benefits:**
+
+- Consistent UI behavior validation across platforms
+- Reduced test maintenance overhead
+- Early detection of cross-platform regressions
+- Simplified test authoring with YAML syntax
+
 ## State Management Strategy
 
 The U3 Stack uses a **React Query + useState** approach to state management:
@@ -223,6 +239,8 @@ mobile.
 ✅ **Database as Code**: Drizzle ORM + Neon make schema management safe, lightweight, and
 scalable.  
 ✅ **Dev/Prod Isolation**: Environment variables scoped to apps.  
+✅ **Unified Testing**: Maestro provides cross-platform UI testing with single test suite for web
+and mobile.  
 ✅ **CI/CD**: GitHub Actions configured for linting, testing, deployment (Fly, Vercel, Expo).  
 ✅ **Observability**: Sentry for error tracking, PostHog for product analytics.  
 ✅ **Fast Build System**: pnpm workspaces reduce install time and duplication.  

@@ -251,7 +251,37 @@
 
 - [ ] Cross-platform build works via OTA.
 
-## Phase 8: CI/CD + DevOps
+## Phase 8: Unified UI Testing with Maestro
+
+**Goal**: Implement a cross-platform UI testing framework using Maestro to automate end-to-end tests
+for Web, iOS, and Android with a single test suite.
+
+### Tasks:
+
+- [ ] Integrate Maestro as the primary UI testing framework for web and mobile.
+- [ ] Define reusable Maestro test scenarios in YAML to cover core user flows.
+- [ ] Configure test environments for:
+  - [ ] Web browsers (Chrome, Firefox, Safari)
+  - [ ] iOS simulators and devices
+  - [ ] Android emulators and devices
+- [ ] Set up CI pipeline steps to run Maestro tests on all platforms automatically.
+- [ ] Collect and analyze Maestro test reports for debugging and quality assurance.
+- [ ] Document best practices for writing and maintaining Maestro tests.
+
+### Test Process:
+
+- [ ] Run Maestro tests on web during PR validation.
+- [ ] Run Maestro tests on iOS and Android simulators in CI.
+- [ ] Validate consistency of UI behavior and user flows across platforms.
+- [ ] Track and fix UI regressions detected by Maestro.
+
+### Exit Criteria:
+
+- [ ] Unified Maestro test suite covering major user journeys.
+- [ ] Automated test runs on every code change across web and mobile.
+- [ ] Reliable UI regression detection and reporting.
+
+## Phase 9: CI/CD + DevOps
 
 **Goal**: Automate builds, tests, and deployments.
 
@@ -259,23 +289,24 @@
 
 - [ ] GitHub Actions workflows:
   - [ ] Lint + Typecheck
-  - [ ] Test suites
+  - [ ] Test suites (unit, integration, Maestro E2E)
   - [ ] Deploy Web -> Vercel
   - [ ] Deploy Backend -> Fly.io
   - [ ] EAS Submit for Mobile OTA
 
 ### Test Process:
 
-- [ ] PR test passes on all workflows.
+- [ ] PR test passes on all workflows including Maestro E2E tests.
 - [ ] On push to main: deploys happen correctly.
 - [ ] OTA updates reach test devices.
+- [ ] Maestro tests run automatically on deployment environments.
 
 ### Exit Criteria:
 
 - [ ] Fully automated CI/CD.
 - [ ] Fast feedback on all code changes.
 
-## Phase 9: Observability + Analytics
+## Phase 10: Observability + Analytics
 
 **Goal**: Add Sentry and PostHog for tracking and debugging.
 
@@ -293,7 +324,7 @@
 
 - [ ] Error tracking and analytics live across all surfaces.
 
-## Phase 10: Production Readiness
+## Phase 11: Production Readiness
 
 **Goal**: Final hardening for launch.
 
