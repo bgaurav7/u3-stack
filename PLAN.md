@@ -6,20 +6,26 @@
 
 ### Tasks:
 
-- [ ] Initialize monorepo using pnpm workspaces.
+- [ ] Initialize monorepo using Turborepo.
 - [ ] Set up folder structure: `/apps`, `/packages`.
-- [ ] Install shared tools: eslint, prettier, tsconfig, dotenv, husky, lint-staged.
+- [ ] Install shared tools: Biome (linting + formatting), tsconfig, dotenv, husky, lint-staged.
+- [ ] Configure `turbo.json` for build pipeline orchestration.
+- [ ] Use latest stable versions of all libraries and dependencies for optimal performance and
+      security.
 
 ### Test Process:
 
 - [ ] Run `pnpm install` across workspaces.
-- [ ] Validate correct project references via `pnpm recursive exec`.
+- [ ] Validate all dependencies are using latest stable versions.
+- [ ] Validate Turborepo pipeline execution with `turbo build`.
+- [ ] Test Biome linting and formatting with `turbo lint` and `turbo format`.
 - [ ] Add a dummy `hello.ts` in each app/package and import from others to validate TS paths.
 
 ### Exit Criteria:
 
 - [ ] All packages interlink correctly.
-- [ ] Linting and formatting work across the monorepo.
+- [ ] Biome linting and formatting work across the monorepo.
+- [ ] Turborepo caching and parallel execution configured.
 
 ## Phase 1: UI Library + Multi-Platform Setup
 
@@ -288,8 +294,9 @@ for Web, iOS, and Android with a single test suite.
 ### Tasks:
 
 - [ ] GitHub Actions workflows:
-  - [ ] Lint + Typecheck
-  - [ ] Test suites (unit, integration, Maestro E2E)
+  - [ ] Biome lint + format check
+  - [ ] TypeScript typecheck with Turborepo caching
+  - [ ] Test suites (unit, integration, Maestro E2E) with parallel execution
   - [ ] Deploy Web -> Vercel
   - [ ] Deploy Backend -> Fly.io
   - [ ] EAS Submit for Mobile OTA
@@ -337,7 +344,7 @@ for Web, iOS, and Android with a single test suite.
 ### Test Process:
 
 - [ ] Load testing backend via k6 or similar.
-- [ ] Run `pnpm build` from clean.
+- [ ] Run `turbo build` from clean to test full pipeline.
 - [ ] Final E2E test on production infra.
 
 ### Exit Criteria:

@@ -9,7 +9,8 @@ shared codebase.
 
 The U3 Stack is designed to maximize code reuse and maintainability across Web (Next.js + React),
 Mobile (React Native via Expo + Expo Router), and Backend (Fastify + tRPC). It promotes a modular
-structure using Clean Architecture, and leverages monorepo tooling (pnpm) to unify development.
+structure using Clean Architecture, and leverages Turborepo for high-performance monorepo
+orchestration.
 
 All communication is type-safe (via tRPC + Zod), and component styling is consistent across
 platforms using Tamagui as the complete styling solution.
@@ -49,6 +50,21 @@ The U3 Stack uses **Maestro** for unified cross-platform UI testing:
 - Reduced test maintenance overhead
 - Early detection of cross-platform regressions
 - Simplified test authoring with YAML syntax
+
+## Build System Strategy
+
+The U3 Stack uses **Turborepo** for high-performance monorepo orchestration:
+
+- **⚡ Intelligent Caching**: Cache build outputs and skip redundant work
+- **🔄 Parallel Execution**: Run tasks across packages simultaneously
+- **📊 Pipeline Orchestration**: Define task dependencies and execution order
+- **🎯 Selective Builds**: Build only what changed with `--filter` flags
+
+**Code Quality with Biome:**
+
+- **🚀 Fast**: Single tool for linting and formatting (replaces ESLint + Prettier)
+- **⚙️ Zero Config**: Works out of the box with sensible defaults
+- **🔧 Consistent**: Same rules across all packages in the monorepo
 
 ## State Management Strategy
 
@@ -98,7 +114,7 @@ Each service and feature is encapsulated for modular scalability and testability
 /packages
   /ui          → Tamagui-based universal components
   /db          → Drizzle schema + Neon client + DB utils
-  /config      → ESLint, tsconfig, env helpers
+  /config      → Biome, tsconfig, env helpers
   /types       → Global types and interfaces
 ```
 
@@ -127,7 +143,10 @@ pnpm drizzle-kit generate
 Start local development:
 
 ```bash
-pnpm dev                 # web + backend
+turbo dev                # all apps with intelligent caching
+# or individually:
+turbo dev --filter=web   # web only
+turbo dev --filter=backend # backend only
 cd apps/mobile
 npx expo start           # mobile
 ```
@@ -243,5 +262,8 @@ scalable.
 and mobile.  
 ✅ **CI/CD**: GitHub Actions configured for linting, testing, deployment (Fly, Vercel, Expo).  
 ✅ **Observability**: Sentry for error tracking, PostHog for product analytics.  
-✅ **Fast Build System**: pnpm workspaces reduce install time and duplication.  
+✅ **High-Performance Builds**: Turborepo provides intelligent caching and parallel execution for
+faster builds.  
+✅ **Code Quality**: Biome provides fast, consistent linting and formatting across the entire
+monorepo.  
 ✅ **Future-Proof**: Easily plug Temporal, Redis, or Vector DBs with adapters in /infra.

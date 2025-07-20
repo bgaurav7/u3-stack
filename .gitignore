@@ -213,3 +213,6 @@ yarn.lock
 # AI Editory
 .kiro/*
 .cursor/*
+
+# Examples
+examples/
