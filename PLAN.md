@@ -6,35 +6,35 @@
 
 ### Tasks:
 
-- [ ] Initialize monorepo using Turborepo.
-- [ ] Set up folder structure: `/apps`, `/packages`, `/env`.
-- [ ] Install shared tools: Biome (linting + formatting), tsconfig, dotenv-flow, env-var, husky, lint-staged.
-- [ ] Configure `turbo.json` for build pipeline orchestration.
-- [ ] Setup unified environment management:
-  - [ ] Create `/env` folder with layered .env files
-  - [ ] Create `packages/config/config.ts` for type-safe env access
-  - [ ] Configure dotenv-flow and env-var integration
-- [ ] Use latest stable versions of all libraries and dependencies for optimal performance and
+- [x] Initialize monorepo using Turborepo.
+- [x] Set up folder structure: `/apps`, `/packages`, `/env`.
+- [x] Install shared tools: Biome (linting + formatting), tsconfig, dotenv-flow, env-var, husky, lint-staged.
+- [x] Configure `turbo.json` for build pipeline orchestration.
+- [x] Setup unified environment management:
+  - [x] Create `/env` folder with layered .env files
+  - [x] Create `packages/config/config.ts` for type-safe env access
+  - [x] Configure dotenv-flow and env-var integration
+- [x] Use latest stable versions of all libraries and dependencies for optimal performance and
       security.
 
 ### Test Process:
 
-- [ ] Run `pnpm install` across workspaces.
-- [ ] Validate all dependencies are using latest stable versions.
-- [ ] Validate Turborepo pipeline execution with `turbo build`.
-- [ ] Test Biome linting and formatting with `turbo lint` and `turbo format`.
-- [ ] Test environment management:
-  - [ ] Validate dotenv-flow loads layered .env files correctly
-  - [ ] Test env-var type-safe validation and defaults
-  - [ ] Verify config access across different environments
-- [ ] Add a dummy `hello.ts` in each app/package and import from others to validate TS paths.
+- [x] Run `pnpm install` across workspaces.
+- [x] Validate all dependencies are using latest stable versions.
+- [x] Validate Turborepo pipeline execution with `turbo build`.
+- [x] Test Biome linting and formatting with `turbo lint` and `turbo format`.
+- [x] Test environment management:
+  - [x] Validate dotenv-flow loads layered .env files correctly
+  - [x] Test env-var type-safe validation and defaults
+  - [x] Verify config access across different environments
+- [x] Add a dummy `hello.ts` in each app/package and import from others to validate TS paths.
 
 ### Exit Criteria:
 
-- [ ] All packages interlink correctly.
-- [ ] Biome linting and formatting work across the monorepo.
-- [ ] Turborepo caching and parallel execution configured.
-- [ ] Type-safe environment management system operational.
+- [x] All packages interlink correctly.
+- [x] Biome linting and formatting work across the monorepo.
+- [x] Turborepo caching and parallel execution configured.
+- [x] Type-safe environment management system operational.
 
 ## Phase 1: UI Library + Multi-Platform Setup
 

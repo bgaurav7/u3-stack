@@ -1,0 +1,50 @@
+{
+  "name": "@u3/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile application for U3-Stack",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "android:go": "expo start --android --go",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build:android": "eas build --platform android",
+    "build:ios": "eas build --platform ios",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.27.6",
+    "@babel/runtime-corejs3": "^7.28.0",
+    "@expo/metro-runtime": "^5.0.4",
+    "@tamagui/button": "^1.132.10",
+    "@tamagui/card": "^1.132.10",
+    "@tamagui/config": "^1.132.10",
+    "@tamagui/core": "^1.132.10",
+    "@tamagui/input": "^1.132.10",
+    "@u3/ui": "workspace:*",
+    "expo": "~53.0.20",
+    "expo-constants": "^17.1.7",
+    "expo-dev-client": "^5.2.4",
+    "expo-modules-core": "^2.5.0",
+    "expo-router": "^5.1.4",
+    "expo-status-bar": "~2.2.3",
+    "invariant": "^2.2.4",
+    "react": "^19.0.0",
+    "react-native": "^0.79.5",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-native-screens": "^4.11.1",
+    "whatwg-fetch": "^3.6.20"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.9",
+    "@babel/plugin-transform-runtime": "^7.28.0",
+    "@tamagui/babel-plugin": "^1.132.10",
+    "@types/react": "^19.0.14",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "typescript": "~5.8.3"
+  }
+}
