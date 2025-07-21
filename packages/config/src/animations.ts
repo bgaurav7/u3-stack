@@ -1,7 +1,7 @@
 import { createAnimations } from '@tamagui/animations-react-native';
 
 // Add type annotation to avoid TypeScript error
-export const animations = createAnimations({
+export const animations: any = createAnimations({
   '100ms': {
     type: 'timing',
     duration: 100,
@@ -29,4 +29,4 @@ export const animations = createAnimations({
     mass: 1.2,
     stiffness: 250,
   },
-});
+} as const);

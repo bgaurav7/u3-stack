@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ForwardRefRenderFunction } from 'react';
 import type { TextInput } from 'react-native';
 import { Input as TamaguiInput, styled } from 'tamagui';
 
@@ -59,10 +59,12 @@ export type CustomInputProps = Omit<
   state?: 'default' | 'error' | 'success';
 };
 
-export const Input = forwardRef<TextInput, CustomInputProps>(
-  ({ ...props }, ref) => {
-    return <StyledInput ref={ref} {...props} />;
-  }
-);
+const InputComponent: ForwardRefRenderFunction<TextInput, CustomInputProps> = (
+  { ...props },
+  ref
+) => {
+  return <StyledInput ref={ref} {...props} />;
+};
 
+export const Input = forwardRef(InputComponent);
 Input.displayName = 'Input';

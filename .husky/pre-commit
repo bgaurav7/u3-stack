@@ -1,2 +1,2 @@
 # Run lint-staged with Biome to check staged files
-npx lint-staged
+pnpm lint-staged
