@@ -18,8 +18,8 @@
   "dependencies": {
     "@babel/runtime": "^7.27.6",
     "@babel/runtime-corejs3": "^7.28.0",
-    "@tamagui/config": "^1.132.10",
-    "tamagui": "^1.132.10",
+    "@tamagui/config": "^1.132.11",
+    "tamagui": "^1.132.11",
     "@u3/ui": "workspace:*",
     "expo": "~53.0.20",
     "expo-constants": "^17.1.7",
@@ -28,16 +28,16 @@
     "expo-router": "^5.1.4",
     "expo-status-bar": "~2.2.3",
     "invariant": "^2.2.4",
-    "react": "^19.0.0",
-    "react-native": "^0.79.5",
+    "react": "^18.3.1",
+    "react-native": "^0.76.9",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "^4.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.28.0",
-    "@tamagui/babel-plugin": "^1.132.10",
-    "@types/react": "^19.0.14",
+    "@tamagui/babel-plugin": "^1.132.11",
+    "@types/react": "^18.3.12",
     "babel-plugin-module-resolver": "^5.0.2",
     "typescript": "~5.8.3"
   }

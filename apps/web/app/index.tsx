@@ -1,9 +1,8 @@
-import { Button, Card, Input, Text } from '@u3/ui';
-import { View } from 'tamagui';
+import { Button, Card, Input, Text, View } from '@u3/ui';
 
 export default function HomePage() {
   return (
-    <View padding='$4' gap='$4' maxWidth={600} margin='0 auto'>
+    <View padding='$4' gap='$4' maxWidth={600} marginHorizontal='auto'>
       <Text variant='heading' weight='bold'>
         Welcome to U3-Stack Web
       </Text>

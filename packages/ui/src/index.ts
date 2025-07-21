@@ -1,3 +1,8 @@
+// Re-export Tamagui core and configuration
+export * from 'tamagui';
+export * from '@tamagui/toast';
+export { config } from '@u3/config'; // Re-exports the config
+
 // Components
 export { Button } from './components/Button';
 export type { ButtonProps } from './components/Button';

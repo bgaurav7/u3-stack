@@ -1,51 +1,6 @@
 import { forwardRef } from 'react';
-import { Button as TamaguiButton, styled } from 'tamagui';
+import { Button as TamaguiButton } from 'tamagui';
 import type { ButtonProps as TamaguiButtonProps } from 'tamagui';
-
-// Use Tamagui's built-in styling system
-const StyledButton = styled(TamaguiButton, {
-  variants: {
-    variant: {
-      primary: {
-        backgroundColor: '$blue10',
-        color: '$white1',
-        borderWidth: 0,
-      },
-      secondary: {
-        backgroundColor: '$gray5',
-        color: '$gray12',
-        borderWidth: 0,
-      },
-      outline: {
-        backgroundColor: 'transparent',
-        borderColor: '$blue10',
-        borderWidth: 1,
-        color: '$blue10',
-      },
-    },
-    size: {
-      small: {
-        scale: 0.9,
-        height: '$2',
-        paddingHorizontal: '$2',
-      },
-      medium: {
-        scale: 1,
-        height: '$3',
-        paddingHorizontal: '$3',
-      },
-      large: {
-        scale: 1.1,
-        height: '$4',
-        paddingHorizontal: '$4',
-      },
-    },
-  } as const,
-  defaultVariants: {
-    variant: 'primary',
-    size: 'medium',
-  },
-});
 
 export type ButtonProps = Omit<TamaguiButtonProps, 'variant' | 'size'> & {
   variant?: 'primary' | 'secondary' | 'outline';
@@ -53,11 +8,60 @@ export type ButtonProps = Omit<TamaguiButtonProps, 'variant' | 'size'> & {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, variant = 'primary', size = 'medium', ...props }, ref) => {
+    // Map our custom variants to Tamagui props
+    const getVariantProps = () => {
+      switch (variant) {
+        case 'primary':
+          return {
+            backgroundColor: '#007AFF',
+            color: 'white',
+          };
+        case 'secondary':
+          return {
+            backgroundColor: '#F2F2F7',
+            color: '#1C1C1E',
+          };
+        case 'outline':
+          return {
+            backgroundColor: 'transparent',
+            borderColor: '#007AFF',
+            borderWidth: 1,
+            color: '#007AFF',
+          };
+        default:
+          return {};
+      }
+    };
+
+    const getSizeProps = () => {
+      switch (size) {
+        case 'small':
+          return {
+            size: '$2',
+          };
+        case 'medium':
+          return {
+            size: '$3',
+          };
+        case 'large':
+          return {
+            size: '$4',
+          };
+        default:
+          return {};
+      }
+    };
+
     return (
-      <StyledButton ref={ref} {...props}>
+      <TamaguiButton
+        ref={ref}
+        {...getSizeProps()}
+        {...getVariantProps()}
+        {...props}
+      >
         {children}
-      </StyledButton>
+      </TamaguiButton>
     );
   }
 );

@@ -9,7 +9,7 @@ export default function HomePage() {
         Welcome to U3-Stack Web
       </Text>
 
-      <Text variant='body' textAlign='center' color='$gray11'>
+      <Text variant='body' textAlign='center'>
         This is the web version of the U3-Stack application using shared UI
         components.
       </Text>
@@ -42,7 +42,7 @@ export default function HomePage() {
           <Text variant='body' weight='medium'>
             This is medium body text
           </Text>
-          <Text variant='caption' weight='normal' color='$gray10'>
+          <Text variant='caption' weight='normal'>
             This is caption text
           </Text>
         </View>

@@ -9,9 +9,12 @@ const nextConfig = {
     'expo',
     'expo-router',
     '@u3/ui',
+    '@u3/config',
     'tamagui',
     '@tamagui/config',
     '@tamagui/toast',
+    '@tamagui/animations-react-native',
+    '@tamagui/font-inter',
   ],
   experimental: {
     forceSwcTransforms: true,
@@ -24,8 +27,8 @@ const nextConfig = {
 };
 
 const tamaguiConfig = withTamagui({
-  config: './tamagui.config.ts',
-  components: ['@u3/ui'],
+  config: '../../packages/config/src/tamagui.config.ts',
+  components: ['tamagui', '@u3/ui'],
   importsWhitelist: ['constants.js', 'colors.js'],
   logTimings: true,
   disableExtraction: process.env.NODE_ENV === 'development',

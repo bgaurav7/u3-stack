@@ -58,8 +58,10 @@ export type CustomInputProps = Omit<
   state?: 'default' | 'error' | 'success';
 };
 
-export const Input = forwardRef<any, CustomInputProps>(({ ...props }, ref) => {
-  return <StyledInput ref={ref} {...props} />;
-});
+export const Input = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ ...props }, ref) => {
+    return <StyledInput ref={ref} {...props} />;
+  }
+);
 
 Input.displayName = 'Input';

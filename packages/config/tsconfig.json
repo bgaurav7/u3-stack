@@ -1,12 +1,9 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "../../tsconfig.json",
+  "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "composite": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "module": "CommonJS",
-    "moduleResolution": "node"
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*"],
-  "exclude": ["dist"]
+  "references": []
 }
