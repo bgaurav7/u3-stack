@@ -22,7 +22,7 @@ config.resolver.disableHierarchicalLookup = true;
 config.resolver.unstable_enableSymlinks = true;
 
 // 5. Ensure proper platform resolution
-config.resolver.platforms = ['ios', 'android', 'native', 'web'];
+config.resolver.platforms = ['ios', 'android', 'native'];
 
 // 6. Additional transformer settings for better compatibility
 config.transformer = {

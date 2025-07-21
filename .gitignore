@@ -217,7 +217,6 @@ yarn.lock
 .turbo/
 
 # Tamagui
-.tamagui
 .tamagui/
 
 # AI Editory

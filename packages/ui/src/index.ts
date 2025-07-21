@@ -10,7 +10,3 @@ export type { CardProps } from './components/Card';
 
 export { Input } from './components/Input';
 export type { CustomInputProps as InputProps } from './components/Input';
-
-// Configuration
-export { tamaguiConfig } from './config';
-export type { TamaguiConfig } from './config';

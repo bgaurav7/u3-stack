@@ -20,11 +20,8 @@
       "package": "com.u3stack.mobile",
       "versionCode": 1
     },
-    "web": {
-      "bundler": "metro"
-    },
     "scheme": "u3-stack-mobile",
-    "platforms": ["ios", "android", "web"],
+    "platforms": ["ios", "android"],
     "plugins": ["expo-router"]
   }
 }

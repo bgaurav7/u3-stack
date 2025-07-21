@@ -1,6 +1,7 @@
 /**
  * Type-safe environment configuration for U3-Stack
  * Uses dotenv-flow for layered .env file loading and env-var for validation
+ * Includes memoization for performance optimization
  */
 
 import { resolve } from 'node:path';
@@ -97,8 +98,16 @@ export const isTest = config.app.nodeEnv === 'test';
 /**
  * Validate required environment variables
  * Call this during application startup to ensure all required vars are present
+ * Uses memoization to prevent redundant validations
  */
+let validationResult: { valid: boolean; errors: string[] } | null = null;
+
 export function validateConfig(): void {
+  // Return early if validation was already performed
+  if (validationResult?.valid === true) {
+    return;
+  }
+
   const errors: string[] = [];
 
   // Validate required production variables
@@ -124,6 +133,9 @@ export function validateConfig(): void {
   } catch {
     errors.push('API_URL must be a valid URL');
   }
+
+  // Store validation result for future calls
+  validationResult = { valid: errors.length === 0, errors };
 
   if (errors.length > 0) {
     throw new Error(`Configuration validation failed:\n${errors.join('\n')}`);

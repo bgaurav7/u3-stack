@@ -1,47 +1,54 @@
-import { Text as TamaguiText } from '@tamagui/core';
-import type { TextProps } from '@tamagui/core';
 import { forwardRef } from 'react';
+import { Text as TamaguiText, styled } from 'tamagui';
+import type { TextProps } from 'tamagui';
 
-export interface CustomTextProps extends Omit<TextProps, 'variant'> {
+// Use Tamagui's built-in styling system
+const StyledText = styled(TamaguiText, {
+  variants: {
+    variant: {
+      heading: {
+        fontFamily: '$heading',
+        fontSize: '$6',
+        lineHeight: '$6',
+      },
+      body: {
+        fontFamily: '$body',
+        fontSize: '$4',
+        lineHeight: '$4',
+      },
+      caption: {
+        fontFamily: '$body',
+        fontSize: '$2',
+        lineHeight: '$2',
+      },
+    },
+    weight: {
+      normal: { fontWeight: '$3' },
+      medium: { fontWeight: '$5' },
+      bold: { fontWeight: '$7' },
+    },
+  } as const,
+  defaultVariants: {
+    variant: 'body',
+    weight: 'normal',
+  },
+});
+
+export type CustomTextProps = TextProps & {
   variant?: 'heading' | 'body' | 'caption';
   weight?: 'normal' | 'medium' | 'bold';
-}
+};
 
 export const Text = forwardRef<HTMLParagraphElement, CustomTextProps>(
-  ({ variant = 'body', weight = 'normal', children, ...props }, ref) => {
-    // Map our custom variants to appropriate styling
-    const getVariantProps = () => {
-      switch (variant) {
-        case 'heading':
-          return {
-            fontSize: '$6',
-            lineHeight: '$6',
-            fontWeight:
-              weight === 'normal' ? '$6' : weight === 'medium' ? '$7' : '$8',
-          };
-        case 'caption':
-          return {
-            fontSize: '$2',
-            lineHeight: '$2',
-            fontWeight:
-              weight === 'normal' ? '$3' : weight === 'medium' ? '$4' : '$5',
-          };
-        default:
-          return {
-            fontSize: '$4',
-            lineHeight: '$4',
-            fontWeight:
-              weight === 'normal' ? '$4' : weight === 'medium' ? '$5' : '$6',
-          };
-      }
-    };
-
+  ({ children, ...props }, ref) => {
     return (
-      <TamaguiText ref={ref} {...getVariantProps()} {...props}>
+      <StyledText ref={ref} {...props}>
         {children}
-      </TamaguiText>
+      </StyledText>
     );
   }
-);
+) as React.ForwardRefExoticComponent<
+  CustomTextProps & React.RefAttributes<HTMLParagraphElement>
+>;
 
 Text.displayName = 'Text';

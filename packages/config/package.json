@@ -2,25 +2,11 @@
   "name": "@u3/config",
   "version": "0.1.0",
   "description": "Shared configuration for U3-Stack monorepo",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "default": "./index.js"
-    },
-    "./typescript": {
-      "types": "./tsconfig.d.ts",
-      "default": "./tsconfig.base.json"
-    },
-    "./config": {
-      "types": "./config.d.ts",
-      "default": "./config.js"
-    }
-  },
-  "files": ["*.js", "*.d.ts", "*.json"],
+  "types": "./src",
+  "main": "src/index.ts",
+  "files": ["types", "dist"],
   "scripts": {
-    "build": "tsc",
+    "build": "tamagui-build --skip-types",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
@@ -28,12 +14,16 @@
     "format:check": "biome format ."
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "@tamagui/animations-react-native": "^1.132.11",
+    "@tamagui/config": "^1.132.11",
+    "@tamagui/font-inter": "^1.132.11",
     "dotenv-flow": "^4.1.0",
-    "env-var": "^7.5.0"
+    "env-var": "^7.5.0",
+    "tamagui": "^1.132.11"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
+    "@tamagui/build": "^1.132.10",
+    "@types/node": "^22.10.5",
     "typescript": "~5.8.3"
   }
 }
