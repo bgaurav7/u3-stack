@@ -8,6 +8,3 @@ exclude:
   - '**/build/**'
   - '**/.next/**'
   - '**/.turbo/**'
-
-ignoredBuiltDependencies:
-  - '@biomejs/biome'

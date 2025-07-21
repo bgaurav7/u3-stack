@@ -41,6 +41,9 @@
     ]
   },
   "dependencies": {
+    "@tamagui/font-inter": "^1.132.10",
+    "@tamagui/shorthands": "^1.132.10",
+    "@tamagui/themes": "^1.132.10",
     "dotenv-flow": "^4.1.0",
     "env-var": "^7.5.0"
   }

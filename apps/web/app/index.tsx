@@ -1,5 +1,5 @@
-import { View } from '@tamagui/core';
 import { Button, Card, Input, Text } from '@u3/ui';
+import { View } from 'tamagui';
 
 export default function HomePage() {
   return (

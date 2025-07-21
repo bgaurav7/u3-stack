@@ -216,9 +216,14 @@ yarn.lock
 # Turborepo
 .turbo/
 
+# Tamagui
+.tamagui
+.tamagui/
+
 # AI Editory
 .kiro/*
 .cursor/*
+.vscode/*
 
 # Examples
 examples/

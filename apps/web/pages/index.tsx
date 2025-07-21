@@ -1,6 +1,6 @@
-import { View } from '@tamagui/core';
 import { Button, Card, Input, Text } from '@u3/ui';
 import React from 'react';
+import { View } from 'tamagui';
 
 export default function HomePage() {
   return (
