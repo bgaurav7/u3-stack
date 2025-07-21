@@ -1,9 +1,13 @@
 import { config } from '@u3/ui';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import type React from 'react';
 import { TamaguiProvider } from 'tamagui';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps): React.ReactElement {
   return (
     <>
       <Head>

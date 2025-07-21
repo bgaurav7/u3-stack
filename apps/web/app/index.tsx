@@ -1,6 +1,7 @@
 import { Button, Card, Input, Text, View } from '@u3/ui';
+import type React from 'react';
 
-export default function HomePage() {
+export default function HomePage(): React.ReactElement {
   return (
     <View padding='$4' gap='$4' maxWidth={600} marginHorizontal='auto'>
       <Text variant='heading' weight='bold'>

@@ -12,7 +12,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@expo/next-adapter": "^6.0.0",
     "@tamagui/animations-react-native": "^1.132.11",
     "@tamagui/config": "^1.132.11",
     "@tamagui/font-inter": "^1.132.11",
@@ -24,8 +23,8 @@
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native": "^0.76.9",
-    "react-native-web": "^0.19.13",
+    "react-native": "0.79.5",
+
     "tamagui": "^1.132.11",
     "tslib": "^2.8.1"
   },

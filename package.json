@@ -37,15 +37,6 @@
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@10.13.1",
-  "pnpm": {
-    "overrides": {
-      "react": "19.0.0",
-      "react-dom": "19.0.0",
-      "@types/react": "^19.0.10",
-      "@types/react-dom": "^19.0.2",
-      "react-native": "^0.76.9"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc}": [
       "biome check --write --no-errors-on-unmatched"

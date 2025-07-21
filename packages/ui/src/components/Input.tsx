@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import type { ComponentProps } from 'react';
+import type { TextInput } from 'react-native';
 import { Input as TamaguiInput, styled } from 'tamagui';
 
 // Use Tamagui's built-in styling system
@@ -58,7 +59,7 @@ export type CustomInputProps = Omit<
   state?: 'default' | 'error' | 'success';
 };
 
-export const Input = forwardRef<HTMLInputElement, CustomInputProps>(
+export const Input = forwardRef<TextInput, CustomInputProps>(
   ({ ...props }, ref) => {
     return <StyledInput ref={ref} {...props} />;
   }

@@ -1,11 +1,9 @@
 const { withTamagui } = require('@tamagui/next-plugin');
-const { withExpo } = require('@expo/next-adapter');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: [
     'react-native',
-    'react-native-web',
     'expo',
     'expo-router',
     '@u3/ui',
@@ -37,4 +35,4 @@ const tamaguiConfig = withTamagui({
   },
 });
 
-module.exports = withExpo(tamaguiConfig(nextConfig));
+module.exports = tamaguiConfig(nextConfig);
