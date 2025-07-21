@@ -3,12 +3,19 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@u3/config": ["packages/config"],
-      "@u3/config/*": ["packages/config/*"],
-      "@u3/types": ["packages/types"],
-      "@u3/types/*": ["packages/types/*"]
+      "@u3/config": ["packages/config/src"],
+      "@u3/config/*": ["packages/config/src/*"],
+      "@u3/types": ["packages/types/src"],
+      "@u3/types/*": ["packages/types/src/*"],
+      "@u3/ui": ["packages/ui/src"],
+      "@u3/ui/*": ["packages/ui/src/*"]
     }
   },
   "include": [],
-  "references": [{ "path": "./packages/config" }, { "path": "./packages/types" }, { "path": "./apps" }]
+  "references": [
+    { "path": "./packages/config" },
+    { "path": "./packages/types" },
+    { "path": "./packages/ui" },
+    { "path": "./apps" }
+  ]
 }

@@ -48,11 +48,9 @@
     // Interop Constraints
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-
-    // Completeness
     "skipDefaultLibCheck": true,
 
-    // Path Mapping (to be extended by individual packages)
+    // Path Mapping
     "baseUrl": ".",
     "paths": {
       "@u3/ui": ["packages/ui/src"],

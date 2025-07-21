@@ -1,13 +1,9 @@
 {
   "extends": "../packages/config/tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "..",
-    "paths": {
-      "@u3/config": ["packages/config"],
-      "@u3/config/*": ["packages/config/*"],
-      "@u3/types": ["packages/types"],
-      "@u3/types/*": ["packages/types/*"]
-    }
+    "composite": true,
+    "baseUrl": ".."
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", ".next"]
 }
