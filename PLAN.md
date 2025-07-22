@@ -125,9 +125,12 @@
 
 ### Tasks:
 
-- [ ] Scaffold `apps/backend` with Fastify + tRPC.
-- [ ] Create feature-based folder structure: `src/features/health/`.
+- [ ] Scaffold `apps/backend` with Fastify + tRPC + WebSocket support.
+- [ ] Install and configure `@fastify/websocket` for real-time updates.
+- [ ] Create feature-based folder structure: `src/features/health/` and `src/features/todos/`.
 - [ ] Define first router in `src/features/health/router.ts`: `ping -> { ok: true }`.
+- [ ] Define todos router in `src/features/todos/router.ts`: basic CRUD operations.
+- [ ] Add WebSocket handlers for real-time todo broadcasts.
 - [ ] Add Zod-based validation and error handling.
 - [ ] Create `createAppRouter()` to combine feature routers.
 
@@ -148,9 +151,9 @@
 ### Tasks:
 
 - [ ] Add `packages/db` for schema and Drizzle client.
-- [ ] Define first schema: User table using Drizzle schema.
+- [ ] Define schemas: User, TodoList, and Todo tables using Drizzle schema.
 - [ ] Setup Drizzle migrations and generate types.
-- [ ] Create `src/features/user/` folder in backend.
+- [ ] Create `src/features/user/` and `src/features/todos/` folders in backend.
 - [ ] Wire backend to DB with feature-based service layer using Drizzle queries.
 
 ### Test Process:
@@ -222,6 +225,8 @@
 - [ ] Create shared `app/` folder in `apps/web` for routes.
 - [ ] Use `@expo/next-adapter` if needed (optional).
 - [ ] Setup React Query provider and tRPC integration as primary state manager.
+- [ ] Add WebSocket client for real-time todo updates.
+- [ ] Implement real-time todo synchronization across browser tabs/windows.
 - [ ] Use useState for simple client-only state (UI toggles, form state).
 - [ ] Use Tamagui components.
 - [ ] Add Clerk auth, fetch user profile, display dashboard.
@@ -268,7 +273,7 @@
 
 ## Phase 8: Core UI Implementation (MVP)
 
-**Goal**: Build the complete chat application MVP with authentication, thread management, and real-time messaging.
+**Goal**: Build the complete real-time collaborative TODO application MVP with authentication, list management, task operations, and live updates across all connected clients.
 
 ### Tasks:
 
@@ -278,22 +283,27 @@
 - [ ] Add optional profile section with sign out functionality
 - [ ] Test authentication flow on both web and mobile
 
-#### 8.2: Thread Sidebar
-- [ ] Create thread sidebar component with app title/logo
-- [ ] Implement thread list with basic titles (Thread #1, Untitled, editable)
-- [ ] Add active thread highlighting
-- [ ] Create "new thread" button with immediate navigation
-- [ ] Make sidebar scrollable for thread overflow
+#### 8.2: Todo Lists Sidebar
+- [ ] Create lists sidebar component with app title/logo
+- [ ] Implement todo lists with basic titles (Personal, Work, Shopping, etc.)
+- [ ] Add active list highlighting
+- [ ] Create "new list" button with immediate navigation
+- [ ] Make sidebar scrollable for list overflow
 - [ ] Optimize layout for mobile (compact design)
 
-#### 8.3: Chat Panel
-- [ ] Build chat header with thread title and optional edit functionality
-- [ ] Create scrollable messages area with chat bubbles:
-  - [ ] User messages (right-aligned, blue)
-  - [ ] Assistant messages (left-aligned, gray)
-- [ ] Implement smooth auto-scroll to bottom on new messages
-- [ ] Create multiline input field with send button
-- [ ] Add loading states and disable input during assistant replies
+#### 8.3: Todo Panel with Real-Time Updates
+- [ ] Build todo header with list title and optional edit functionality
+- [ ] Create scrollable todos area with todo items:
+  - [ ] Completed todos (strikethrough, gray)
+  - [ ] Pending todos (normal styling)
+  - [ ] Priority indicators (high/medium/low)
+  - [ ] Real-time visual indicators for new/updated todos
+- [ ] Implement todo item interactions (check/uncheck, edit, delete)
+- [ ] Create todo input field with add button
+- [ ] Add loading states and disable input during operations
+- [ ] Implement WebSocket client connection for real-time updates
+- [ ] Handle real-time todo broadcasts from other users
+- [ ] Show live user activity indicators (who's online, typing, etc.)
 
 #### 8.4: Theme & Responsiveness
 - [ ] Implement responsive layout using Tamagui
@@ -305,23 +315,35 @@
 - [ ] Add error toasts for failed operations
 - [ ] Implement loading indicators for all async operations
 - [ ] Create empty states:
-  - [ ] "Start your first conversation" (no threads)
-  - [ ] "Say something to begin" (no messages)
-- [ ] Add disabled UI states during assistant replies
+  - [ ] "Create your first todo list" (no lists)
+  - [ ] "Add your first todo" (no todos)
+- [ ] Add disabled UI states during operations
 
-#### 8.6: Optional Enhancements
-- [ ] Thread title rename functionality
-- [ ] Thread deletion (long-press/context menu)
+#### 8.6: Real-Time Collaboration Features
+- [ ] Show online users list with avatars
+- [ ] Display who created/modified each todo (user attribution)
+- [ ] Real-time typing indicators when users are adding todos
+- [ ] Conflict resolution for simultaneous edits
+- [ ] User presence indicators (online/offline status)
+- [ ] Real-time notifications for todo assignments
+- [ ] Live cursor positions for collaborative editing
+
+#### 8.7: Optional Enhancements
+- [ ] List title rename functionality
+- [ ] List deletion (long-press/context menu)
+- [ ] Todo due dates and reminders
+- [ ] Todo categories/tags
 - [ ] User avatar in sidebar footer
 - [ ] Mobile bottom tab layout
-- [ ] Typing indicator for assistant
+- [ ] Drag and drop reordering
 - [ ] Toast system for actions and errors
 
 ### Test Process:
 
 - [ ] Test authentication flow on web and mobile
-- [ ] Validate thread creation and navigation
-- [ ] Test message sending and receiving
+- [ ] Validate list creation and navigation
+- [ ] Test todo creation, editing, and deletion
+- [ ] Test todo completion/incompletion
 - [ ] Verify responsive design across devices
 - [ ] Test dark/light theme switching
 - [ ] Validate error handling and loading states
@@ -330,8 +352,8 @@
 
 ### Exit Criteria:
 
-- [ ] Complete chat application MVP functional on web and mobile
-- [ ] All core features working: auth, threads, messaging
+- [ ] Complete TODO application MVP functional on web and mobile
+- [ ] All core features working: auth, lists, todo operations
 - [ ] Responsive design with proper theme support
 - [ ] Error handling and loading states implemented
 - [ ] Smooth user experience across platforms

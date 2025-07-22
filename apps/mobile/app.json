@@ -24,11 +24,7 @@
     "platforms": ["ios", "android"],
     "plugins": ["expo-router"],
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "4fa21bbf-dddd-42a8-912e-39a654292518"
-      }
-    },
-    "owner": "bgaurav"
+      "router": {}
+    }
   }
 }

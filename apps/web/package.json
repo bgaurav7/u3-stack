@@ -23,8 +23,7 @@
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native": "0.79.5",
-
+    "react-native": "0.79.2",
     "tamagui": "^1.132.11",
     "tslib": "^2.8.1"
   },

@@ -10,4 +10,8 @@ exclude:
   - '**/.turbo/**'
 
 onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@swc/core'
   - dtrace-provider
+  - esbuild
+  - sharp

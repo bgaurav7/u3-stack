@@ -2,8 +2,7 @@
 
 ## Universal Stack
 
-A modern, type-safe, scalable monorepo stack to build Android, iOS, and Web applications with a
-shared codebase.
+A modern, type-safe, scalable monorepo stack to build Android, iOS, and Web real-time collaborative TODO applications with a shared codebase.
 
 ## Overview
 
@@ -88,43 +87,74 @@ The U3 Stack uses a **React Query + useState** approach to state management:
 - Server as source of truth
 - Simple mental model: server data vs UI state
 
+## Real-Time Collaborative Features
+
+The U3 Stack implements a real-time collaborative TODO application with WebSocket-powered live updates:
+
+### 🔄 Real-Time Architecture
+- **Backend**: Fastify server with `@fastify/websocket` for real-time broadcasts
+- **Frontend**: WebSocket client connections for instant updates
+- **Flow**: User A adds todo → Next.js API → Fastify WebSocket → All connected clients see update instantly
+
+### 🎯 Use Cases
+- **Team Project Management**: Shared boards like Trello/Linear with live updates
+- **Family/Roommate Apps**: Live shopping lists and household task coordination  
+- **Classroom Tools**: Students submit tasks, teachers see updates in real-time
+- **Multiplayer Productivity**: Shared workspace with live collaboration
+
+### ⚡ Real-Time Features
+- Instant todo creation/completion across all clients
+- Live user presence indicators (who's online)
+- Real-time typing indicators
+- Conflict resolution for simultaneous edits
+- Cross-browser tab synchronization
+- Mobile-to-web real-time sync
+
 ## Core UI Requirements (MVP)
 
-The U3 Stack includes a comprehensive chat application MVP with the following core features:
+The U3 Stack includes a comprehensive real-time collaborative TODO application MVP with the following core features:
 
 ### 🔐 1. Authentication (Clerk)
 - Sign In / Sign Up screen using Clerk
 - Authenticated Layout that wraps the app once user is logged in
 - [Optional] Profile section with Sign Out button in sidebar
 
-### 🗂 2. Thread Sidebar
+### 📋 2. Todo Lists Sidebar
 - App title or logo
-- List of existing threads
-- Show basic title (Thread #1, Untitled, or editable)
-- Highlight the selected/active thread
-- Create new thread button
-- Immediately adds a thread and navigates to it
-- Scrollable if threads overflow
+- List of existing todo lists
+- Show basic title (Personal, Work, Shopping, or editable)
+- Highlight the selected/active list
+- Create new list button
+- Immediately adds a list and navigates to it
+- Scrollable if lists overflow
 - Compact layout for mobile
+- Show task count per list
 
-### 💬 3. Chat Panel
+### ✅ 3. Real-Time Todo Panel
 **Header**
-- Thread title
-- [Optional] Edit title
-- [Optional] Show message count or timestamp
+- List title with live edit indicators
+- Online users count and avatars
+- Task count or completion percentage (live updates)
 
-**Messages Area**
-- Scrollable message list
-- Chat bubbles for:
-  - User messages (right-aligned, blue)
-  - Assistant messages (left-aligned, gray)
-- Smooth auto-scroll to bottom on new message
+**Tasks Area**
+- Scrollable task list with real-time updates
+- Task items with:
+  - Checkbox for completion status (syncs instantly)
+  - Task text with strikethrough when completed
+  - Priority indicators (high/medium/low with colors)
+  - Due date display (if set)
+  - User attribution (who created/modified)
+  - Live update animations for new/changed tasks
+- Task reordering capabilities (syncs across clients)
+- Bulk actions (mark all complete, delete completed)
 
 **Input Box**
-- Multiline input field
-- "Send" button (or Enter to send)
-- Disable input while waiting for assistant reply
-- Loading spinner or "Assistant is thinking..." indicator
+- Task input field with typing indicators
+- "Add Task" button (or Enter to add)
+- Priority selector
+- Due date picker
+- Loading spinner during task operations
+- Real-time conflict resolution for simultaneous adds
 
 ### 🌓 4. Theme / Responsiveness
 - Responsive layout (Tamagui handles this)
@@ -132,33 +162,50 @@ The U3 Stack includes a comprehensive chat application MVP with the following co
 - Keyboard-safe input on mobile (Tamagui KeyboardAvoidingView if needed)
 
 ### 🧪 Testing & Error Handling (MVP-level polish)
-- Error toast if thread creation or message sending fails
+- Error toast if list creation or task operations fail
 - Loading indicators:
-  - When sending message
-  - When threads/messages are being fetched
+  - When adding/editing tasks
+  - When lists/tasks are being fetched
 - Empty state:
-  - No threads → "Start your first conversation"
-  - No messages in thread → "Say something to begin"
-- Disabled UI state while waiting for assistant reply
+  - No lists → "Create your first todo list"
+  - No tasks in list → "Add your first task"
+  - All tasks completed → "All tasks completed! 🎉"
+- Disabled UI state during operations
 
 ### 🧠 Optional (but low-effort additions)
 These are easy to add with Tamagui and improve UX significantly:
-- Rename thread title
-- Delete thread (via long-press or context menu)
+- Rename list title
+- Delete list (via long-press or context menu)
+- Task categories/tags
+- Task notes/description
 - User avatar in sidebar footer (with Clerk profile)
-- Mobile bottom tab layout (threads/chat/profile)
-- Typing indicator for assistant
+- Mobile bottom tab layout (lists/tasks/profile)
+- Search/filter tasks
 - Toast system for errors and actions
 
 ### ✅ Summary of Screens / UI Views
 | Screen / View | Platform | Description |
 |---------------|----------|-------------|
 | Clerk Auth | Web + Mobile | Sign in / Sign up |
-| Main App Layout | Web + Mobile | Two-pane (sidebar + chat) |
-| Sidebar Threads | Web + Mobile | List + Add |
-| Chat View | Web + Mobile | Messages + Input |
+| Main App Layout | Web + Mobile | Two-pane (sidebar + tasks) |
+| Sidebar Lists | Web + Mobile | List + Add |
+| Todo View | Web + Mobile | Tasks + Input |
 | Empty / Loading States | Web + Mobile | Fallbacks |
 | Optional Profile | Web + Mobile | Avatar + Sign out |
+
+## Real-Time Implementation Details
+
+### 🔄 Data Flow
+1. **User Action**: User A adds a todo via form submission
+2. **API Route**: Next.js `/api/todos` processes the request
+3. **Database**: Todo saved to Neon PostgreSQL via Drizzle ORM
+4. **WebSocket Broadcast**: Fastify server broadcasts to all connected clients
+5. **Real-Time Update**: All users see the new todo instantly via React Query invalidation
+
+### 📱 Cross-Platform Sync
+- **Web**: WebSocket connection with automatic reconnection
+- **Mobile**: React Native WebSocket with background sync
+- **Offline**: Queue actions and sync when connection restored
 
 ## Clean Architecture Overview
 
