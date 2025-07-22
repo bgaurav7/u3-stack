@@ -8,3 +8,6 @@ exclude:
   - '**/build/**'
   - '**/.next/**'
   - '**/.turbo/**'
+
+onlyBuiltDependencies:
+  - dtrace-provider

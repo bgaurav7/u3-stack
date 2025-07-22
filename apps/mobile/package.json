@@ -5,12 +5,12 @@
   "description": "Mobile application for U3-Stack",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "android:go": "expo start --android --go",
-    "ios": "expo start --ios",
-    "build:android": "eas build --platform android",
-    "build:ios": "eas build --platform ios",
+    "start": "pnpm expo start",
+    "android": "pnpm expo start --android",
+    "android:go": "pnpm expo start --android --go",
+    "ios": "pnpm expo start --ios",
+    "build:android": "pnpm eas build --platform android",
+    "build:ios": "pnpm eas build --platform ios",
     "lint": "biome check .",
     "lint:fix": "biome check . --write",
     "typecheck": "echo '⚠️  Mobile typecheck temporarily disabled due to React 19 forwardRef compatibility issues'",
@@ -21,7 +21,6 @@
     "@babel/runtime-corejs3": "^7.28.0",
     "@expo/metro-runtime": "~5.0.4",
     "@tamagui/config": "^1.132.11",
-    "tamagui": "^1.132.11",
     "@u3/ui": "workspace:*",
     "expo": "~53.0.20",
     "expo-constants": "^17.1.7",
@@ -33,14 +32,17 @@
     "react": "^19.0.0",
     "react-native": "0.79.5",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1"
+    "react-native-screens": "~4.11.1",
+    "tamagui": "^1.132.11"
   },
   "devDependencies": {
     "@babel/core": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.28.0",
+    "@expo/cli": "^0.24.20",
     "@tamagui/babel-plugin": "^1.132.11",
     "@types/react": "~19.0.10",
     "babel-plugin-module-resolver": "^5.0.2",
+    "eas-cli": "^16.17.0",
     "typescript": "~5.8.3"
   }
 }
