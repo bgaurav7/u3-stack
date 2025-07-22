@@ -109,6 +109,9 @@ importers:
       '@expo/cli':
         specifier: ^0.24.20
         version: 0.24.20(graphql@16.8.1)
+      '@expo/metro-config':
+        specifier: ^0.20.17
+        version: 0.20.17
       '@tamagui/babel-plugin':
         specifier: ^1.132.11
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
