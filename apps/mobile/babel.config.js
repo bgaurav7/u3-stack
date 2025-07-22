@@ -34,7 +34,6 @@ module.exports = api => {
           logTimings: true,
           disableExtraction: process.env.NODE_ENV === 'development',
         },
-        'tamagui-plugin', // Add unique name to avoid duplicates
       ],
     ],
   };
