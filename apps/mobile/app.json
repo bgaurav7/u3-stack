@@ -11,14 +11,16 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "hermes"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
       "package": "com.example.u3stack",
-      "versionCode": 1
+      "versionCode": 1,
+      "jsEngine": "hermes"
     },
     "scheme": "u3-stack",
     "platforms": ["ios", "android"],

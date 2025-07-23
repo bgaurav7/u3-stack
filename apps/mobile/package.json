@@ -37,6 +37,7 @@
     "@expo/metro-config": "~0.20.0",
     "@tamagui/babel-plugin": "^1.132.10",
     "@types/react": "~19.0.10",
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "expo-dev-client": "~5.0.8"
   }
 }
