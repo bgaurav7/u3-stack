@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { Text as TamaguiText, styled } from 'tamagui';
 import type { TextProps } from 'tamagui';
 
@@ -39,16 +38,11 @@ export type CustomTextProps = TextProps & {
   weight?: 'normal' | 'medium' | 'bold';
 };
 
-export const Text = forwardRef<HTMLParagraphElement, CustomTextProps>(
-  ({ children, ...props }, ref) => {
-    return (
-      <StyledText ref={ref} {...props}>
-        {children}
-      </StyledText>
-    );
-  }
-) as React.ForwardRefExoticComponent<
-  CustomTextProps & React.RefAttributes<HTMLParagraphElement>
->;
+// Simplified approach for cross-platform compatibility
+export const Text = (props: CustomTextProps) => {
+  const { children, ...restProps } = props || {};
+
+  return <StyledText {...restProps}>{children}</StyledText>;
+};
 
 Text.displayName = 'Text';

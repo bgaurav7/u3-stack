@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+// No React import needed for this simplified component
 import {
   Card as TamaguiCard,
   type CardProps as TamaguiCardProps,
@@ -38,16 +38,10 @@ export type CardProps = Omit<TamaguiCardProps, 'variant'> & {
   variant?: 'elevated' | 'outlined' | 'filled';
 };
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ children, ...props }, ref) => {
-    return (
-      <StyledCard ref={ref} {...props}>
-        {children}
-      </StyledCard>
-    );
-  }
-) as React.ForwardRefExoticComponent<
-  CardProps & React.RefAttributes<HTMLDivElement>
->;
+export const Card = (props: CardProps) => {
+  const { children, ...restProps } = props || {};
+
+  return <StyledCard {...restProps}>{children}</StyledCard>;
+};
 
 Card.displayName = 'Card';
