@@ -13,6 +13,7 @@
     "lib": ["DOM", "ESNext"],
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "exactOptionalPropertyTypes": false
   }
 }

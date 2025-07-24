@@ -1,4 +1,4 @@
-import { Provider } from 'app/provider';
+import { Provider } from '@u3/app';
 import { Stack } from 'expo-router';
 import type React from 'react';
 

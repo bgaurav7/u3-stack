@@ -20,6 +20,15 @@
       ],
       "@u3/ui": [
         "../../packages/ui/src"
+      ],
+      "@u3/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@u3/app": [
+        "../../packages/app/src"
+      ],
+      "@u3/app/*": [
+        "../../packages/app/src/*"
       ]
     }
   },
