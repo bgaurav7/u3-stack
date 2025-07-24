@@ -179,9 +179,6 @@ importers:
 
   packages/app:
     dependencies:
-      '@tamagui/next-theme':
-        specifier: ^1.132.11
-        version: 1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@u3/config':
         specifier: workspace:*
         version: link:../config
@@ -234,9 +231,6 @@ importers:
       '@tamagui/font-inter':
         specifier: ^1.132.11
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      '@tamagui/next-theme':
-        specifier: ^1.132.11
-        version: 1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/themes':
         specifier: ^1.132.11
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -2219,11 +2213,6 @@ packages:
     resolution: {integrity: sha512-tkW6SaLRc8DLYAl24w/IEo4DBKw5n6VK4yNJTQigjcKQD1FvonSAw6rY5kR2CHDHwyaHx1hSlcGdBvjhcfVjMA==}
     peerDependencies:
       next: '>=13'
-
-  '@tamagui/next-theme@1.132.11':
-    resolution: {integrity: sha512-irlsurZh+BNM8SUuldeD4SgSXVivxtAqDD5s8Mv1Mm0WqGZJ6iUhuH8GJRpkRkS2VtL9/YEAb9GpXBd3SkZJYA==}
-    peerDependencies:
-      react: '*'
 
   '@tamagui/normalize-css-color@1.132.11':
     resolution: {integrity: sha512-pUP8nrUF3tMbjA0A4MpdQNO2KRstRTQnYdJBRia0oTddUfuTvh6jfPZ0l9MabF5FZWK+q9fUVmh9yg2ltiqJrg==}
@@ -8147,22 +8136,6 @@ snapshots:
       - react-native
       - supports-color
       - webpack
-
-  '@tamagui/next-theme@1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@tamagui/constants': 1.132.11(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      '@tamagui/use-event': 1.132.11(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      next: 15.4.2(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react: 19.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - babel-plugin-macros
-      - babel-plugin-react-compiler
-      - react-dom
-      - react-native
-      - sass
 
   '@tamagui/normalize-css-color@1.132.11':
     dependencies:

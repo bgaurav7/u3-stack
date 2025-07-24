@@ -26,7 +26,7 @@ const StyledInput = styled(TamaguiInput, {
       default: {
         borderColor: '$borderColor',
         focusStyle: {
-          borderColor: '$blue10',
+          borderColor: '$gray10',
         },
       },
       error: {

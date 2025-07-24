@@ -14,7 +14,6 @@
     "format:check": "biome format src"
   },
   "dependencies": {
-    "@tamagui/next-theme": "^1.132.11",
     "@u3/ui": "workspace:*",
     "@u3/config": "workspace:*",
     "expo-linking": "~7.1.4",
