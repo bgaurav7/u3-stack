@@ -6,6 +6,7 @@ const nextConfig = {
     'react-native',
     'expo',
     'expo-router',
+    '@u3/app',
     '@u3/ui',
     '@u3/config',
     'tamagui',

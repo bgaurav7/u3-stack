@@ -60,6 +60,9 @@ importers:
       '@tamagui/config':
         specifier: ^1.132.10
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native-reanimated@3.18.0(@babel/core@7.28.0)(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@u3/app':
+        specifier: workspace:*
+        version: link:../../packages/app
       '@u3/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -127,6 +130,9 @@ importers:
       '@tamagui/next-plugin':
         specifier: ^1.132.11
         version: 1.132.11(@babel/core@7.28.0)(next@15.4.2(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))
+      '@u3/app':
+        specifier: workspace:*
+        version: link:../../packages/app
       '@u3/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -171,6 +177,52 @@ importers:
         specifier: ~5.8.3
         version: 5.8.3
 
+  packages/app:
+    dependencies:
+      '@tamagui/next-theme':
+        specifier: ^1.132.11
+        version: 1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@u3/config':
+        specifier: workspace:*
+        version: link:../config
+      '@u3/ui':
+        specifier: workspace:*
+        version: link:../ui
+      expo-linking:
+        specifier: ~7.1.4
+        version: 7.1.7(expo@53.0.20(@babel/core@7.28.0)(@expo/metro-runtime@5.0.4(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      expo-router:
+        specifier: ~5.0.6
+        version: 5.0.7(ed7b7a9af784a60168b5bc097509a3ec)
+      expo-status-bar:
+        specifier: ~2.2.3
+        version: 2.2.3(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      react-native:
+        specifier: ^0.79.0
+        version: 0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+      react-native-safe-area-context:
+        specifier: ^5.4.0
+        version: 5.4.0(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      react-native-screens:
+        specifier: ^4.10.0
+        version: 4.10.0(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^1.5.3
+        version: 1.9.4
+      '@tamagui/build':
+        specifier: ^1.132.11
+        version: 1.132.11(@swc/helpers@0.5.17)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.8.3
+
   packages/config:
     dependencies:
       '@tamagui/animations-react-native':
@@ -180,6 +232,12 @@ importers:
         specifier: ^1.132.11
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native-reanimated@3.18.0(@babel/core@7.28.0)(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/font-inter':
+        specifier: ^1.132.11
+        version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tamagui/next-theme':
+        specifier: ^1.132.11
+        version: 1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tamagui/themes':
         specifier: ^1.132.11
         version: 1.132.11(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       dotenv-flow:
@@ -2162,6 +2220,11 @@ packages:
     peerDependencies:
       next: '>=13'
 
+  '@tamagui/next-theme@1.132.11':
+    resolution: {integrity: sha512-irlsurZh+BNM8SUuldeD4SgSXVivxtAqDD5s8Mv1Mm0WqGZJ6iUhuH8GJRpkRkS2VtL9/YEAb9GpXBd3SkZJYA==}
+    peerDependencies:
+      react: '*'
+
   '@tamagui/normalize-css-color@1.132.11':
     resolution: {integrity: sha512-pUP8nrUF3tMbjA0A4MpdQNO2KRstRTQnYdJBRia0oTddUfuTvh6jfPZ0l9MabF5FZWK+q9fUVmh9yg2ltiqJrg==}
 
@@ -3485,6 +3548,12 @@ packages:
         optional: true
       react-native-reanimated:
         optional: true
+
+  expo-status-bar@2.2.3:
+    resolution: {integrity: sha512-+c8R3AESBoduunxTJ8353SqKAKpxL6DvcD8VKBuh81zzJyUUbfB4CVjr1GufSJEKsMzNPXZU+HJwXx7Xh7lx8Q==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   expo-updates-interface@1.0.0:
     resolution: {integrity: sha512-93oWtvULJOj+Pp+N/lpTcFfuREX1wNeHtp7Lwn8EbzYYmdn37MvZU3TPW2tYYCZuhzmKEXnUblYcruYoDu7IrQ==}
@@ -8079,6 +8148,22 @@ snapshots:
       - supports-color
       - webpack
 
+  '@tamagui/next-theme@1.132.11(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tamagui/constants': 1.132.11(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tamagui/use-event': 1.132.11(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      next: 15.4.2(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - babel-plugin-macros
+      - babel-plugin-react-compiler
+      - react-dom
+      - react-native
+      - sass
+
   '@tamagui/normalize-css-color@1.132.11':
     dependencies:
       '@react-native/normalize-color': 2.1.0
@@ -9848,6 +9933,13 @@ snapshots:
       - react
       - react-native
       - supports-color
+
+  expo-status-bar@2.2.3(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-native: 0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+      react-native-edge-to-edge: 1.6.0(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      react-native-is-edge-to-edge: 1.2.1(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
 
   expo-updates-interface@1.0.0(expo@53.0.20(@babel/core@7.28.0)(@expo/metro-runtime@5.0.4(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)))(react-native@0.79.2(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)):
     dependencies:

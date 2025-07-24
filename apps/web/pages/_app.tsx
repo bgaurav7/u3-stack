@@ -1,8 +1,8 @@
+import { Provider } from '@u3/app';
 import { config } from '@u3/ui';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import type React from 'react';
-import { TamaguiProvider } from 'tamagui';
 
 export default function App({
   Component,
@@ -18,9 +18,9 @@ export default function App({
           }}
         />
       </Head>
-      <TamaguiProvider config={config}>
+      <Provider>
         <Component {...pageProps} />
-      </TamaguiProvider>
+      </Provider>
     </>
   );
 }

@@ -1,7 +1,8 @@
 import { createAnimations } from '@tamagui/animations-react-native';
+import type { AnimationDriver } from '@tamagui/web';
 
-// Add type annotation to avoid TypeScript error
-export const animations: any = createAnimations({
+// Use proper type annotation to avoid TypeScript error
+export const animations: AnimationDriver = createAnimations({
   '100ms': {
     type: 'timing',
     duration: 100,
