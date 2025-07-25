@@ -1,0 +1,43 @@
+{
+  "name": "@u3/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile application for U3-Stack",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "pnpm expo start -c",
+    "android": "pnpm expo run:android",
+    "ios": "pnpm expo run:ios",
+    "build:android": "pnpm expo run:android --variant release",
+    "build:ios": "pnpm expo run:ios --configuration Release",
+    "prebuild": "pnpm expo prebuild",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "typecheck": "tsc --noEmit --skipLibCheck"
+  },
+  "dependencies": {
+    "expo": "~53.0.8",
+    "expo-router": "~5.0.6",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-web": "^0.20.0",
+    "@react-navigation/native": "^7.1.14",
+    "@react-navigation/native-stack": "^7.3.12",
+    "@react-navigation/core": "^7.12.1",
+    "burnt": "^0.12.2",
+    "tamagui": "^1.132.11",
+    "@tamagui/config": "^1.132.10",
+    "@u3/config": "workspace:*",
+    "@u3/ui": "workspace:*",
+    "babel-plugin-module-resolver": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/plugin-transform-runtime": "^7.24.6",
+    "@expo/metro-config": "~0.20.0",
+    "@tamagui/babel-plugin": "^1.132.10",
+    "@types/react": "~19.0.10",
+    "typescript": "~5.8.3",
+    "expo-dev-client": "~5.0.8"
+  }
+}

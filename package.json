@@ -1,0 +1,48 @@
+{
+  "name": "u3-stack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Universal Stack - A modern, type-safe, scalable monorepo stack for Android, iOS, and Web applications",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "build:fast": "turbo run build --filter=!typecheck --filter=!lint --filter=!format:check",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "clean:install": "pnpm run clean && pnpm install",
+    "validate": "turbo run typecheck lint format:check",
+    "prepare": "husky",
+    "postinstall": "pnpm run prepare"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@biomejs/biome": "^1.9.3",
+    "@swc/helpers": "^0.5.17",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "turbo": "^1.13.4",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,jsonc}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "dependencies": {
+    "@tamagui/font-inter": "^1.132.11",
+    "@tamagui/shorthands": "^1.132.11",
+    "@tamagui/themes": "^1.132.11",
+    "dotenv-flow": "^4.1.0",
+    "env-var": "^7.5.0"
+  }
+}

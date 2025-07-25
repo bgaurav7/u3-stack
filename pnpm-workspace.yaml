@@ -1,0 +1,29 @@
+packages:
+  - apps/*
+  - packages/*
+
+exclude:
+  - '**/node_modules/**'
+  - '**/dist/**'
+  - '**/build/**'
+  - '**/.next/**'
+  - '**/.turbo/**'
+
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@swc/core'
+  - core-js-pure
+  - dtrace-provider
+  - esbuild
+  - sharp
+
+public-hoist-pattern:
+  - 'invariant'
+  - 'expo'
+  - 'expo-*'
+  - '@expo/*'
+  - 'react-native'
+  - 'react-native-*'
+  - '@react-native/*'
+  - 'whatwg-fetch'
+  - 'expo-asset'

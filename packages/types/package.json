@@ -1,0 +1,30 @@
+{
+  "name": "@u3/types",
+  "version": "0.1.0",
+  "description": "Shared types for U3-Stack monorepo",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./hello": {
+      "types": "./hello.d.ts",
+      "default": "./hello.js"
+    }
+  },
+  "files": ["*.js", "*.d.ts"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
+  },
+  "devDependencies": {
+    "@u3/config": "workspace:*",
+    "typescript": "^5.3.3"
+  }
+}

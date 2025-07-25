@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "U3-Stack Mobile",
+    "slug": "u3-stack",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "jsEngine": "hermes",
+      "bundleIdentifier": "com.example.u3stack"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.example.u3stack",
+      "versionCode": 1,
+      "jsEngine": "hermes"
+    },
+    "scheme": "u3-stack",
+    "platforms": ["ios", "android"],
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {}
+    }
+  }
+}
