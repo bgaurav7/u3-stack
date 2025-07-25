@@ -1,7 +1,6 @@
 'use client';
 
-import { HomeScreen, Provider } from '@u3/app';
-import { View } from '@u3/ui';
+import { HomeScreen, Provider, View } from '@u3/ui';
 import type React from 'react';
 
 export default function HomePage(): React.ReactElement {

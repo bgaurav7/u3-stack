@@ -16,7 +16,6 @@
     "@tamagui/config": "^1.132.11",
     "@tamagui/font-inter": "^1.132.11",
     "@tamagui/next-plugin": "^1.132.11",
-    "@u3/app": "workspace:*",
     "@u3/config": "workspace:*",
     "@u3/ui": "workspace:*",
     "expo": "~53.0.20",

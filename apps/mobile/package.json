@@ -27,7 +27,6 @@
     "burnt": "^0.12.2",
     "tamagui": "^1.132.11",
     "@tamagui/config": "^1.132.10",
-    "@u3/app": "workspace:*",
     "@u3/config": "workspace:*",
     "@u3/ui": "workspace:*",
     "babel-plugin-module-resolver": "^5.0.2"

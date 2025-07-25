@@ -1,4 +1,4 @@
-import { HomeScreen } from '@u3/app';
+import { HomeScreen } from '@u3/ui';
 import { Stack } from 'expo-router';
 
 export default function HomePage() {

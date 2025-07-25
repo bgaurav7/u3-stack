@@ -55,8 +55,6 @@
     "paths": {
       "@u3/ui": ["packages/ui/src"],
       "@u3/ui/*": ["packages/ui/src/*"],
-      "@u3/app": ["packages/app/src"],
-      "@u3/app/*": ["packages/app/src/*"],
       "@u3/api": ["packages/api/src"],
       "@u3/api/*": ["packages/api/src/*"],
       "@u3/db": ["packages/db/src"],

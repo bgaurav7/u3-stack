@@ -17,3 +17,10 @@ export type { CardProps } from './components/Card';
 
 export { Input } from './components/Input';
 export type { InputProps } from './components/Input';
+
+// Pages
+export { HomeScreen } from './pages/homescreen';
+
+// Provider
+export { Provider } from './provider';
+export type { ProviderProps } from './provider';

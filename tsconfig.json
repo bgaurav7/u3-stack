@@ -8,9 +8,7 @@
       "@u3/types": ["packages/types/src"],
       "@u3/types/*": ["packages/types/src/*"],
       "@u3/ui": ["packages/ui/src"],
-      "@u3/ui/*": ["packages/ui/src/*"],
-      "@u3/app": ["packages/app/src"],
-      "@u3/app/*": ["packages/app/src/*"]
+      "@u3/ui/*": ["packages/ui/src/*"]
     }
   },
   "include": [],
@@ -18,7 +16,6 @@
     { "path": "./packages/config" },
     { "path": "./packages/types" },
     { "path": "./packages/ui" },
-    { "path": "./packages/app" },
     { "path": "./apps" }
   ]
 }
