@@ -1,5 +1,5 @@
-import { Button as TamaguiButton } from 'tamagui';
 import type { ButtonProps as TamaguiButtonProps } from 'tamagui';
+import { Button as TamaguiButton } from 'tamagui';
 
 // Use Tamagui's built-in theming system directly
 export type ButtonProps = TamaguiButtonProps;

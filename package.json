@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Universal Stack - A modern, type-safe, scalable monorepo stack for Android, iOS, and Web applications",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
@@ -21,11 +24,11 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
-    "@biomejs/biome": "^1.9.3",
+    "@biomejs/biome": "^2.1.2",
     "@swc/helpers": "^0.5.17",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "turbo": "^1.13.4",
+    "turbo": "^2.5.5",
     "typescript": "^5.8.3"
   },
   "engines": {
@@ -39,9 +42,6 @@
     ]
   },
   "dependencies": {
-    "@tamagui/font-inter": "^1.132.11",
-    "@tamagui/shorthands": "^1.132.11",
-    "@tamagui/themes": "^1.132.11",
     "dotenv-flow": "^4.1.0",
     "env-var": "^7.5.0"
   }

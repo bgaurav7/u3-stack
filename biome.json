@@ -1,8 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+
   "linter": {
     "enabled": true,
     "rules": {
@@ -46,18 +44,30 @@
     }
   },
   "files": {
-    "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.json"],
-    "ignore": [
-      "node_modules/**",
-      "dist/**",
-      "build/**",
-      ".next/**",
-      ".turbo/**",
-      "coverage/**",
-      "*.d.ts",
-      "**/tsconfig*.json",
-      "examples/**",
-      "**/.tamagui/tamagui.config.json"
+    "includes": [
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.json",
+      "!node_modules/**",
+      "!**/dist/**",
+      "!**/build/**",
+      "!**/.next/**",
+      "!**/.turbo/**",
+      "!**/coverage/**",
+      "!*.d.ts",
+      "!**/tsconfig*.json",
+      "!examples/**",
+      "!**/.tamagui/tamagui.config.json"
+    ],
+    "experimentalScannerIgnores": [
+      "node_modules",
+      "dist",
+      "build",
+      ".next",
+      ".turbo",
+      "coverage"
     ],
     "maxSize": 10000000
   }

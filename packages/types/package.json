@@ -14,7 +14,10 @@
       "default": "./hello.js"
     }
   },
-  "files": ["*.js", "*.d.ts"],
+  "files": [
+    "*.js",
+    "*.d.ts"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",

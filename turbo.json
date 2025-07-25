@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["NODE_ENV", "CI"],
   "globalDependencies": ["**/.env.*local", "**/.env"],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build", "typecheck", "lint", "format:check"],
       "inputs": [
@@ -14,8 +14,7 @@
         "package.json",
         "tsconfig.json"
       ],
-      "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"],
-      "outputMode": "hash-only"
+      "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
       "cache": false,
@@ -25,8 +24,7 @@
     "lint": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "*.ts", "*.tsx", "*.js", "*.jsx", "biome.json"],
-      "outputs": [],
-      "outputMode": "errors-only"
+      "outputs": []
     },
     "lint:fix": {
       "dependsOn": ["^build"],
@@ -57,20 +55,17 @@
         "*.json",
         "biome.json"
       ],
-      "outputs": [],
-      "outputMode": "errors-only"
+      "outputs": []
     },
     "typecheck": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "*.ts", "*.tsx", "tsconfig.json"],
-      "outputs": [],
-      "outputMode": "errors-only"
+      "outputs": []
     },
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "test/**", "*.test.*", "*.spec.*"],
-      "outputs": ["coverage/**"],
-      "outputMode": "errors-only"
+      "outputs": ["coverage/**"]
     },
     "test:watch": {
       "cache": false,

@@ -1,8 +1,8 @@
 import type * as React from 'react';
 import {
+  styled,
   Card as TamaguiCard,
   type CardProps as TamaguiCardProps,
-  styled,
 } from 'tamagui';
 
 // Use Tamagui's built-in styling system

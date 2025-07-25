@@ -20,6 +20,7 @@ module.exports = api => {
           root: ['../..'],
           alias: {
             '@u3/ui': '../../packages/ui/src',
+            '@u3/config': '../../packages/config/src',
           },
           extensions: ['.js', '.jsx', '.tsx', '.ios.js', '.android.js'],
         },

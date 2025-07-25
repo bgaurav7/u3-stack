@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, View } from 'tamagui';
-import { Paragraph, SizableText, YStack } from 'tamagui';
+import { Paragraph, ScrollView, SizableText, View, YStack } from 'tamagui';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Input } from '../../components/Input';

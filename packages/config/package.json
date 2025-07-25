@@ -4,7 +4,10 @@
   "description": "Shared configuration for U3-Stack monorepo",
   "types": "./src",
   "main": "src/index.ts",
-  "files": ["types", "dist"],
+  "files": [
+    "types",
+    "dist"
+  ],
   "scripts": {
     "build": "tamagui-build --skip-types",
     "typecheck": "tsc --noEmit",
@@ -14,18 +17,23 @@
     "format:check": "biome format ."
   },
   "dependencies": {
-    "@tamagui/animations-react-native": "^1.132.11",
-    "@tamagui/config": "^1.132.11",
-    "@tamagui/font-inter": "^1.132.11",
-    "@tamagui/themes": "^1.132.11",
+    "@tamagui/animations-react-native": "^1.132.12",
+    "@tamagui/colors": "^1.132.12",
+    "@tamagui/config": "^1.132.12",
+    "@tamagui/font-inter": "^1.132.12",
+    "@tamagui/shorthands": "^1.132.12",
+    "@tamagui/theme-builder": "^1.132.12",
+    "@tamagui/themes": "^1.132.12",
+    "@tamagui/web": "^1.132.12",
     "dotenv-flow": "^4.1.0",
     "env-var": "^7.5.0",
-    "tamagui": "^1.132.11",
+    "react-native": "0.79.2",
+    "tamagui": "^1.132.12",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.132.11",
-    "@types/node": "^22.10.5",
+    "@tamagui/build": "^1.132.12",
+    "@types/node": "^22.16.5",
     "typescript": "~5.8.3"
   }
 }
