@@ -1,3 +1,5 @@
+'use client';
+
 // Re-export Tamagui core and configuration
 export * from 'tamagui';
 export * from '@tamagui/toast';

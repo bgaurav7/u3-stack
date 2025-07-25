@@ -15,9 +15,9 @@ const nextConfig = {
     '@tamagui/animations-react-native',
     '@tamagui/font-inter',
   ],
-  experimental: {
-    forceSwcTransforms: true,
-  },
+  // experimental: {
+  //   forceSwcTransforms: true,
+  // },
   // Expo Router configuration
   trailingSlash: true,
   images: {
