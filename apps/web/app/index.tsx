@@ -1,71 +1,75 @@
-import { Button, Card, Input, Text, View } from '@u3/ui';
+import { Button, Card, Input, View } from '@u3/ui';
 import type React from 'react';
+import { Paragraph, SizableText, YStack } from 'tamagui';
 
 export default function HomePage(): React.ReactElement {
   return (
     <View padding='$4' gap='$4' maxWidth={600} marginHorizontal='auto'>
-      <Text variant='heading' weight='bold'>
+      <SizableText size='$8' fontWeight='bold'>
         Welcome to U3-Stack Web
-      </Text>
+      </SizableText>
 
-      <Text variant='body'>
+      <Paragraph size='$4'>
         This is a test page showcasing the shared UI components from @u3/ui
         package.
-      </Text>
+      </Paragraph>
 
       <Card variant='elevated'>
-        <Text variant='heading' weight='medium' marginBottom='$3'>
+        <SizableText size='$6' fontWeight='600' marginBottom='$3'>
           Button Components
-        </Text>
-        <View gap='$3'>
-          <Button variant='primary' size='large'>
+        </SizableText>
+        <YStack gap='$3'>
+          <Button size='$5' backgroundColor='$color'>
             Primary Button
           </Button>
-          <Button variant='secondary' size='medium'>
+          <Button size='$4' backgroundColor='$background'>
             Secondary Button
           </Button>
-          <Button variant='outline' size='small'>
+          <Button size='$3' variant='outlined'>
             Outline Button
           </Button>
-        </View>
+        </YStack>
       </Card>
 
       <Card variant='outlined'>
-        <Text variant='heading' weight='medium' marginBottom='$3'>
+        <SizableText size='$6' fontWeight='600' marginBottom='$3'>
           Text Components
-        </Text>
-        <View gap='$2'>
-          <Text variant='heading' weight='bold'>
+        </SizableText>
+        <YStack gap='$2'>
+          <SizableText size='$6' fontWeight='bold'>
             This is a heading text
-          </Text>
-          <Text variant='body' weight='medium'>
+          </SizableText>
+          <Paragraph size='$4' fontWeight='500'>
             This is medium body text
-          </Text>
-          <Text variant='caption' weight='normal'>
+          </Paragraph>
+          <SizableText size='$2' fontWeight='normal'>
             This is caption text
-          </Text>
-        </View>
+          </SizableText>
+        </YStack>
       </Card>
 
       <Card variant='filled'>
-        <Text variant='heading' weight='medium' marginBottom='$3'>
+        <SizableText size='$6' fontWeight='600' marginBottom='$3'>
           Input Components
-        </Text>
-        <View gap='$3'>
-          <Input placeholder='Default input' variant='default' />
-          <Input placeholder='Outlined input' variant='outlined' />
-          <Input placeholder='Filled input' variant='filled' />
+        </SizableText>
+        <YStack gap='$3'>
+          <Input placeholder='Default input' />
+          <Input placeholder='Outlined input' borderWidth={1} />
+          <Input
+            placeholder='Filled input'
+            backgroundColor='$backgroundFocus'
+          />
           <Input
             placeholder='Error state input'
-            variant='outlined'
-            state='error'
+            borderWidth={1}
+            borderColor='$red10'
           />
           <Input
             placeholder='Success state input'
-            variant='outlined'
-            state='success'
+            borderWidth={1}
+            borderColor='$green10'
           />
-        </View>
+        </YStack>
       </Card>
     </View>
   );

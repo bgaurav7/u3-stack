@@ -1,4 +1,4 @@
-// No React import needed for this simplified component
+import type * as React from 'react';
 import {
   Card as TamaguiCard,
   type CardProps as TamaguiCardProps,
@@ -38,10 +38,22 @@ export type CardProps = Omit<TamaguiCardProps, 'variant'> & {
   variant?: 'elevated' | 'outlined' | 'filled';
 };
 
-export const Card = (props: CardProps) => {
+// Define the Card component type with subcomponents
+type CardComponentType = React.FC<CardProps> & {
+  Header: typeof TamaguiCard.Header;
+  Footer: typeof TamaguiCard.Footer;
+  Background: typeof TamaguiCard.Background;
+  displayName?: string;
+};
+
+export const Card: CardComponentType = (props: CardProps) => {
   const { children, ...restProps } = props || {};
 
   return <StyledCard {...restProps}>{children}</StyledCard>;
 };
 
+// Expose TamaguiCard subcomponents
+Card.Header = TamaguiCard.Header;
+Card.Footer = TamaguiCard.Footer;
+Card.Background = TamaguiCard.Background;
 Card.displayName = 'Card';

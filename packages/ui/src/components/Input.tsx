@@ -1,66 +1,14 @@
-import type { ComponentProps } from 'react';
-import { Input as TamaguiInput, styled } from 'tamagui';
+import { Input as TamaguiInput } from 'tamagui';
+import type { InputProps as TamaguiInputProps } from 'tamagui';
 
-// Use Tamagui's built-in styling system
-const StyledInput = styled(TamaguiInput, {
-  size: '$4',
-  borderRadius: '$2',
-  padding: '$3',
+// Use Tamagui's built-in theming system directly
+export type InputProps = TamaguiInputProps;
 
-  variants: {
-    variant: {
-      default: {
-        borderWidth: 1,
-        backgroundColor: '$background',
-      },
-      outlined: {
-        borderWidth: 1,
-        backgroundColor: 'transparent',
-      },
-      filled: {
-        borderWidth: 0,
-        backgroundColor: '$backgroundHover',
-      },
-    },
-    state: {
-      default: {
-        borderColor: '$borderColor',
-        focusStyle: {
-          borderColor: '$gray10',
-        },
-      },
-      error: {
-        borderColor: '$red10',
-        focusStyle: {
-          borderColor: '$red10',
-        },
-      },
-      success: {
-        borderColor: '$green10',
-        focusStyle: {
-          borderColor: '$green10',
-        },
-      },
-    },
-  } as const,
-  defaultVariants: {
-    variant: 'default',
-    state: 'default',
-  },
-});
+// Simplified component for cross-platform compatibility
+export const Input = (props: InputProps) => {
+  const { children, ...restProps } = props || {};
 
-export type CustomInputProps = Omit<
-  ComponentProps<typeof TamaguiInput>,
-  'variant'
-> & {
-  variant?: 'default' | 'outlined' | 'filled';
-  state?: 'default' | 'error' | 'success';
-};
-
-export const Input = (props: CustomInputProps) => {
-  const { ...restProps } = props || {};
-
-  return <StyledInput {...restProps} />;
+  return <TamaguiInput {...restProps} />;
 };
 
 Input.displayName = 'Input';
