@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
-    "@react-navigation/native": "^7.1.14",
-    "@react-navigation/native-stack": "^7.3.12",
+    "@react-navigation/native": "^7.1.6",
+    "@react-navigation/native-stack": "^7.3.10",
     "@tamagui/animations-react-native": "^1.132.12",
     "@tamagui/static": "1.132.12",
     "@u3/ui": "workspace:*",
@@ -32,6 +32,13 @@
     "react": "^19.0.0",
     "react-native": "^0.79.2",
     "tamagui": "^1.132.12"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",

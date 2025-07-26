@@ -65,7 +65,7 @@
     "typecheck": {
       "dependsOn": [],
       "inputs": ["src/**", "**/*.{ts,tsx}", "tsconfig.json"],
-      "outputs": [".turbo/typecheck.cache"]
+      "outputs": []
     },
     "test": {
       "dependsOn": [],
