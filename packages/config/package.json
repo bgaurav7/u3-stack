@@ -2,14 +2,19 @@
   "name": "@u3/config",
   "version": "0.1.0",
   "description": "Shared configuration for U3-Stack monorepo",
-  "types": "./src",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "files": [
-    "types",
     "dist"
   ],
   "scripts": {
-    "build": "tamagui-build --skip-types",
+    "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint . --write",
@@ -22,7 +27,6 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.132.12",
     "@types/node": "^22.16.5",
     "typescript": "~5.8.3"
   }

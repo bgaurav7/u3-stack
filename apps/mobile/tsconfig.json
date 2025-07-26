@@ -1,9 +1,6 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
     "lib": [
       "dom",
@@ -11,9 +8,7 @@
     ],
     "moduleResolution": "node",
     "noEmit": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
@@ -29,6 +24,12 @@
       ],
       "@u3/config/*": [
         "../../packages/config/src/*"
+      ],
+      "@u3/types": [
+        "../../packages/types/src"
+      ],
+      "@u3/types/*": [
+        "../../packages/types/src/*"
       ]
     }
   },
@@ -37,6 +38,7 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "tamagui.config.ts"
   ]
 }
