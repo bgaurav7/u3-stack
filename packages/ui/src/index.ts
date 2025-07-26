@@ -1,5 +1,8 @@
 'use client';
 
+// Import and ensure Tamagui config is loaded
+import './config';
+
 export * from '@tamagui/toast';
 // Re-export Tamagui core and configuration
 export * from 'tamagui';

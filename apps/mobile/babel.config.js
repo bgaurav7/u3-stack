@@ -31,7 +31,7 @@ module.exports = api => {
         '@tamagui/babel-plugin',
         {
           components: ['@u3/ui', 'tamagui'],
-          config: '../../packages/config/src/tamagui.config.ts',
+          config: '../../packages/ui/src/config/tamagui.config.ts',
           logTimings: true,
           disableExtraction: process.env.NODE_ENV === 'development',
         },

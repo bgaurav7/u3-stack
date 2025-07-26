@@ -30,13 +30,13 @@ export function HomeScreen() {
               Button Components
             </SizableText>
             <YStack gap='$3'>
-              <Button size='$5' backgroundColor='$color'>
+              <Button size='$4' backgroundColor='$color'>
                 Primary Button
               </Button>
-              <Button size='$4' backgroundColor='$background'>
+              <Button size='$3' backgroundColor='$background'>
                 Secondary Button
               </Button>
-              <Button size='$3' variant='outlined'>
+              <Button size='$2' variant='outlined'>
                 Outline Button
               </Button>
             </YStack>

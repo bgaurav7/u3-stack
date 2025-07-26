@@ -21,8 +21,8 @@
     "expo": "~53.0.8",
     "expo-router": "~5.1.4",
     "next": "^15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "tamagui": "^1.132.12"
   },
   "devDependencies": {
