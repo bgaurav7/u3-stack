@@ -1,5 +1,5 @@
 import { shorthands } from '@tamagui/shorthands';
-import { tokens } from '@tamagui/themes/v4';
+import { tokens } from '@tamagui/themes';
 import { createTamagui } from 'tamagui';
 import { animations } from './animations';
 import { bodyFont, headingFont } from './fonts';
@@ -19,4 +19,9 @@ export const config = createTamagui({
   tokens,
 });
 
-export default config;
+// Types for the Tamagui configuration
+export type AppConfig = typeof config;
+
+declare module 'tamagui' {
+  interface TamaguiCustomConfig extends AppConfig {}
+}
