@@ -9,7 +9,10 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
+    "dev:mobile": "pnpm --filter=@u3/mobile start",
     "build": "turbo run build",
+    "build:android": "turbo run build:android --filter=@u3/mobile",
+    "build:ios": "turbo run build:ios --filter=@u3/mobile",
     "build:fast": "turbo run build --filter=!typecheck --filter=!lint --filter=!format:check",
     "test": "turbo run test",
     "lint": "turbo run lint",
@@ -40,9 +43,5 @@
     "*.{js,jsx,ts,tsx,json,jsonc}": [
       "biome check --write --no-errors-on-unmatched"
     ]
-  },
-  "dependencies": {
-    "dotenv-flow": "^4.1.0",
-    "env-var": "^7.5.0"
   }
 }

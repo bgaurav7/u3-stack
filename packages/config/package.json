@@ -25,8 +25,6 @@
     "@tamagui/theme-builder": "^1.132.12",
     "@tamagui/themes": "^1.132.12",
     "@tamagui/web": "^1.132.12",
-    "dotenv-flow": "^4.1.0",
-    "env-var": "^7.5.0",
     "react-native": "0.79.2",
     "tamagui": "^1.132.12",
     "tslib": "^2.8.1"

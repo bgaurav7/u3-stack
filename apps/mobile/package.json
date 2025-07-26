@@ -8,8 +8,8 @@
     "start": "pnpm expo start -c",
     "android": "pnpm expo run:android",
     "ios": "pnpm expo run:ios",
-    "build:android": "pnpm expo run:android --variant release",
-    "build:ios": "pnpm expo run:ios --configuration Release",
+    "build:android": "pnpm eas build -p android --local",
+    "build:ios": "pnpm eas build -p ios --local",
     "prebuild": "pnpm expo prebuild",
     "lint": "biome check .",
     "lint:fix": "biome check . --write",
@@ -36,6 +36,7 @@
     "@types/node": "^24.1.0",
     "@types/react": "~19.0.2",
     "babel-plugin-module-resolver": "^5.0.2",
+    "eas-cli": "^16.17.3",
     "expo-dev-client": "~5.2.4",
     "typescript": "~5.8.3"
   }

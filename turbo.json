@@ -21,6 +21,35 @@
       "persistent": true,
       "dependsOn": ["^build"]
     },
+    "build:android": {
+      "dependsOn": ["^build"],
+      "outputs": [".expo/**", "android/**"],
+      "inputs": [
+        "src/**",
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx",
+        "package.json",
+        "app.json",
+        "metro.config.js"
+      ],
+      "env": ["ANDROID_HOME", "JAVA_HOME", "PATH"]
+    },
+    "build:ios": {
+      "dependsOn": ["^build"],
+      "outputs": [".expo/**", "ios/**"],
+      "inputs": [
+        "src/**",
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx",
+        "package.json",
+        "app.json",
+        "metro.config.js"
+      ]
+    },
     "lint": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "*.ts", "*.tsx", "*.js", "*.jsx", "biome.json"],
