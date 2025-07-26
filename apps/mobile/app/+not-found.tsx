@@ -1,11 +1,11 @@
-import { Button, ErrorPage } from '@u3/ui';
+import { Button, PageNotFound } from '@u3/ui';
 import { router, Stack } from 'expo-router';
 
 export default function NotFound() {
   return (
     <>
       <Stack.Screen options={{ title: 'Page Not Found' }} />
-      <ErrorPage
+      <PageNotFound
         actionButton={
           <Button
             size='$4'

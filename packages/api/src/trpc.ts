@@ -69,7 +69,7 @@ const authMiddleware = t.middleware(async ({ next, ctx }) => {
 
   // Mock user object - will be replaced with real user lookup
   const user = {
-    id: 'user-1',
+    id: 'fd005279-cfd7-4968-8b66-32239c0c15cd',
     email: 'user@example.com',
     name: 'Test User',
   };

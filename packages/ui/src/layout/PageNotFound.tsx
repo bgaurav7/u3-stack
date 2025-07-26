@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { Button, Card, Text, YStack } from 'tamagui';
 
-export interface ErrorPageProps {
+export interface PageNotFoundProps {
   /** Custom title for the error page */
   title?: string;
   /** Custom message for the error page */
@@ -12,12 +12,12 @@ export interface ErrorPageProps {
   containerProps?: HTMLAttributes<HTMLDivElement>;
 }
 
-export function ErrorPage({
+export function PageNotFound({
   title = 'Page Not Found',
   message = "The page you're looking for doesn't exist or has been moved.",
   actionButton,
   containerProps,
-}: ErrorPageProps) {
+}: PageNotFoundProps) {
   return (
     <div
       style={{
@@ -50,4 +50,4 @@ export function ErrorPage({
   );
 }
 
-ErrorPage.displayName = 'ErrorPage';
+PageNotFound.displayName = 'PageNotFound';

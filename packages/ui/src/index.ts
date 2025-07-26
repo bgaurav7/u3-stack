@@ -7,12 +7,21 @@ export * from '@tamagui/toast';
 
 // Re-export Tamagui core and configuration
 export * from 'tamagui';
-export { config } from './config'; // Re-exports the config from local config directory
-export type { ErrorPageProps } from './pages/error';
-export { ErrorPage } from './pages/error';
-// Pages
-export { HomeScreen } from './pages/homescreen';
+export { config } from './config';
+// Layout
+export type { PageNotFoundProps } from './layout/PageNotFound';
+export { PageNotFound } from './layout/PageNotFound';
+export { PrimitivesSample } from './layout/PrimitivesSample';
+// Primitives
+export type { ButtonProps } from './primitives/Button';
+export { Button } from './primitives/Button';
+export type { CardProps } from './primitives/Card';
+export { Card } from './primitives/Card';
+export type { InputProps } from './primitives/Input';
+export { Input } from './primitives/Input';
+export type { TextProps } from './primitives/Text';
+export { Text } from './primitives/Text';
 
 // Provider
-export type { ProviderProps } from './provider';
-export { Provider } from './provider';
+export type { UIProviderProps } from './provider/UIProvider';
+export { UIProvider } from './provider/UIProvider';
