@@ -2,16 +2,21 @@
  * @fileoverview Todo feature business logic service
  */
 
+import { generateUUID } from '../utils';
 import { todoSchema } from './schema';
 import type { CreateTodoInput, Todo, UpdateTodoInput } from './types';
 
 // In-memory storage for demo (replace with database in production)
 const todos: Todo[] = [];
-let nextId = 1;
 
 export const todoService = {
   async getAllTodos(): Promise<Todo[]> {
     return todos;
+  },
+
+  // Test utility - clear all todos (for testing only)
+  _clearTodos(): void {
+    todos.length = 0;
   },
 
   async getTodoById(id: string): Promise<Todo | null> {
@@ -21,7 +26,7 @@ export const todoService = {
 
   async createTodo(input: CreateTodoInput & { userId: string }): Promise<Todo> {
     const newTodo: Todo = {
-      id: `todo-${nextId++}`,
+      id: generateUUID(),
       title: input.title,
       description: input.description,
       completed: false,

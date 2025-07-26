@@ -2,14 +2,19 @@
  * @fileoverview Auth feature business logic service
  */
 
+import { generateUUID } from '../utils';
 import { authResultSchema, authUserSchema } from './schema';
 import type { AuthResult, AuthUser, LoginInput, RegisterInput } from './types';
 
 // Mock user storage (replace with database in production)
 const users: AuthUser[] = [];
-let nextId = 1;
 
 export const authService = {
+  // Test utility - clear all users (for testing only)
+  _clearUsers(): void {
+    users.length = 0;
+  },
+
   async login(input: LoginInput): Promise<AuthResult | null> {
     // Mock authentication logic
     const user = users.find(u => u.email === input.email);
@@ -35,7 +40,7 @@ export const authService = {
     }
 
     const newUser: AuthUser = {
-      id: `user-${nextId++}`,
+      id: generateUUID(),
       email: input.email,
       name: input.name,
     };

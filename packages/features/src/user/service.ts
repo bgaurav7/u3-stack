@@ -2,16 +2,21 @@
  * @fileoverview User feature business logic service
  */
 
+import { generateUUID } from '../utils';
 import { userSchema } from './schema';
 import type { CreateUserInput, UpdateUserInput, User } from './types';
 
 // Mock user storage (replace with database in production)
 const users: User[] = [];
-let nextId = 1;
 
 export const userService = {
   async getAllUsers(): Promise<User[]> {
     return users;
+  },
+
+  // Test utility - clear all users (for testing only)
+  _clearUsers(): void {
+    users.length = 0;
   },
 
   async getUserById(id: string): Promise<User | null> {
@@ -32,7 +37,7 @@ export const userService = {
     }
 
     const newUser: User = {
-      id: `user-${nextId++}`,
+      id: generateUUID(),
       email: input.email,
       name: input.name,
       createdAt: new Date(),
