@@ -4,7 +4,7 @@
  */
 
 export { animations } from './animations';
-// Default export for convenience
-export { config, config as default } from './config';
 export { bodyFont, headingFont } from './fonts';
+// Default export for convenience
+export { config, config as default } from './tamagui.config';
 export { type Themes, themes } from './themes';

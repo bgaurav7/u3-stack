@@ -23,6 +23,12 @@
       ],
       "@u3/ui/*": [
         "../../packages/ui/src/*"
+      ],
+      "@u3/config": [
+        "../../packages/config/src"
+      ],
+      "@u3/config/*": [
+        "../../packages/config/src/*"
       ]
     }
   },

@@ -23,7 +23,6 @@ config.resolver.unstable_enableSymlinks = true;
 config.resolver.extraNodeModules = {
   '@u3/config': path.resolve(workspaceRoot, 'packages/config'),
   '@u3/ui': path.resolve(workspaceRoot, 'packages/ui'),
-  '@u3/app': path.resolve(workspaceRoot, 'packages/app'),
 };
 
 // 4. Support multi-platform

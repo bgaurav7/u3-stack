@@ -11,5 +11,3 @@ export {
   isTest,
   validateConfig,
 } from './env/config';
-// Export Tamagui configuration
-export * from './tamagui';
