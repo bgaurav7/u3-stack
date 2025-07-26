@@ -18,12 +18,11 @@
   "dependencies": {
     "@tamagui/next-plugin": "^1.132.12",
     "@u3/ui": "workspace:*",
-    "expo": "~53.0.20",
-    "expo-router": "^5.1.4",
+    "expo": "~53.0.8",
+    "expo-router": "~5.1.4",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native": "0.79.2",
     "tamagui": "^1.132.12"
   },
   "devDependencies": {
