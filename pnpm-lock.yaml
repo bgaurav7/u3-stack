@@ -133,7 +133,22 @@ importers:
     dependencies:
       '@tamagui/next-plugin':
         specifier: ^1.132.12
-        version: 1.132.13(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)
+        version: 1.132.13(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))
+      '@tanstack/react-query':
+        specifier: ^4.40.1
+        version: 4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^4.40.1
+        version: 4.40.1(@tanstack/react-query@4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
+      '@trpc/react-query':
+        specifier: ^10.45.2
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@u3/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@u3/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -2796,6 +2811,46 @@ packages:
     peerDependencies:
       react: 19.0.0
 
+  '@tanstack/match-sorter-utils@8.19.4':
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
+    engines: {node: '>=12'}
+
+  '@tanstack/query-core@4.40.0':
+    resolution: {integrity: sha512-7MJTtZkCSuehMC7IxMOCGsLvHS3jHx4WjveSrGsG1Nc1UQLjaFwwkpLA2LmPfvOAxnH4mszMOBFD6LlZE+aB+Q==}
+
+  '@tanstack/react-query-devtools@4.40.1':
+    resolution: {integrity: sha512-g8g2CCDt91CNhkLsKLVXVBVQSUubExnBdprwwjY5FFM+ZBjv1WfCpGiX1UOezgjVhNxqoi1Is+iMYShdOMoI8Q==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.40.1
+      react: 19.0.0
+      react-dom: 19.0.0
+
+  '@tanstack/react-query@4.40.1':
+    resolution: {integrity: sha512-mgD07S5N8e5v81CArKDWrHE4LM7HxZ9k/KLeD3+NUD9WimGZgKIqojUZf/rXkfAMYZU9p0Chzj2jOXm7xpgHHQ==}
+    peerDependencies:
+      react: 19.0.0
+      react-dom: 19.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
+  '@trpc/client@10.45.2':
+    resolution: {integrity: sha512-ykALM5kYWTLn1zYuUOZ2cPWlVfrXhc18HzBDyRhoPYN0jey4iQHEFSEowfnhg1RvYnrAVjNBgHNeSAXjrDbGwg==}
+    peerDependencies:
+      '@trpc/server': 10.45.2
+
+  '@trpc/react-query@10.45.2':
+    resolution: {integrity: sha512-BAqb9bGZIscroradlNx+Cc9522R+idY3BOSf5z0jHUtkxdMbjeGKxSSMxxu7JzoLqSIEC+LVzL3VvF8sdDWaZQ==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.45.2
+      '@trpc/server': 10.45.2
+      react: 19.0.0
+      react-dom: 19.0.0
+
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
 
@@ -3571,6 +3626,10 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  copy-anything@3.0.5:
+    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
+    engines: {node: '>=12.13'}
 
   core-js-compat@3.44.0:
     resolution: {integrity: sha512-JepmAj2zfl6ogy34qfWtcE7nHKAJnKsQFRn++scjVS2bZFllwptzw61BZcZFYBPpUznLfAvh0LGhxKppk04ClA==}
@@ -4552,6 +4611,10 @@ packages:
   is-unicode-supported@0.1.0:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
+
+  is-what@4.1.16:
+    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
+    engines: {node: '>=12.13'}
 
   is-wsl@2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
@@ -5644,6 +5707,9 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
 
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
+
   remove-trailing-slash@0.1.1:
     resolution: {integrity: sha512-o4S4Qh6L2jpnCy83ysZDau+VORNvnFw07CKSAymkd6ICNVEPisMyzlc00KlvvicsxKck94SEwhDnMNdICzO+tA==}
 
@@ -6021,6 +6087,10 @@ packages:
   sudo-prompt@9.1.1:
     resolution: {integrity: sha512-es33J1g2HjMpyAhz8lOR+ICmXXAqTuKbuXuUWLhOLew20oN9oUCgCJx615U/v7aioZg7IX5lIh9x34vwneu4pA==}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+  superjson@1.13.3:
+    resolution: {integrity: sha512-mJiVjfd2vokfDxsQPOwJ/PtanO87LhpYY88ubI5dUB1Ab58Txbyje3+jpm+/83R/fevaq/107NNhtYBLuoTrFg==}
+    engines: {node: '>=10'}
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -9371,21 +9441,21 @@ snapshots:
       - react-dom
       - react-native
 
-  '@tamagui/next-plugin@1.132.13(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)':
+  '@tamagui/next-plugin@1.132.13(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))':
     dependencies:
       '@babel/preset-react': 7.27.1(@babel/core@7.28.0)
       '@tamagui/proxy-worm': 1.132.13
       '@tamagui/react-native-svg': 1.132.13
       '@tamagui/static': 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.100.2)
+      babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.100.2(esbuild@0.25.8))
       browserslist: 4.25.1
-      css-loader: 6.11.0(webpack@5.100.2)
-      esbuild-loader: 4.3.0(webpack@5.100.2)
-      file-loader: 6.2.0(webpack@5.100.2)
-      html-webpack-plugin: 5.6.3(webpack@5.100.2)
+      css-loader: 6.11.0(webpack@5.100.2(esbuild@0.25.8))
+      esbuild-loader: 4.3.0(webpack@5.100.2(esbuild@0.25.8))
+      file-loader: 6.2.0(webpack@5.100.2(esbuild@0.25.8))
+      html-webpack-plugin: 5.6.3(webpack@5.100.2(esbuild@0.25.8))
       next: 15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      tamagui-loader: 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.100.2))(webpack@5.100.2)
+      tamagui-loader: 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)))(webpack@5.100.2(esbuild@0.25.8))
     transitivePeerDependencies:
       - '@babel/core'
       - '@rspack/core'
@@ -10165,6 +10235,42 @@ snapshots:
     dependencies:
       react: 19.0.0
 
+  '@tanstack/match-sorter-utils@8.19.4':
+    dependencies:
+      remove-accents: 0.5.0
+
+  '@tanstack/query-core@4.40.0': {}
+
+  '@tanstack/react-query-devtools@4.40.1(@tanstack/react-query@4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.19.4
+      '@tanstack/react-query': 4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      superjson: 1.13.3
+      use-sync-external-store: 1.5.0(react@19.0.0)
+
+  '@tanstack/react-query@4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 4.40.0
+      react: 19.0.0
+      use-sync-external-store: 1.5.0(react@19.0.0)
+    optionalDependencies:
+      react-dom: 19.0.0(react@19.0.0)
+      react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+
+  '@trpc/client@10.45.2(@trpc/server@10.45.2)':
+    dependencies:
+      '@trpc/server': 10.45.2
+
+  '@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/react-query': 4.40.1(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@trpc/client': 10.45.2(@trpc/server@10.45.2)
+      '@trpc/server': 10.45.2
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@trpc/server@10.45.2': {}
 
   '@tsconfig/node10@1.0.11': {}
@@ -10606,12 +10712,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.2.1(@babel/core@7.28.0)(webpack@5.100.2):
+  babel-loader@9.2.1(@babel/core@7.28.0)(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       '@babel/core': 7.28.0
       find-cache-dir: 4.0.0
       schema-utils: 4.3.2
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
 
   babel-plugin-istanbul@6.1.1:
     dependencies:
@@ -11043,6 +11149,10 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
+  copy-anything@3.0.5:
+    dependencies:
+      is-what: 4.1.16
+
   core-js-compat@3.44.0:
     dependencies:
       browserslist: 4.25.1
@@ -11076,7 +11186,7 @@ snapshots:
     dependencies:
       hyphenate-style-name: 1.1.0
 
-  css-loader@6.11.0(webpack@5.100.2):
+  css-loader@6.11.0(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -11087,7 +11197,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.2
     optionalDependencies:
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
 
   css-select@4.3.0:
     dependencies:
@@ -11378,12 +11488,12 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
-  esbuild-loader@4.3.0(webpack@5.100.2):
+  esbuild-loader@4.3.0(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       esbuild: 0.25.8
       get-tsconfig: 4.10.1
       loader-utils: 2.0.4
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
       webpack-sources: 1.4.3
 
   esbuild-plugin-es5@2.1.1(esbuild@0.25.8):
@@ -11735,11 +11845,11 @@ snapshots:
     dependencies:
       escape-string-regexp: 1.0.5
 
-  file-loader@6.2.0(webpack@5.100.2):
+  file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
 
   filelist@1.0.4:
     dependencies:
@@ -12036,7 +12146,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.43.1
 
-  html-webpack-plugin@5.6.3(webpack@5.100.2):
+  html-webpack-plugin@5.6.3(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -12044,7 +12154,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.2.2
     optionalDependencies:
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
 
   htmlparser2@6.1.0:
     dependencies:
@@ -12181,6 +12291,8 @@ snapshots:
   is-stream@2.0.1: {}
 
   is-unicode-supported@0.1.0: {}
+
+  is-what@4.1.16: {}
 
   is-wsl@2.2.0:
     dependencies:
@@ -13437,6 +13549,8 @@ snapshots:
 
   relateurl@0.2.7: {}
 
+  remove-accents@0.5.0: {}
+
   remove-trailing-slash@0.1.1: {}
 
   renderkid@3.0.0:
@@ -13846,6 +13960,10 @@ snapshots:
 
   sudo-prompt@9.1.1: {}
 
+  superjson@1.13.3:
+    dependencies:
+      copy-anything: 3.0.5
+
   supports-color@5.5.0:
     dependencies:
       has-flag: 3.0.0
@@ -13875,13 +13993,13 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tamagui-loader@1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2):
+  tamagui-loader@1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       '@tamagui/cli-color': 1.132.13
       '@tamagui/core': 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/static': 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/web': 1.132.13(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      esbuild-loader: 4.3.0(webpack@5.100.2)
+      esbuild-loader: 4.3.0(webpack@5.100.2(esbuild@0.25.8))
       esm-resolve: 1.0.11
       fs-extra: 11.3.0
       loader-utils: 3.3.1
@@ -13986,14 +14104,16 @@ snapshots:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.14(webpack@5.100.2):
+  terser-webpack-plugin@5.3.14(esbuild@0.25.8)(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.29
       jest-worker: 27.5.1
       schema-utils: 4.3.2
       serialize-javascript: 6.0.2
       terser: 5.43.1
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
+    optionalDependencies:
+      esbuild: 0.25.8
 
   terser@5.43.1:
     dependencies:
@@ -14169,14 +14289,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@5.100.2))(webpack@5.100.2):
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)))(webpack@5.100.2(esbuild@0.25.8)):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
-      webpack: 5.100.2
+      webpack: 5.100.2(esbuild@0.25.8)
     optionalDependencies:
-      file-loader: 6.2.0(webpack@5.100.2)
+      file-loader: 6.2.0(webpack@5.100.2(esbuild@0.25.8))
 
   use-latest-callback@0.2.4(react@19.0.0):
     dependencies:
@@ -14300,7 +14420,7 @@ snapshots:
 
   webpack-sources@3.3.3: {}
 
-  webpack@5.100.2:
+  webpack@5.100.2(esbuild@0.25.8):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8
@@ -14324,7 +14444,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.2
       tapable: 2.2.2
-      terser-webpack-plugin: 5.3.14(webpack@5.100.2)
+      terser-webpack-plugin: 5.3.14(esbuild@0.25.8)(webpack@5.100.2(esbuild@0.25.8))
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:
