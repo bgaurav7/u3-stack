@@ -12,9 +12,11 @@
     "build": "tamagui-build --skip-types",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
+    "lint:fix": "biome lint . --write",
     "format": "biome format --write .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "clean": "rm -rf dist .turbo node_modules",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
     "@tamagui/animations-react-native": "^1.132.12",

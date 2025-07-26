@@ -11,9 +11,13 @@
     "build:android": "pnpm eas build -p android --local",
     "build:ios": "pnpm eas build -p ios --local",
     "prebuild": "pnpm expo prebuild",
-    "lint": "biome check .",
-    "lint:fix": "biome check . --write",
-    "typecheck": "tsc --noEmit --skipLibCheck"
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --write",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "clean": "rm -rf .expo .turbo .tamagui android ios node_modules",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",

@@ -8,10 +8,6 @@
     ".": {
       "types": "./index.d.ts",
       "default": "./index.js"
-    },
-    "./hello": {
-      "types": "./hello.d.ts",
-      "default": "./hello.js"
     }
   },
   "files": [
@@ -24,7 +20,9 @@
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "clean": "rm -rf *.js dist .turbo node_modules",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "devDependencies": {
     "@u3/config": "workspace:*",
