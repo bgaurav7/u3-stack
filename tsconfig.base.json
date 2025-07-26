@@ -81,6 +81,12 @@
             ],
             "@u3/types/*": [
                 "packages/types/src/*"
+            ],
+            "@u3/features": [
+                "packages/features/src"
+            ],
+            "@u3/features/*": [
+                "packages/features/src/*"
             ]
         }
     },
