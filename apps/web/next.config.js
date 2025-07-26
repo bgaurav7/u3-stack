@@ -25,7 +25,7 @@ const nextConfig = {
 };
 
 const tamaguiConfig = withTamagui({
-  config: '../../packages/config/src/tamagui.config.ts',
+  config: '../../packages/ui/src/config/tamagui.config.ts',
   components: ['tamagui', '@u3/ui'],
   importsWhitelist: ['constants.js', 'colors.js'],
   logTimings: true,

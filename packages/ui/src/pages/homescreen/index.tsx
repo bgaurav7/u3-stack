@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, View } from 'tamagui';
-import { Paragraph, SizableText, YStack } from 'tamagui';
+import { Paragraph, ScrollView, SizableText, View, YStack } from 'tamagui';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Input } from '../../components/Input';
@@ -31,13 +30,13 @@ export function HomeScreen() {
               Button Components
             </SizableText>
             <YStack gap='$3'>
-              <Button size='$5' backgroundColor='$color'>
+              <Button size='$4' backgroundColor='$color'>
                 Primary Button
               </Button>
-              <Button size='$4' backgroundColor='$background'>
+              <Button size='$3' backgroundColor='$background'>
                 Secondary Button
               </Button>
-              <Button size='$3' variant='outlined'>
+              <Button size='$2' variant='outlined'>
                 Outline Button
               </Button>
             </YStack>

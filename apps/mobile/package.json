@@ -8,36 +8,50 @@
     "start": "pnpm expo start -c",
     "android": "pnpm expo run:android",
     "ios": "pnpm expo run:ios",
-    "build:android": "pnpm expo run:android --variant release",
-    "build:ios": "pnpm expo run:ios --configuration Release",
+    "build:android": "pnpm eas build -p android --local",
+    "build:ios": "pnpm eas build -p ios --local",
     "prebuild": "pnpm expo prebuild",
-    "lint": "biome check .",
-    "lint:fix": "biome check . --write",
-    "typecheck": "tsc --noEmit --skipLibCheck"
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --write",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "clean": "rm -rf .expo .turbo .tamagui android ios node_modules",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
-    "expo": "~53.0.8",
-    "expo-router": "~5.0.6",
-    "react": "19.0.0",
-    "react-native": "0.79.2",
-    "react-native-web": "^0.20.0",
-    "@react-navigation/native": "^7.1.14",
-    "@react-navigation/native-stack": "^7.3.12",
-    "@react-navigation/core": "^7.12.1",
-    "burnt": "^0.12.2",
-    "tamagui": "^1.132.11",
-    "@tamagui/config": "^1.132.10",
-    "@u3/config": "workspace:*",
+    "@babel/runtime": "^7.28.2",
+    "@react-navigation/native": "^7.1.6",
+    "@react-navigation/native-stack": "^7.3.10",
+    "@tamagui/animations-react-native": "^1.132.12",
+    "@tamagui/static": "1.132.12",
     "@u3/ui": "workspace:*",
-    "babel-plugin-module-resolver": "^5.0.2"
+    "burnt": "^0.12.2",
+    "expo": "~53.0.8",
+    "expo-router": "~5.1.4",
+    "react": "^19.0.0",
+    "react-native": "^0.79.2",
+    "tamagui": "^1.132.12"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
     "@babel/plugin-transform-runtime": "^7.24.6",
     "@expo/metro-config": "~0.20.0",
-    "@tamagui/babel-plugin": "^1.132.10",
-    "@types/react": "~19.0.10",
-    "typescript": "~5.8.3",
-    "expo-dev-client": "~5.0.8"
+    "@expo/metro-runtime": "^5.0.4",
+    "@tamagui/babel-plugin": "^1.132.12",
+    "@tamagui/config-default": "1.132.12",
+    "@types/node": "^24.1.0",
+    "@types/react": "~19.0.2",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "eas-cli": "^16.17.3",
+    "expo-dev-client": "~5.2.4",
+    "typescript": "~5.8.3"
   }
 }

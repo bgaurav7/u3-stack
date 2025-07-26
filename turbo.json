@@ -1,83 +1,84 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NODE_ENV", "CI"],
+  "globalEnv": ["NODE_ENV", "CI", "ANDROID_HOME", "JAVA_HOME", "PATH"],
   "globalDependencies": ["**/.env.*local", "**/.env"],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build", "typecheck", "lint", "format:check"],
       "inputs": [
         "src/**",
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx",
+        "**/*.{ts,tsx,js,jsx}",
         "package.json",
         "tsconfig.json"
       ],
-      "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"],
-      "outputMode": "hash-only"
+      "outputs": ["dist/**", "build/**", ".next/**", ".expo/**", "!**/cache/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
       "dependsOn": ["^build"]
     },
-    "lint": {
+    "build:android": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "*.ts", "*.tsx", "*.js", "*.jsx", "biome.json"],
-      "outputs": [],
-      "outputMode": "errors-only"
+      "inputs": [
+        "src/**",
+        "**/*.{ts,tsx,js,jsx}",
+        "package.json",
+        "app.json",
+        "metro.config.js"
+      ],
+      "outputs": [".expo/**", "android/**"]
+    },
+    "build:ios": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "**/*.{ts,tsx,js,jsx}",
+        "package.json",
+        "app.json",
+        "metro.config.js"
+      ],
+      "outputs": [".expo/**", "ios/**"]
+    },
+    "lint": {
+      "dependsOn": [],
+      "inputs": ["src/**", "**/*.{ts,tsx,js,jsx}", "biome.json"],
+      "outputs": []
     },
     "lint:fix": {
-      "dependsOn": ["^build"],
-      "inputs": ["src/**", "*.ts", "*.tsx", "*.js", "*.jsx", "biome.json"],
+      "dependsOn": [],
+      "inputs": ["src/**", "**/*.{ts,tsx,js,jsx}", "biome.json"],
       "outputs": [],
       "cache": false
     },
     "format": {
-      "inputs": [
-        "src/**",
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx",
-        "*.json",
-        "biome.json"
-      ],
+      "inputs": ["src/**", "**/*.{ts,tsx,js,jsx,json}", "biome.json"],
       "outputs": [],
-      "cache": false
+      "cache": false,
+      "dependsOn": []
     },
     "format:check": {
-      "inputs": [
-        "src/**",
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx",
-        "*.json",
-        "biome.json"
-      ],
+      "inputs": ["src/**", "**/*.{ts,tsx,js,jsx,json}", "biome.json"],
       "outputs": [],
-      "outputMode": "errors-only"
+      "dependsOn": []
     },
     "typecheck": {
-      "dependsOn": ["^build"],
-      "inputs": ["src/**", "*.ts", "*.tsx", "tsconfig.json"],
-      "outputs": [],
-      "outputMode": "errors-only"
+      "dependsOn": [],
+      "inputs": ["src/**", "**/*.{ts,tsx}", "tsconfig.json"],
+      "outputs": []
     },
     "test": {
-      "dependsOn": ["^build"],
-      "inputs": ["src/**", "test/**", "*.test.*", "*.spec.*"],
-      "outputs": ["coverage/**"],
-      "outputMode": "errors-only"
+      "dependsOn": [],
+      "inputs": ["src/**", "test/**", "**/*.{test,spec}.{ts,tsx,js}"],
+      "outputs": ["coverage/**"]
     },
     "test:watch": {
       "cache": false,
       "persistent": true
     },
     "clean": {
-      "cache": false
+      "cache": false,
+      "dependsOn": []
     }
   }
 }

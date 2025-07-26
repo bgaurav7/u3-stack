@@ -13,7 +13,10 @@
     "ios": {
       "supportsTablet": true,
       "jsEngine": "hermes",
-      "bundleIdentifier": "com.example.u3stack"
+      "bundleIdentifier": "com.example.u3stack",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +30,10 @@
     "platforms": ["ios", "android"],
     "plugins": ["expo-router"],
     "extra": {
-      "router": {}
+      "router": {},
+      "eas": {
+        "projectId": "4fa21bbf-dddd-42a8-912e-39a654292518"
+      }
     }
   }
 }

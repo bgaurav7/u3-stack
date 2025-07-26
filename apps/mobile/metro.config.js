@@ -19,6 +19,12 @@ config.resolver.nodeModulesPaths = [
 config.resolver.disableHierarchicalLookup = true;
 config.resolver.unstable_enableSymlinks = true;
 
+// Add extraNodeModules for package resolution
+config.resolver.extraNodeModules = {
+  '@u3/config': path.resolve(workspaceRoot, 'packages/config'),
+  '@u3/ui': path.resolve(workspaceRoot, 'packages/ui'),
+};
+
 // 4. Support multi-platform
 config.resolver.platforms = ['ios', 'android', 'native'];
 

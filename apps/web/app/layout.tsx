@@ -7,11 +7,7 @@ export const metadata: Metadata = {
   description: 'U3-Stack Web Application',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
       <head>

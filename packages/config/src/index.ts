@@ -1,4 +1,13 @@
-// Export Tamagui configuration
-export { config } from './tamagui.config';
-export { animations } from './animations';
-export { bodyFont, headingFont } from './fonts';
+/**
+ * Main configuration exports
+ * Centralizes access to all configuration modules
+ */
+
+// Export environment configuration
+export { default as envConfig } from './env';
+export {
+  isDevelopment,
+  isProduction,
+  isTest,
+  validateConfig,
+} from './env/config';
