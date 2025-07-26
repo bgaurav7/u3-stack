@@ -44,17 +44,16 @@
 
 #### Tasks:
 
-- [ ] Create `packages/ui`
-- [ ] Install and configure:
-  - [ ] tamagui (with @tamagui/config for default themes)
-  - [ ] react-native-web
-- [ ] Use `@tamagui/config/v3` as base configuration
-- [ ] Create base components: Button, Text, Card, Input
+- [x] Create `packages/ui`
+- [x] Install and configure:
+  - [x] tamagui (with @tamagui/config for default themes)
+- [ ] Use `@tamagui/config/v4` as base configuration
+- [x] Create base components: Button, Text, Card, Input
 
 #### Test Process:
 
-- [ ] Create `apps/web` with Next.js + React + Tamagui + Expo Router
-- [ ] Render test components from `@u3/ui`
+- [x] Create `apps/web` with Next.js + React + Tamagui + Expo Router
+- [x] Render test components from `@u3/ui`
 - [ ] Unit tests using vitest + @testing-library/react
 - [ ] Snapshot tests
 
@@ -70,16 +69,16 @@
 
 #### Tasks:
 
-- [ ] Create `apps/mobile` with expo
-- [ ] Configure expo-router in `apps/mobile`
-- [ ] Add a default `_layout.tsx` for navigation wrapper
-- [ ] Link `@u3/ui` as local workspace dependency
-- [ ] Configure Metro bundler:
-  - [ ] Enable symlinks
-  - [ ] Add aliases for react-native-web, tamagui
-  - [ ] Sync Metro bundler and Webpack/Tamagui settings for route resolution
+- [x] Create `apps/mobile` with expo
+- [x] Configure expo-router in `apps/mobile`
+- [x] Add a default `_layout.tsx` for navigation wrapper
+- [x] Link `@u3/ui` as local workspace dependency
+- [x] Configure Metro bundler:
+  - [x] Enable symlinks
+  - [x] Add aliases for react-native-web, tamagui
+  - [x] Sync Metro bundler and Webpack/Tamagui settings for route resolution
 - [ ] Configure native Android settings for fonts (if custom)
-- [ ] Note: expo-router does not need react-navigation setup—avoid conflicts
+- [x] Note: expo-router does not need react-navigation setup—avoid conflicts
 
 #### Test Process:
 
@@ -100,13 +99,13 @@
 
 #### Tasks:
 
-- [ ] Install Xcode (if not already)
-- [ ] Configure expo-router in `apps/mobile` (if not done in 1.2)
-- [ ] Add a default `_layout.tsx` for navigation wrapper (if not done in 1.2)
+- [x] Install Xcode (if not already)
+- [x] Configure expo-router in `apps/mobile` (if not done in 1.2)
+- [x] Add a default `_layout.tsx` for navigation wrapper (if not done in 1.2)
 - [ ] Run `expo start --ios`
 - [ ] Ensure font and safe-area support
 - [ ] Setup native splash screen and icon if needed
-- [ ] Sync Metro bundler and Webpack/Tamagui settings for route resolution
+- [x] Sync Metro bundler and Webpack/Tamagui settings for route resolution
 
 #### Test Process:
 
