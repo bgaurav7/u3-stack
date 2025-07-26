@@ -1,4 +1,4 @@
-import { HomeScreen } from '@u3/ui';
+import { PrimitivesSample } from '@u3/ui';
 import { Stack } from 'expo-router';
 
 export default function HomePage() {
@@ -9,7 +9,7 @@ export default function HomePage() {
           title: 'U3-Stack Mobile',
         }}
       />
-      <HomeScreen />
+      <PrimitivesSample />
     </>
   );
 }

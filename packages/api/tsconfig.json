@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    // Path mapping for clean router imports within the API package
+    "baseUrl": "./src",
+    "paths": {
+      // Enable clean imports for routers within the API package
+      "~/routers/*": ["./routers/*"],
+      "~/middleware/*": ["./middleware/*"],
+      "~/server": ["./server"],
+      // Preserve base path mappings from tsconfig.base.json
+      "@u3/api": ["./index"],
+      "@u3/api/*": ["./*"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "**/*.test.*",
+    "**/*.spec.*"
+  ],
+  "references": []
+}

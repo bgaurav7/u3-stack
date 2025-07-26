@@ -4,21 +4,24 @@
 import './config';
 
 export * from '@tamagui/toast';
+
 // Re-export Tamagui core and configuration
 export * from 'tamagui';
-export type { ButtonProps } from './components/Button';
-// Components
-export { Button } from './components/Button';
-export type { CardProps } from './components/Card';
-export { Card } from './components/Card';
-export type { InputProps } from './components/Input';
-export { Input } from './components/Input';
-export type { TextProps } from './components/Text';
-export { Text } from './components/Text';
-export { config } from './config'; // Re-exports the config from local config directory
+export { config } from './config';
+// Layout
+export type { PageNotFoundProps } from './layout/PageNotFound';
+export { PageNotFound } from './layout/PageNotFound';
+export { PrimitivesSample } from './layout/PrimitivesSample';
+// Primitives
+export type { ButtonProps } from './primitives/Button';
+export { Button } from './primitives/Button';
+export type { CardProps } from './primitives/Card';
+export { Card } from './primitives/Card';
+export type { InputProps } from './primitives/Input';
+export { Input } from './primitives/Input';
+export type { TextProps } from './primitives/Text';
+export { Text } from './primitives/Text';
 
-// Pages
-export { HomeScreen } from './pages/homescreen';
-export type { ProviderProps } from './provider';
 // Provider
-export { Provider } from './provider';
+export type { UIProviderProps } from './provider/UIProvider';
+export { UIProvider } from './provider/UIProvider';

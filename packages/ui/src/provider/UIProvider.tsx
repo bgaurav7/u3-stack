@@ -3,16 +3,16 @@ import type { PropsWithChildren } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { config } from '../config';
 
-export interface ProviderProps extends PropsWithChildren {
+export interface UIProviderProps extends PropsWithChildren {
   disableRootThemeClass?: boolean;
   defaultTheme?: string;
 }
 
-export function Provider({
+export function UIProvider({
   children,
   disableRootThemeClass,
   defaultTheme,
-}: ProviderProps) {
+}: UIProviderProps) {
   return (
     <SafeAreaProvider>
       <TamaguiProvider

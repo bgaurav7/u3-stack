@@ -1,10 +1,10 @@
-import { Provider } from '@u3/ui';
+import { UIProvider } from '@u3/ui';
 import { Stack } from 'expo-router';
 import type React from 'react';
 
 export default function RootLayout(): React.ReactNode {
   return (
-    <Provider>
+    <UIProvider>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -16,6 +16,6 @@ export default function RootLayout(): React.ReactNode {
           },
         }}
       />
-    </Provider>
+    </UIProvider>
   );
 }
