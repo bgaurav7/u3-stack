@@ -7,9 +7,13 @@
       "dependsOn": ["^build", "typecheck", "lint", "format:check"],
       "inputs": [
         "src/**",
+        "app/**",
         "**/*.{ts,tsx,js,jsx}",
         "package.json",
-        "tsconfig.json"
+        "tsconfig.json",
+        "next.config.js",
+        "metro.config.js",
+        "app.json"
       ],
       "outputs": ["dist/**", "build/**", ".next/**", ".expo/**", "!**/cache/**"]
     },
@@ -68,8 +72,8 @@
       "outputs": []
     },
     "test": {
-      "dependsOn": [],
-      "inputs": ["src/**", "test/**", "**/*.{test,spec}.{ts,tsx,js}"],
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "app/**", "test/**", "**/*.{test,spec}.{ts,tsx,js}"],
       "outputs": ["coverage/**"]
     },
     "test:watch": {

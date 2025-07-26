@@ -1,14 +1,52 @@
 import type { InputProps as TamaguiInputProps } from 'tamagui';
 import { Input as TamaguiInput } from 'tamagui';
 
-// Use Tamagui's built-in theming system directly
-export type InputProps = TamaguiInputProps;
+// Enhanced props with common input states
+export interface InputProps extends TamaguiInputProps {
+  /** Input state for visual feedback */
+  state?: 'default' | 'error' | 'success' | 'warning';
+  /** Helper text to display below input */
+  helperText?: string;
+  /** Whether the input is required */
+  required?: boolean;
+}
 
-// Simplified component for cross-platform compatibility
+// Enhanced component with better accessibility and state management
 export const Input = (props: InputProps) => {
-  const { ...restProps } = props || {};
+  const { state = 'default', helperText, required, ...restProps } = props;
 
-  return <TamaguiInput {...restProps} />;
+  // Apply state-based styling
+  const getStateProps = () => {
+    switch (state) {
+      case 'error':
+        return {
+          borderColor: '$red10',
+          focusStyle: { borderColor: '$red10' },
+        };
+      case 'success':
+        return {
+          borderColor: '$green10',
+          focusStyle: { borderColor: '$green10' },
+        };
+      case 'warning':
+        return {
+          borderColor: '$yellow10',
+          focusStyle: { borderColor: '$yellow10' },
+        };
+      default:
+        return {};
+    }
+  };
+
+  return (
+    <TamaguiInput
+      {...restProps}
+      {...getStateProps()}
+      aria-required={required}
+      aria-invalid={state === 'error'}
+      aria-describedby={helperText ? `${restProps.id}-helper` : undefined}
+    />
+  );
 };
 
 Input.displayName = 'Input';

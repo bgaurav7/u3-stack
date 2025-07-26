@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint . --write",
@@ -24,10 +24,13 @@
     "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
+    "dotenv-flow": "^4.1.0",
+    "env-var": "^7.5.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@types/node": "^22.16.5",
+    "tsx": "^4.19.2",
     "typescript": "~5.8.3"
   }
 }
