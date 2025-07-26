@@ -410,17 +410,24 @@
 
 ## Phase 9: Unified UI Testing with Maestro
 
-**Goal**: Implement a cross-platform UI testing framework using Maestro to automate end-to-end tests
-for Web, iOS, and Android with a single test suite.
+**Goal**: Implement a cross-platform UI testing framework using Maestro with organized test infrastructure.
 
 ### Tasks:
 
+- [ ] **NEW**: Setup `packages/test` infrastructure:
+  - [ ] Create `packages/test/e2e/maestro/` for YAML-based Maestro tests
+  - [ ] Create `packages/test/unit/` for Vitest/Jest unit tests
+  - [ ] Create `packages/test/mocks/` for test fixtures and mocks
+  - [ ] Create `packages/test/setup.ts` for test configuration
 - [ ] Integrate Maestro as the primary UI testing framework for web and mobile.
 - [ ] Define reusable Maestro test scenarios in YAML to cover core user flows.
 - [ ] Configure test environments for:
   - [ ] Web browsers (Chrome, Firefox, Safari)
   - [ ] iOS simulators and devices
   - [ ] Android emulators and devices
+- [ ] **NEW**: Create feature-specific test suites:
+  - [ ] Todo feature tests in `packages/test/e2e/maestro/todo/`
+  - [ ] Auth feature tests in `packages/test/e2e/maestro/auth/`
 - [ ] Set up CI pipeline steps to run Maestro tests on all platforms automatically.
 - [ ] Collect and analyze Maestro test reports for debugging and quality assurance.
 - [ ] Document best practices for writing and maintaining Maestro tests.
@@ -431,12 +438,17 @@ for Web, iOS, and Android with a single test suite.
 - [ ] Run Maestro tests on iOS and Android simulators in CI.
 - [ ] Validate consistency of UI behavior and user flows across platforms.
 - [ ] Track and fix UI regressions detected by Maestro.
+- [ ] **NEW**: Test feature isolation:
+  - [ ] Run unit tests for individual feature packages
+  - [ ] Test UI component isolation in `packages/ui/*/`
+  - [ ] Validate shared utilities in `packages/hooks` and `packages/utils`
 
 ### Exit Criteria:
 
 - [ ] Unified Maestro test suite covering major user journeys.
 - [ ] Automated test runs on every code change across web and mobile.
 - [ ] Reliable UI regression detection and reporting.
+- [ ] **NEW**: Comprehensive test coverage for feature-based architecture.
 
 ## Phase 10: CI/CD + DevOps
 
