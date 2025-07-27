@@ -19,10 +19,10 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
     "clean": "rm -rf *.js dist .turbo node_modules",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
+    "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "devDependencies": {
     "@u3/config": "workspace:*",

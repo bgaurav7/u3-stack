@@ -13,11 +13,11 @@
     "prebuild": "pnpm expo prebuild",
     "lint": "biome lint .",
     "lint:fix": "biome lint . --write",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "clean": "rm -rf .expo .turbo .tamagui android ios node_modules",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
+    "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
