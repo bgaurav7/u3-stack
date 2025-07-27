@@ -1,15 +1,5 @@
-import { PrimitivesSample } from '@u3/ui';
-import { Stack } from 'expo-router';
+import { Redirect } from 'expo-router';
 
-export default function HomePage() {
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          title: 'U3-Stack Mobile',
-        }}
-      />
-      <PrimitivesSample />
-    </>
-  );
+export default function RootPage() {
+  return <Redirect href='/(home)' />;
 }
