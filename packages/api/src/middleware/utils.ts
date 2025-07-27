@@ -73,9 +73,9 @@ export function createMiddleware<
     }
 
     try {
-      return await middleware(opts as any);
+      return await middleware(opts as Parameters<typeof middleware>[0]);
     } catch (error) {
-      const handledError = finalConfig.errorHandler!(error as any, {
+      const handledError = finalConfig.errorHandler?.(error as Error, {
         path,
         type,
         ctx,
@@ -102,7 +102,7 @@ export function composeMiddleware(
     let currentContext = opts.ctx;
     let index = 0;
 
-    const executeNext = async (): Promise<{ ctx: any }> => {
+    const executeNext = async (): Promise<{ ctx: MiddlewareContext }> => {
       if (index >= middlewares.length) {
         return opts.next();
       }

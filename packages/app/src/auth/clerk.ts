@@ -1,14 +1,23 @@
 import { Platform } from 'react-native';
 
-// Platform-specific imports
+// Platform-specific imports - using any due to dynamic platform-specific imports
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let ClerkProvider: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let SignIn: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let SignUp: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let SignedIn: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let SignedOut: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let UserButton: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let useAuth: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let useUser: any;
+// biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let useClerk: any;
 
 // Dynamic imports based on platform
@@ -64,6 +73,7 @@ export interface AuthState {
 /**
  * Transform Clerk user to our AuthUser interface
  */
+// biome-ignore lint/suspicious/noExplicitAny: Clerk user type varies by platform
 function transformClerkUser(clerkUser: any): AuthUser | null {
   if (!clerkUser) return null;
 

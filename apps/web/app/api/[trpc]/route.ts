@@ -56,7 +56,7 @@ const handler = (req: Request) =>
     },
     responseMeta: ({ paths, errors, type }) => {
       // Set cache headers for queries (not mutations)
-      const allPublic = paths && paths.every(path => path.includes('health'));
+      const allPublic = paths?.every(path => path.includes('health'));
       const allOk = errors.length === 0;
       const isQuery = type === 'query';
 

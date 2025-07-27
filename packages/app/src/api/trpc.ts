@@ -129,19 +129,32 @@ export const trpcClientConfig = createTRPCClientConfig();
 /**
  * Error handler for tRPC operations
  */
-export function handleTRPCError(error: any): string {
+export function handleTRPCError(error: unknown): string {
   console.error('tRPC Error:', error);
 
   // Handle different error types
-  if (error?.data?.zodError) {
+  if (
+    error &&
+    typeof error === 'object' &&
+    'data' in error &&
+    error.data &&
+    typeof error.data === 'object' &&
+    'zodError' in error.data
+  ) {
     // Zod validation errors
-    const zodError = error.data.zodError;
+    // biome-ignore lint/suspicious/noExplicitAny: Zod error structure varies
+    const zodError = error.data.zodError as any;
     const fieldErrors = zodError.fieldErrors;
     const firstError = Object.values(fieldErrors)[0];
     return Array.isArray(firstError) ? firstError[0] : 'Validation error';
   }
 
-  if (error?.message) {
+  if (
+    error &&
+    typeof error === 'object' &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
     return error.message;
   }
 
@@ -175,7 +188,7 @@ export const auth = {
  * Useful for debugging and health checks
  */
 export function usePing() {
-  // Type assertion needed due to tRPC client setup
+  // biome-ignore lint/suspicious/noExplicitAny: tRPC client typing limitation
   return (trpc as any).health.ping.useQuery();
 }
 

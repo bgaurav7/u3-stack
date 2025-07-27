@@ -43,7 +43,7 @@ export interface UserProfileLayoutProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**

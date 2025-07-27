@@ -13,7 +13,7 @@ export interface LoginFormProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**
@@ -44,7 +44,7 @@ export function LoginForm({ signInComponent, style }: LoginFormProps) {
 /**
  * Default login form when no custom component is provided
  */
-function DefaultLoginForm({ style }: { style?: any }) {
+function DefaultLoginForm({ style }: { style?: Record<string, unknown> }) {
   return (
     <YStack
       gap='$4'

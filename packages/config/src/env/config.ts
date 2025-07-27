@@ -1,5 +1,6 @@
 /**
- * Type-safe environment configuration for U3-Stack using dotenv-flow and env-var
+ * Server-side environment configuration for U3-Stack using dotenv-flow and env-var
+ * This config is now server-only since individual apps use local .env files for client-side variables
  */
 
 import { resolve } from 'node:path';
@@ -51,7 +52,7 @@ function getEnvEnum<T extends string>(
     .asEnum([...allowedValues]) as T;
 }
 
-// Create a type-safe configuration object that works in both browser and server
+// Create a type-safe configuration object for server-side use
 const config = {
   app: {
     nodeEnv: getEnvEnum(
@@ -73,15 +74,11 @@ const config = {
     ),
   },
   auth: {
-    clerkPublishableKey: getEnvVar('CLERK_PUBLISHABLE_KEY'),
     clerkSecretKey: getEnvVar('CLERK_SECRET_KEY'),
   },
   database: {
     url: getEnvVar('DATABASE_URL'),
     directUrl: getEnvVar('DATABASE_DIRECT_URL'),
-  },
-  api: {
-    url: getEnvVar('API_URL', 'http://localhost:3000/api'),
   },
   features: {
     analytics: getEnvBoolean('ENABLE_ANALYTICS'),
@@ -106,9 +103,6 @@ export function validateConfig(): void {
   try {
     // Validate required production variables
     if (isProduction) {
-      if (!config.auth.clerkPublishableKey) {
-        errors.push('CLERK_PUBLISHABLE_KEY is required in production');
-      }
       if (!config.auth.clerkSecretKey) {
         errors.push('CLERK_SECRET_KEY is required in production');
       }
@@ -138,14 +132,6 @@ export function validateConfig(): void {
         new URL(config.app.url);
       } catch {
         errors.push('APP_URL must be a valid URL');
-      }
-    }
-
-    if (config.api.url) {
-      try {
-        new URL(config.api.url);
-      } catch {
-        errors.push('API_URL must be a valid URL');
       }
     }
   } catch (error) {

@@ -7,7 +7,6 @@ const nextConfig = {
     'expo',
     'expo-router',
     '@u3/ui',
-    '@u3/config',
     '@u3/types',
     'tamagui',
     '@tamagui/config',

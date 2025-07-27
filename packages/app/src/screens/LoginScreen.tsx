@@ -19,7 +19,7 @@ export interface LoginScreenProps {
   /**
    * Custom styling passed to UI component
    */
-  style?: any;
+  style?: Record<string, unknown>;
   /**
    * Custom loading component passed to UI component
    */

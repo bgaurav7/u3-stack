@@ -78,7 +78,9 @@ export abstract class BaseMiddleware<
     path?: string,
     _type?: 'query' | 'mutation' | 'subscription'
   ): Promise<TRPCError | Error> {
-    return this.config.errorHandler!(error, { ctx, path, type: _type });
+    return (
+      this.config.errorHandler?.(error, { ctx, path, type: _type }) ?? error
+    );
   }
 
   /**
@@ -136,7 +138,7 @@ export abstract class BaseMiddleware<
         return result;
       } catch (error) {
         const handledError = await this.onError(
-          error as any,
+          error as Error,
           ctx as TInputContext,
           path,
           type
@@ -262,7 +264,7 @@ export function createSimpleMiddleware<
  * Higher-order function for creating middleware builders
  * Provides a consistent pattern for creating configurable middleware
  */
-export function createMiddlewareBuilder<TOptions = {}>(
+export function createMiddlewareBuilder<TOptions = Record<string, unknown>>(
   name: string,
   description: string,
   middlewareFactory: (options?: TOptions) => MiddlewareFunction,

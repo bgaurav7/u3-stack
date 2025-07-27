@@ -16,9 +16,10 @@
     "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "dependencies": {
-    "@u3/app": "workspace:*",
+    "@clerk/nextjs": "^6.27.1",
     "@tamagui/next-plugin": "^1.132.12",
     "@u3/api": "workspace:*",
+    "@u3/app": "workspace:*",
     "@u3/ui": "workspace:*",
     "expo": "~53.0.8",
     "expo-router": "~5.1.4",

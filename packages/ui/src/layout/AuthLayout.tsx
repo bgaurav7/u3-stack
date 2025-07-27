@@ -12,7 +12,7 @@ export interface LoadingLayoutProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**
@@ -58,7 +58,7 @@ export interface SuccessLayoutProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**
@@ -111,7 +111,7 @@ export interface CenteredLayoutProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**
@@ -163,7 +163,7 @@ export interface SignedOutLayoutProps {
   /**
    * Custom styling
    */
-  style?: any;
+  style?: Record<string, unknown>;
 }
 
 /**
