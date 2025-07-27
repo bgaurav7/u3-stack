@@ -16,11 +16,8 @@
     "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
+    "@u3/app": "workspace:*",
     "@tamagui/next-plugin": "^1.132.12",
-    "@tanstack/react-query": "^4.40.1",
-    "@tanstack/react-query-devtools": "^4.40.1",
-    "@trpc/client": "^10.45.2",
-    "@trpc/react-query": "^10.45.2",
     "@u3/api": "workspace:*",
     "@u3/ui": "workspace:*",
     "expo": "~53.0.8",

@@ -1,0 +1,51 @@
+{
+  "name": "@u3/app",
+  "version": "0.1.0",
+  "description": "Cross-platform app package with authentication logic, business logic for screens, and utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --write",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "clean": "rm -rf dist .turbo node_modules",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.40.1",
+    "@trpc/client": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@u3/api": "workspace:*",
+    "@u3/ui": "workspace:*",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "@clerk/clerk-react": ">=4.0.0",
+    "@clerk/clerk-expo": ">=2.0.0",
+    "@react-native-async-storage/async-storage": ">=1.0.0",
+    "react": "^19.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.0.2",
+    "typescript": "~5.8.3"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

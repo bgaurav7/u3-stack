@@ -87,6 +87,12 @@
             ],
             "@u3/features/*": [
                 "packages/features/src/*"
+            ],
+            "@u3/app": [
+                "packages/app/src"
+            ],
+            "@u3/app/*": [
+                "packages/app/src/*"
             ]
         }
     },
