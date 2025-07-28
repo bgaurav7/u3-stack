@@ -1,7 +1,7 @@
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
-import { PrimitivesSample } from '@u3/ui';
+import { Button, PrimitivesSample, Text, YStack } from '@u3/ui';
 import { Link, Stack } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import SignOutButton from '../components/SignOutButton';
 
 export default function HomePage() {
@@ -14,90 +14,65 @@ export default function HomePage() {
           title: 'U3-Stack Mobile',
         }}
       />
-      <View style={styles.container}>
+      <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
         <SignedIn>
-          <Text style={styles.welcomeText}>
-            Hello{' '}
-            {user?.emailAddresses[0]?.emailAddress || user?.firstName || 'User'}
-            ! 🎉
-          </Text>
-          <Text style={styles.subText}>
-            You are successfully authenticated with Clerk.
-          </Text>
-          <View style={styles.content}>
-            <PrimitivesSample />
-          </View>
-          <SignOutButton />
+          <YStack gap='$4' flex={1}>
+            <YStack gap='$2' alignItems='center'>
+              <Text fontSize='$6' fontWeight='bold' textAlign='center'>
+                Hello{' '}
+                {user?.emailAddresses[0]?.emailAddress ||
+                  user?.firstName ||
+                  'User'}
+                ! 🎉
+              </Text>
+              <Text fontSize='$4' color='$gray11' textAlign='center'>
+                You are successfully authenticated with Clerk.
+              </Text>
+            </YStack>
+
+            <YStack flex={1} gap='$4'>
+              <PrimitivesSample />
+            </YStack>
+
+            <SignOutButton />
+          </YStack>
         </SignedIn>
+
         <SignedOut>
-          <View style={styles.authContainer}>
-            <Text style={styles.title}>Welcome to U3-Stack Mobile</Text>
-            <Text style={styles.description}>
-              Please sign in to access the application.
-            </Text>
-            <Link href='/(auth)/sign-in' style={styles.authLink}>
-              <Text style={styles.authLinkText}>Sign in</Text>
-            </Link>
-            <Link href='/(auth)/sign-up' style={styles.authLink}>
-              <Text style={styles.authLinkText}>Sign up</Text>
-            </Link>
-          </View>
+          <YStack flex={1} justifyContent='center' alignItems='center' gap='$6'>
+            <YStack gap='$3' alignItems='center'>
+              <Text fontSize='$7' fontWeight='bold' textAlign='center'>
+                Welcome to U3-Stack Mobile
+              </Text>
+              <Text fontSize='$4' color='$gray11' textAlign='center'>
+                Please sign in to access the application.
+              </Text>
+            </YStack>
+
+            <YStack gap='$3' width='100%' maxWidth={300}>
+              <Link href='/(auth)/sign-in' asChild>
+                <Button
+                  size='$4'
+                  backgroundColor='$blue10'
+                  color='white'
+                  fontWeight='600'
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link href='/(auth)/sign-up' asChild>
+                <Button
+                  size='$4'
+                  variant='outlined'
+                  backgroundColor='$background'
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </YStack>
+          </YStack>
         </SignedOut>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  welcomeText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subText: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#666',
-  },
-  content: {
-    flex: 1,
-    marginVertical: 20,
-  },
-  authContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 16,
-    marginBottom: 40,
-    textAlign: 'center',
-    color: '#666',
-  },
-  authLink: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 15,
-    minWidth: 200,
-  },
-  authLinkText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});

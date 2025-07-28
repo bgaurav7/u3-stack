@@ -4,7 +4,7 @@ import { UIProvider } from '@u3/ui';
 import { Stack } from 'expo-router';
 import type React from 'react';
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!publishableKey) {
   throw new Error(

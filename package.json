@@ -27,6 +27,7 @@
     "postinstall": "pnpm run prepare"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001727",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tamagui": "^1.132.12"

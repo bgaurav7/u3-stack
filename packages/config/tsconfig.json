@@ -5,9 +5,8 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": ["dist", "**/*.test.*", "**/*.spec.*"],
-  "references": []
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../types" }
+  ]
 }

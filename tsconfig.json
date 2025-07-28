@@ -5,8 +5,10 @@
   },
   "include": [],
   "references": [
-    { "path": "./packages/config" },
     { "path": "./packages/types" },
+    { "path": "./packages/config" },
+    { "path": "./packages/features" },
+    { "path": "./packages/api" },
     { "path": "./packages/ui" },
     { "path": "./packages/app" },
     { "path": "./apps" }

@@ -1,6 +1,7 @@
 import { useClerk } from '@clerk/clerk-expo';
+import { SignOutButton as UISignOutButton } from '@u3/ui';
 import { useRouter } from 'expo-router';
-import { Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Alert } from 'react-native';
 
 const SignOutButton = () => {
   // Use `useClerk()` to access the `signOut()` function
@@ -12,7 +13,7 @@ const SignOutButton = () => {
       await signOut();
       // Redirect to your desired page
       router.replace('/');
-    } catch (err: any) {
+    } catch (err: unknown) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
@@ -20,26 +21,7 @@ const SignOutButton = () => {
     }
   };
 
-  return (
-    <TouchableOpacity style={styles.button} onPress={handleSignOut}>
-      <Text style={styles.buttonText}>Sign out</Text>
-    </TouchableOpacity>
-  );
+  return <UISignOutButton onSignOut={handleSignOut} />;
 };
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#ff4444',
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default SignOutButton;

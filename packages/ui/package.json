@@ -2,11 +2,10 @@
   "name": "@u3/ui",
   "version": "0.1.0",
   "description": "Shared UI component library for U3-Stack",
-  "types": "./src",
-  "main": "src/index.ts",
+  "main": "dist/cjs",
+  "module": "dist/jsx",
   "module:jsx": "src",
   "files": [
-    "types",
     "dist"
   ],
   "scripts": {

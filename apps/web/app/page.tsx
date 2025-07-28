@@ -1,7 +1,13 @@
 'use client';
 
-import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
-import { PrimitivesSample, UIProvider } from '@u3/ui';
+import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/nextjs';
+import {
+  PrimitivesSample,
+  SignOutButton,
+  Text,
+  UIProvider,
+  YStack,
+} from '@u3/ui';
 import type React from 'react';
 
 export default function HomePage(): React.ReactElement {
@@ -9,17 +15,31 @@ export default function HomePage(): React.ReactElement {
     <UIProvider>
       <div style={{ minHeight: '100vh', flex: 1, padding: '2rem' }}>
         <SignedOut>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h1>Welcome to U3-Stack</h1>
-            <p>Please sign in to access the application.</p>
-          </div>
+          <YStack
+            gap='$4'
+            alignItems='center'
+            justifyContent='center'
+            style={{ minHeight: '60vh' }}
+          >
+            <YStack gap='$3' alignItems='center'>
+              <Text fontSize='$8' fontWeight='bold' textAlign='center'>
+                Welcome to U3-Stack
+              </Text>
+              <Text fontSize='$5' color='$gray11' textAlign='center'>
+                Please sign in to access the application.
+              </Text>
+            </YStack>
+          </YStack>
         </SignedOut>
 
         <SignedIn>
-          <UserInfo />
-          <div style={{ marginTop: '2rem' }}>
+          <YStack gap='$6'>
+            <UserInfo />
             <PrimitivesSample />
-          </div>
+            <div style={{ maxWidth: '200px' }}>
+              <WebSignOutButton />
+            </div>
+          </YStack>
         </SignedIn>
       </div>
     </UIProvider>
@@ -30,19 +50,36 @@ function UserInfo(): React.ReactElement {
   const { user } = useUser();
 
   return (
-    <div
-      style={{
-        marginBottom: '2rem',
-        padding: '1rem',
-        backgroundColor: '#f8f9fa',
-        borderRadius: '0.5rem',
-        border: '1px solid #e9ecef',
-      }}
+    <YStack
+      gap='$3'
+      padding='$4'
+      backgroundColor='$gray2'
+      borderRadius='$4'
+      borderWidth={1}
+      borderColor='$gray6'
     >
-      <h2>
+      <Text fontSize='$6' fontWeight='bold'>
         Welcome, {user?.firstName || user?.emailAddresses[0]?.emailAddress}! 🎉
-      </h2>
-      <p>You are successfully authenticated with Clerk.</p>
-    </div>
+      </Text>
+      <Text fontSize='$4' color='$gray11'>
+        You are successfully authenticated with Clerk.
+      </Text>
+    </YStack>
   );
+}
+
+function WebSignOutButton(): React.ReactElement {
+  const { signOut } = useClerk();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Sign out error:', error);
+      alert('An error occurred during sign out');
+    }
+  };
+
+  return <SignOutButton onSignOut={handleSignOut} />;
 }

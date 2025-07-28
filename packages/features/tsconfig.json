@@ -13,13 +13,9 @@
       "@u3/features/*": ["./*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "dist",
-    "**/*.test.*",
-    "**/*.spec.*"
-  ],
-  "references": []
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../types" },
+    { "path": "../config" }
+  ]
 }
