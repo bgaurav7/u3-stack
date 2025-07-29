@@ -13,12 +13,6 @@
 // ============================================================================
 
 /**
- * AppRouter type - Essential for frontend tRPC client setup
- * This is the primary export that enables end-to-end type safety
- */
-export type { AppRouter } from './server';
-
-/**
  * Main app router instance - Used by Next.js API handler
  * This is the composed router that includes all feature routers
  */

@@ -42,8 +42,6 @@ export const appRouter = createAppRouter({
   user: userRouter,
 });
 
-export type AppRouter = typeof appRouter;
-
 /**
  * Context creator for Next.js integration
  * Creates the context object that will be passed to all tRPC procedures
