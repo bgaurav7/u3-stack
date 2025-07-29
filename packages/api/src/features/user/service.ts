@@ -2,9 +2,9 @@
  * @fileoverview User feature business logic service
  */
 
+import type { CreateUserInput, UpdateUserInput, User } from '@u3/types';
 import { generateUUID } from '../../utils';
 import { userSchema } from './schema';
-import type { CreateUserInput, UpdateUserInput, User } from './types';
 
 // Mock user storage (replace with database in production)
 const users: User[] = [];

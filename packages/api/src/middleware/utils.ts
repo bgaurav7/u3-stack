@@ -12,7 +12,7 @@ import type {
   MiddlewareFunction,
   MiddlewareMetadata,
   MiddlewarePipeline,
-} from './types';
+} from '@u3/types';
 
 /**
  * Default error handler for middleware

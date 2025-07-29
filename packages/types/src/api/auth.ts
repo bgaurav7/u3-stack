@@ -1,7 +1,4 @@
-/**
- * @fileoverview Auth feature type definitions
- */
-
+// Auth-related types
 export interface AuthUser {
   id: string;
   email: string;

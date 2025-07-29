@@ -4,7 +4,7 @@
  */
 
 import type { TRPCError } from '@trpc/server';
-import type { Context } from '../server';
+import type { Context } from './context';
 
 /**
  * Base middleware context interface

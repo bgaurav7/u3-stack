@@ -1,17 +1,16 @@
 import type { ProcedureRouterRecord } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
+import type { Context } from '@u3/types';
 import { authRouter } from './routers/auth';
-
 // Router imports will be added here when routers are implemented
 import { healthRouter } from './routers/health';
 import { todoRouter } from './routers/todo';
 import { userRouter } from './routers/user';
 // Import tRPC utilities from separate file to avoid circular dependencies
-import { type Context, router } from './trpc';
+import { router } from './trpc';
 
 // Re-export tRPC utilities for backward compatibility
 export {
-  type Context,
   loggedPublicProcedure,
   middleware,
   protectedProcedure,

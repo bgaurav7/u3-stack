@@ -4,6 +4,9 @@ export interface Todo {
   title: string;
   description?: string;
   completed: boolean;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CreateTodoInput {
@@ -12,10 +15,13 @@ export interface CreateTodoInput {
 }
 
 export interface UpdateTodoInput {
-  id: string;
   title?: string;
   description?: string;
   completed?: boolean;
+}
+
+export interface TodoIdInput {
+  id: string;
 }
 
 export interface DeleteTodoInput {

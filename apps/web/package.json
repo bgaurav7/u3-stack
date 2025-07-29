@@ -21,6 +21,7 @@
     "@u3/api": "workspace:*",
     "@u3/app": "workspace:*",
     "@u3/ui": "workspace:*",
+    "@u3/types": "workspace:*",
     "expo": "~53.0.8",
     "next": "^15.1.6",
     "react": "19.0.0",

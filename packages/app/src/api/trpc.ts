@@ -201,6 +201,3 @@ export function usePing() {
   // biome-ignore lint/suspicious/noExplicitAny: tRPC client typing limitation
   return (trpc as any).health.ping.useQuery();
 }
-
-// Re-export types for convenience
-export type { AppRouter } from '@u3/types';

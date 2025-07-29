@@ -28,6 +28,7 @@
     "@tamagui/animations-react-native": "^1.132.12",
     "@tamagui/static": "1.132.12",
     "@u3/app": "workspace:*",
+    "@u3/types": "workspace:*",
     "@u3/ui": "workspace:*",
     "burnt": "^0.12.2",
     "expo": "~53.0.8",

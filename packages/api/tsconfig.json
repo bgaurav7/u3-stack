@@ -16,7 +16,9 @@
       "~/server": ["./server"],
       // Preserve base path mappings from tsconfig.base.json
       "@u3/api": ["./index"],
-      "@u3/api/*": ["./*"]
+      "@u3/api/*": ["./*"],
+      "@u3/types": ["../../types/src"],
+      "@u3/types/*": ["../../types/src/*"]
     }
   },
   "include": [

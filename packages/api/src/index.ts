@@ -27,7 +27,6 @@ export { appRouter } from './server';
  * Enables proper typing when extending the API
  */
 export type {
-  Context,
   TRPCMiddleware,
   TRPCProcedure,
   TRPCRouter,

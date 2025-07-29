@@ -10,7 +10,7 @@ import type {
   MiddlewareContext,
   MiddlewareFunction,
   MiddlewareMetadata,
-} from './types';
+} from '@u3/types';
 import { createMiddleware, defaultErrorHandler } from './utils';
 
 /**

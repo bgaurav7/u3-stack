@@ -4,4 +4,3 @@
 
 export * from './schema';
 export { userService } from './service';
-export type * from './types';

@@ -2,9 +2,9 @@
  * @fileoverview Todo feature business logic service
  */
 
+import type { CreateTodoInput, Todo, UpdateTodoInput } from '@u3/types';
 import { generateUUID } from '../../utils';
 import { todoSchema } from './schema';
-import type { CreateTodoInput, Todo, UpdateTodoInput } from './types';
 
 // In-memory storage for demo (replace with database in production)
 const todos: Todo[] = [];

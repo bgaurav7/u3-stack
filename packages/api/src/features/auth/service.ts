@@ -2,9 +2,14 @@
  * @fileoverview Auth feature business logic service
  */
 
+import type {
+  AuthResult,
+  AuthUser,
+  LoginInput,
+  RegisterInput,
+} from '@u3/types';
 import { generateUUID } from '../../utils';
 import { authResultSchema, authUserSchema } from './schema';
-import type { AuthResult, AuthUser, LoginInput, RegisterInput } from './types';
 
 // Mock user storage (replace with database in production)
 const users: AuthUser[] = [];

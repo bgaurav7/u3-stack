@@ -4,4 +4,3 @@
 
 export * from './schema';
 export { todoService } from './service';
-export type * from './types';
