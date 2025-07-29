@@ -1,4 +1,8 @@
-import { Platform } from 'react-native';
+// Platform detection without React Native dependencies
+const isReactNative =
+  typeof window === 'undefined' &&
+  typeof navigator !== 'undefined' &&
+  navigator.product === 'ReactNative';
 
 // Platform-specific imports - using any due to dynamic platform-specific imports
 // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
@@ -20,31 +24,65 @@ let useUser: any;
 // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
 let useClerk: any;
 
-// Dynamic imports based on platform
-if (Platform.OS === 'web') {
+// Dynamic imports based on platform using safe detection
+if (!isReactNative) {
   // Web imports
-  const clerkReact = require('@clerk/clerk-react');
-  ClerkProvider = clerkReact.ClerkProvider;
-  SignIn = clerkReact.SignIn;
-  SignUp = clerkReact.SignUp;
-  SignedIn = clerkReact.SignedIn;
-  SignedOut = clerkReact.SignedOut;
-  UserButton = clerkReact.UserButton;
-  useAuth = clerkReact.useAuth;
-  useUser = clerkReact.useUser;
-  useClerk = clerkReact.useClerk;
+  try {
+    // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+    const clerkReact = eval('require')('@clerk/clerk-react');
+    ClerkProvider = clerkReact.ClerkProvider;
+    SignIn = clerkReact.SignIn;
+    SignUp = clerkReact.SignUp;
+    SignedIn = clerkReact.SignedIn;
+    SignedOut = clerkReact.SignedOut;
+    UserButton = clerkReact.UserButton;
+    useAuth = clerkReact.useAuth;
+    useUser = clerkReact.useUser;
+    useClerk = clerkReact.useClerk;
+  } catch (_e) {
+    // Clerk React not available, provide fallbacks
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    ClerkProvider = ({ children }: any) => children;
+    SignIn = () => null;
+    SignUp = () => null;
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    SignedIn = ({ children }: any) => children;
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    SignedOut = ({ children }: any) => children;
+    UserButton = () => null;
+    useAuth = () => ({});
+    useUser = () => ({});
+    useClerk = () => ({});
+  }
 } else {
   // React Native imports
-  const clerkExpo = require('@clerk/clerk-expo');
-  ClerkProvider = clerkExpo.ClerkProvider;
-  SignIn = clerkExpo.SignIn;
-  SignUp = clerkExpo.SignUp;
-  SignedIn = clerkExpo.SignedIn;
-  SignedOut = clerkExpo.SignedOut;
-  UserButton = clerkExpo.UserButton;
-  useAuth = clerkExpo.useAuth;
-  useUser = clerkExpo.useUser;
-  useClerk = clerkExpo.useClerk;
+  try {
+    // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+    const clerkExpo = eval('require')('@clerk/clerk-expo');
+    ClerkProvider = clerkExpo.ClerkProvider;
+    SignIn = clerkExpo.SignIn;
+    SignUp = clerkExpo.SignUp;
+    SignedIn = clerkExpo.SignedIn;
+    SignedOut = clerkExpo.SignedOut;
+    UserButton = clerkExpo.UserButton;
+    useAuth = clerkExpo.useAuth;
+    useUser = clerkExpo.useUser;
+    useClerk = clerkExpo.useClerk;
+  } catch (_e) {
+    // Clerk Expo not available, provide fallbacks
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    ClerkProvider = ({ children }: any) => children;
+    SignIn = () => null;
+    SignUp = () => null;
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    SignedIn = ({ children }: any) => children;
+    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+    SignedOut = ({ children }: any) => children;
+    UserButton = () => null;
+    useAuth = () => ({});
+    useUser = () => ({});
+    useClerk = () => ({});
+  }
 }
 
 /**

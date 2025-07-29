@@ -5,8 +5,13 @@
 
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from '@u3/api';
-import { Platform } from 'react-native';
+import type { AppRouter } from '@u3/types';
+
+// Safe platform detection without React Native dependencies
+const isReactNative =
+  typeof window === 'undefined' &&
+  typeof navigator !== 'undefined' &&
+  navigator.product === 'ReactNative';
 
 /**
  * Create the tRPC React client with proper typing
@@ -18,7 +23,7 @@ export const trpc = createTRPCReact<AppRouter>();
  */
 const storage = {
   getItem: async (key: string): Promise<string | null> => {
-    if (Platform.OS === 'web') {
+    if (!isReactNative) {
       // Web environment
       if (typeof window === 'undefined') return null;
       try {
@@ -30,8 +35,10 @@ const storage = {
     } else {
       // React Native environment
       try {
-        const AsyncStorage =
-          require('@react-native-async-storage/async-storage').default;
+        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+        const AsyncStorage = eval('require')(
+          '@react-native-async-storage/async-storage'
+        ).default;
         return await AsyncStorage.getItem(key);
       } catch (error) {
         console.warn('Failed to retrieve from AsyncStorage:', error);
@@ -41,7 +48,7 @@ const storage = {
   },
 
   setItem: async (key: string, value: string): Promise<void> => {
-    if (Platform.OS === 'web') {
+    if (!isReactNative) {
       // Web environment
       if (typeof window === 'undefined') return;
       try {
@@ -52,8 +59,10 @@ const storage = {
     } else {
       // React Native environment
       try {
-        const AsyncStorage =
-          require('@react-native-async-storage/async-storage').default;
+        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+        const AsyncStorage = eval('require')(
+          '@react-native-async-storage/async-storage'
+        ).default;
         await AsyncStorage.setItem(key, value);
       } catch (error) {
         console.warn('Failed to save to AsyncStorage:', error);
@@ -62,7 +71,7 @@ const storage = {
   },
 
   removeItem: async (key: string): Promise<void> => {
-    if (Platform.OS === 'web') {
+    if (!isReactNative) {
       // Web environment
       if (typeof window === 'undefined') return;
       try {
@@ -73,8 +82,10 @@ const storage = {
     } else {
       // React Native environment
       try {
-        const AsyncStorage =
-          require('@react-native-async-storage/async-storage').default;
+        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+        const AsyncStorage = eval('require')(
+          '@react-native-async-storage/async-storage'
+        ).default;
         await AsyncStorage.removeItem(key);
       } catch (error) {
         console.warn('Failed to remove from AsyncStorage:', error);
@@ -95,8 +106,7 @@ async function getAuthToken(): Promise<string | null> {
  * Creates platform-specific configuration for web and mobile
  */
 export function createTRPCClientConfig(baseUrl?: string) {
-  const defaultBaseUrl =
-    Platform.OS === 'web' ? '/api' : 'http://localhost:3000/api';
+  const defaultBaseUrl = !isReactNative ? '/api' : 'http://localhost:3000/api';
   const apiUrl = baseUrl || defaultBaseUrl;
 
   return {
@@ -193,4 +203,4 @@ export function usePing() {
 }
 
 // Re-export types for convenience
-export type { AppRouter } from '@u3/api';
+export type { AppRouter } from '@u3/types';

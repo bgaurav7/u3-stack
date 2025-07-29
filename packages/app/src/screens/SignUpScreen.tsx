@@ -1,5 +1,6 @@
 import { CenteredLayout, SignUpForm } from '@u3/ui';
 import { useState } from 'react';
+import { getPlatformDeps } from '../utils/platform-deps';
 
 // Platform detection
 const isReactNative = typeof window === 'undefined';
@@ -37,47 +38,8 @@ export function SignUpScreen({
   const [isPendingVerification, setIsPendingVerification] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Import platform-specific dependencies at the top level
-  let platformDeps: {
-    useRouter?: () => {
-      replace: (path: string) => void;
-      push: (path: string) => void;
-    };
-    Alert?: { alert: (title: string, message: string) => void };
-    useSignUp?: () => any;
-  } = {};
-
-  try {
-    if (isReactNative) {
-      const expo = require('expo-router');
-      const rn = require('react-native');
-      const clerk = require('@clerk/clerk-expo');
-      platformDeps = {
-        useRouter: expo.useRouter,
-        Alert: rn.Alert,
-        useSignUp: clerk.useSignUp,
-      };
-    } else {
-      const clerk = require('@clerk/nextjs');
-      platformDeps = {
-        useRouter: () => ({
-          replace: (path: string) => {
-            window.location.href = path;
-          },
-          push: (path: string) => {
-            window.location.href = path;
-          },
-        }),
-        Alert: {
-          alert: (title: string, message: string) =>
-            alert(`${title}: ${message}`),
-        },
-        useSignUp: clerk.useSignUp,
-      };
-    }
-  } catch (_e) {
-    // Dependencies not available
-  }
+  // Get platform-specific dependencies safely
+  const platformDeps = getPlatformDeps();
 
   // Use hooks unconditionally
   const router = platformDeps?.useRouter?.() || {
