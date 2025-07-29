@@ -5,7 +5,6 @@
 
 // Export server-side config (no browser support needed since apps use local .env files)
 export {
-  type Config,
   config,
   config as default,
   initializeConfig,

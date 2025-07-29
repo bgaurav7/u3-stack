@@ -33,7 +33,7 @@
     "lint:fix": "biome lint . --write",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "clean": "rm -rf dist .turbo node_modules",
+    "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
     "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "dependencies": {

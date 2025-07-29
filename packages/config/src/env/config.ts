@@ -4,6 +4,7 @@
  */
 
 import { resolve } from 'node:path';
+import type { Config } from '@u3/types';
 import { config as dotenvConfig } from 'dotenv-flow';
 import env from 'env-var';
 
@@ -53,7 +54,7 @@ function getEnvEnum<T extends string>(
 }
 
 // Create a type-safe configuration object for server-side use
-const config = {
+const config: Config = {
   app: {
     nodeEnv: getEnvEnum(
       'NODE_ENV',
@@ -84,7 +85,7 @@ const config = {
     analytics: getEnvBoolean('ENABLE_ANALYTICS'),
     errorTracking: getEnvBoolean('ENABLE_ERROR_TRACKING'),
   },
-} as const;
+};
 
 // Environment-specific helpers
 export const isDevelopment = config.app.nodeEnv === 'development';
@@ -169,11 +170,6 @@ export function initializeConfig(): void {
     }
   }
 }
-
-/**
- * Type definitions for the configuration object
- */
-export type Config = typeof config;
 
 /**
  * Export the configuration object

@@ -16,7 +16,7 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "typecheck": "tsc --noEmit --skipLibCheck",
-    "clean": "rm -rf .expo .turbo .tamagui android ios node_modules",
+    "clean": "rm -rf .expo .turbo .tamagui android ios node_modules tsconfig.tsbuildinfo",
     "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "dependencies": {
