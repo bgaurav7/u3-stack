@@ -8,6 +8,7 @@
     "start": "pnpm expo start -c",
     "android": "pnpm expo run:android",
     "ios": "pnpm expo run:ios",
+    "build": "pnpm expo export --experimental-bundle --platform all",
     "build:android": "pnpm eas build -p android --local",
     "build:ios": "pnpm eas build -p ios --local",
     "prebuild": "pnpm expo prebuild",
