@@ -62,6 +62,17 @@
       "tamagui": "^1.132.12",
       "@tamagui/*": "^1.132.12",
       "typescript": "~5.8.3"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@clerk/shared",
+      "@swc/core",
+      "browser-tabs-lock",
+      "core-js",
+      "core-js-pure",
+      "dtrace-provider",
+      "esbuild",
+      "sharp"
+    ]
   }
 }

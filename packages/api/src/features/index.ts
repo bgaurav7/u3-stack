@@ -19,5 +19,3 @@ export * as user from './user';
 export * from './user/schema';
 export { userService } from './user/service';
 export type * from './user/types';
-// Utility exports
-export * from './utils';

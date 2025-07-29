@@ -4,12 +4,12 @@
  */
 
 import { TRPCError } from '@trpc/server';
-import { todoService } from '@u3/features/todo';
+import { todoService } from '../features/todo';
 import {
   createTodoSchema,
   todoIdSchema,
   updateTodoSchema,
-} from '@u3/features/todo/schema';
+} from '../features/todo/schema';
 import { protectedProcedure, publicProcedure, router } from '../trpc';
 
 export const todoRouter = router({

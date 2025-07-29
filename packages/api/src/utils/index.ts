@@ -2,4 +2,4 @@
  * @fileoverview Utility functions barrel exports
  */
 
-export { generateUUID } from './uuid.js';
+export { generateUUID } from './uuid';

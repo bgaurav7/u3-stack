@@ -4,8 +4,8 @@
  */
 
 import { TRPCError } from '@trpc/server';
-import { authService } from '@u3/features/auth';
-import { loginSchema, registerSchema } from '@u3/features/auth/schema';
+import { authService } from '../features/auth';
+import { loginSchema, registerSchema } from '../features/auth/schema';
 import { protectedProcedure, publicProcedure, router } from '../trpc';
 
 export const authRouter = router({

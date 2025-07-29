@@ -2,7 +2,7 @@
  * @fileoverview User feature business logic service
  */
 
-import { generateUUID } from '../utils';
+import { generateUUID } from '../../utils';
 import { userSchema } from './schema';
 import type { CreateUserInput, UpdateUserInput, User } from './types';
 

@@ -2,7 +2,7 @@
  * @fileoverview Auth feature business logic service
  */
 
-import { generateUUID } from '../utils';
+import { generateUUID } from '../../utils';
 import { authResultSchema, authUserSchema } from './schema';
 import type { AuthResult, AuthUser, LoginInput, RegisterInput } from './types';
 

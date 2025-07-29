@@ -2,7 +2,7 @@
  * @fileoverview Todo feature business logic service
  */
 
-import { generateUUID } from '../utils';
+import { generateUUID } from '../../utils';
 import { todoSchema } from './schema';
 import type { CreateTodoInput, Todo, UpdateTodoInput } from './types';
 
