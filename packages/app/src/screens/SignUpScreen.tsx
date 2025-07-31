@@ -1,3 +1,5 @@
+'use client';
+
 import { CenteredLayout, SignUpForm } from '@u3/ui';
 import { useState } from 'react';
 import { getPlatformDeps } from '../utils/platform-deps';

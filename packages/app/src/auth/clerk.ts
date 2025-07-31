@@ -26,33 +26,49 @@ let useClerk: any;
 
 // Dynamic imports based on platform using safe detection
 if (!isReactNative) {
-  // Web imports
+  // Web imports - try Next.js first, then fall back to React
   try {
+    // Try Next.js Clerk first
     // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
-    const clerkReact = eval('require')('@clerk/clerk-react');
-    ClerkProvider = clerkReact.ClerkProvider;
-    SignIn = clerkReact.SignIn;
-    SignUp = clerkReact.SignUp;
-    SignedIn = clerkReact.SignedIn;
-    SignedOut = clerkReact.SignedOut;
-    UserButton = clerkReact.UserButton;
-    useAuth = clerkReact.useAuth;
-    useUser = clerkReact.useUser;
-    useClerk = clerkReact.useClerk;
+    const clerkNextjs = eval('require')('@clerk/nextjs');
+    ClerkProvider = clerkNextjs.ClerkProvider;
+    SignIn = clerkNextjs.SignIn;
+    SignUp = clerkNextjs.SignUp;
+    SignedIn = clerkNextjs.SignedIn;
+    SignedOut = clerkNextjs.SignedOut;
+    UserButton = clerkNextjs.UserButton;
+    useAuth = clerkNextjs.useAuth;
+    useUser = clerkNextjs.useUser;
+    useClerk = clerkNextjs.useClerk;
   } catch (_e) {
-    // Clerk React not available, provide fallbacks
-    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
-    ClerkProvider = ({ children }: any) => children;
-    SignIn = () => null;
-    SignUp = () => null;
-    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
-    SignedIn = ({ children }: any) => children;
-    // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
-    SignedOut = ({ children }: any) => children;
-    UserButton = () => null;
-    useAuth = () => ({});
-    useUser = () => ({});
-    useClerk = () => ({});
+    try {
+      // Fall back to Clerk React
+      // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
+      const clerkReact = eval('require')('@clerk/clerk-react');
+      ClerkProvider = clerkReact.ClerkProvider;
+      SignIn = clerkReact.SignIn;
+      SignUp = clerkReact.SignUp;
+      SignedIn = clerkReact.SignedIn;
+      SignedOut = clerkReact.SignedOut;
+      UserButton = clerkReact.UserButton;
+      useAuth = clerkReact.useAuth;
+      useUser = clerkReact.useUser;
+      useClerk = clerkReact.useClerk;
+    } catch (_e2) {
+      // Neither Clerk package available, provide fallbacks
+      // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+      ClerkProvider = ({ children }: any) => children;
+      SignIn = () => null;
+      SignUp = () => null;
+      // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+      SignedIn = ({ children }: any) => children;
+      // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
+      SignedOut = ({ children }: any) => children;
+      UserButton = () => null;
+      useAuth = () => ({ isSignedIn: false, isLoaded: true });
+      useUser = () => ({ user: null });
+      useClerk = () => ({ signOut: async () => {} });
+    }
   }
 } else {
   // React Native imports
@@ -79,9 +95,9 @@ if (!isReactNative) {
     // biome-ignore lint/suspicious/noExplicitAny: Required for dynamic platform imports
     SignedOut = ({ children }: any) => children;
     UserButton = () => null;
-    useAuth = () => ({});
-    useUser = () => ({});
-    useClerk = () => ({});
+    useAuth = () => ({ isSignedIn: false, isLoaded: true });
+    useUser = () => ({ user: null });
+    useClerk = () => ({ signOut: async () => {} });
   }
 }
 
@@ -133,6 +149,25 @@ function transformClerkUser(clerkUser: any): AuthUser | null {
 export function useAuthWrapper(): AuthState {
   const { isSignedIn, isLoaded } = useAuth();
   const { user } = useUser();
+
+  // Check if Clerk is properly configured by checking for publishable key
+  const hasClerkConfig =
+    typeof window !== 'undefined'
+      ? !!(window as any).__clerk ||
+        !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+      : !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  // If Clerk is not properly configured, return a non-loading state
+  if (!hasClerkConfig) {
+    console.warn(
+      'Clerk is not properly configured. Please set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'
+    );
+    return {
+      isSignedIn: false,
+      isLoading: false,
+      user: null,
+    };
+  }
 
   return {
     isSignedIn: isSignedIn || false,

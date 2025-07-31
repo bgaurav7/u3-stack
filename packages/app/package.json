@@ -31,6 +31,7 @@
   },
   "peerDependencies": {
     "@clerk/clerk-react": ">=4.0.0",
+    "@clerk/nextjs": ">=4.0.0",
     "react": "^19.0.0"
   },
   "devDependencies": {
