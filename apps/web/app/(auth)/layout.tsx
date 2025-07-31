@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@clerk/nextjs';
+import { UIProvider } from '@u3/ui';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -21,5 +22,5 @@ export default function AuthLayout({
     return null;
   }
 
-  return <>{children}</>;
+  return <UIProvider>{children}</UIProvider>;
 }
