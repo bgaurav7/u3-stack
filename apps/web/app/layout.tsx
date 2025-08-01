@@ -1,6 +1,5 @@
-import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { TamaguiStyleTag } from './tamagui-style';
 
@@ -16,60 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <head>
           <TamaguiStyleTag />
         </head>
-        <body>
-          <header
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              padding: '1rem',
-              gap: '1rem',
-              height: '4rem',
-              borderBottom: '1px solid #e5e5e5',
-            }}
-          >
-            <SignedOut>
-              <Link href='/sign-in'>
-                <button
-                  type='button'
-                  style={{
-                    padding: '0.5rem 1rem',
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                  }}
-                >
-                  Sign In
-                </button>
-              </Link>
-              <Link href='/sign-up'>
-                <button
-                  type='button'
-                  style={{
-                    padding: '0.5rem 1rem',
-                    backgroundColor: '#6c47ff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '0.375rem',
-                    cursor: 'pointer',
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                  }}
-                >
-                  Sign Up
-                </button>
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          {children}
-        </body>
+        <body>{children}</body>
       </html>
     </ClerkProvider>
   );

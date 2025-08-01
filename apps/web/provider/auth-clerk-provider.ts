@@ -7,7 +7,7 @@ import type { AuthProvider } from '@u3/types/app/auth';
 import { useRouter } from 'next/navigation';
 
 export function useClerkAuthProvider(): AuthProvider {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded, signOut: clerkSignOut } = useAuth();
   const { user } = useUser();
   const {
     signIn,
@@ -63,10 +63,11 @@ export function useClerkAuthProvider(): AuthProvider {
             requiresVerification: signInAttempt.status === 'needs_identifier',
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Sign in error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during sign in';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to sign in. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
@@ -86,10 +87,11 @@ export function useClerkAuthProvider(): AuthProvider {
           strategy: 'email_code',
         });
         return { success: true, requiresVerification: true };
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Sign up error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during sign up';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to create account. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
@@ -113,18 +115,23 @@ export function useClerkAuthProvider(): AuthProvider {
             error: 'Verification incomplete. Please try again.',
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Verification error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during verification';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to verify email. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
 
     signOut: async () => {
-      // This will be handled by Clerk's UserButton or a custom sign out component
-      // For now, we'll just reload the page
-      window.location.href = '/';
+      try {
+        await clerkSignOut();
+        router.push('/');
+      } catch (error) {
+        console.error('Sign out error:', error);
+        throw error;
+      }
     },
 
     navigate: (path: string) => {

@@ -1,19 +1,19 @@
 // Existing layout components
 
-// New authentication and profile layout components
+// Authentication layout
 export {
-  CenteredLayout,
-  type CenteredLayoutProps,
+  AuthLayout,
+  type AuthLayoutProps,
+} from './AuthLayout';
+
+// Other layouts
+export {
   LoadingLayout,
   type LoadingLayoutProps,
-  SignedOutLayout,
-  type SignedOutLayoutProps,
-  SuccessLayout,
-  type SuccessLayoutProps,
-} from './AuthLayout';
+} from './LoadingLayout';
+
 export type { PageNotFoundProps } from './PageNotFound';
 export { PageNotFound } from './PageNotFound';
-export { PrimitivesSample } from './PrimitivesSample';
 
 export {
   type ProfileUser,

@@ -1,98 +1,88 @@
-import type { AuthProvider } from '@u3/types/app/auth';
-import {
-  LoadingLayout,
-  type ProfileUser,
-  SignedOutLayout,
-  UserProfileLayout,
-} from '@u3/ui';
 import type React from 'react';
-import { useCurrentUser } from '../hooks/useAuthState';
-import { formatDate } from '../utils/formatDate';
+import { Button, H1, Paragraph, YStack } from 'tamagui';
 
 /**
- * Props for the HomeScreen business logic component
+ * Props for the HomeScreen component
  */
 export interface HomeScreenProps {
   /**
-   * Authentication provider for the current platform
+   * Title text for the landing page
    */
-  authProvider: AuthProvider;
+  title?: string;
   /**
-   * Callback when user signs out
+   * Subtitle text for the landing page
    */
-  onSignOut?: () => void;
+  subtitle?: string;
   /**
-   * Custom styling passed to UI component
+   * Custom button text
+   */
+  buttonText?: string;
+  /**
+   * Callback when sign-in button is clicked
+   */
+  onSignInClick?: () => void;
+  /**
+   * Custom styling
    */
   style?: Record<string, unknown>;
-  /**
-   * Custom loading component passed to UI component
-   */
-  loadingComponent?: React.ReactNode;
-  /**
-   * Custom signed out component passed to UI component
-   */
-  signedOutComponent?: React.ReactNode;
 }
 
 /**
- * Cross-platform home screen business logic component
- * Handles authentication state and delegates UI rendering to @u3/ui
+ * Cross-platform public landing page component
+ * Shows welcome content and sign-in call-to-action
+ * Uses Tamagui for cross-platform compatibility
  */
 export function HomeScreen({
-  authProvider,
-  onSignOut,
+  title = 'Welcome to U3-Stack',
+  subtitle = 'A modern, type-safe, scalable monorepo stack for Android, iOS, and Web applications.',
+  buttonText = 'Get Started - Sign In',
+  onSignInClick,
   style,
-  loadingComponent,
-  signedOutComponent,
-}: HomeScreenProps) {
-  const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
-
-  const handleSignOut = async () => {
-    try {
-      await authProvider.signOut();
-      onSignOut?.();
-    } catch (error) {
-      console.error('Sign out error:', error);
-    }
-  };
-
-  // Show loading state
-  if (isLoading) {
-    return <LoadingLayout loadingComponent={loadingComponent} style={style} />;
-  }
-
-  // Show signed out state
-  if (!isAuthenticated) {
-    return (
-      <SignedOutLayout signedOutComponent={signedOutComponent} style={style} />
-    );
-  }
-
-  // Transform user data to match UI component interface
-  const profileUser: ProfileUser | null = user
-    ? {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        fullName: user.fullName,
-        imageUrl: user.imageUrl,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      }
-    : null;
-
-  // Format current date
-  const currentDate = formatDate(new Date(), { dateStyle: 'full' });
-
-  // Show user profile
+}: HomeScreenProps): React.ReactElement {
   return (
-    <UserProfileLayout
-      user={profileUser}
-      onSignOut={handleSignOut}
-      currentDate={currentDate}
+    <YStack
+      flex={1}
+      justifyContent='center'
+      alignItems='center'
+      paddingHorizontal='$6'
+      paddingVertical='$8'
+      gap='$6'
       style={style}
-    />
+    >
+      <H1 size='$10' color='$gray12' textAlign='center' maxWidth='$20'>
+        {title}
+      </H1>
+
+      <Paragraph
+        size='$5'
+        color='$gray11'
+        textAlign='center'
+        maxWidth='$18'
+        lineHeight='$6'
+      >
+        {subtitle}
+      </Paragraph>
+
+      <Button
+        size='$5'
+        backgroundColor='$blue10'
+        color='white'
+        fontWeight='600'
+        paddingHorizontal='$8'
+        paddingVertical='$4'
+        borderRadius='$4'
+        pressStyle={{
+          backgroundColor: '$blue11',
+          transform: [{ translateY: -1 }],
+        }}
+        hoverStyle={{
+          backgroundColor: '$blue11',
+          transform: [{ translateY: -1 }],
+        }}
+        onPress={onSignInClick}
+      >
+        {buttonText}
+      </Button>
+    </YStack>
   );
 }

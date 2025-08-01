@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { Alert } from 'react-native';
 
 export function useClerkAuthProvider(): AuthProvider {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded, signOut: clerkSignOut } = useAuth();
   const { user } = useUser();
   const {
     signIn,
@@ -64,10 +64,11 @@ export function useClerkAuthProvider(): AuthProvider {
             requiresVerification: signInAttempt.status === 'needs_identifier',
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Sign in error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during sign in';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to sign in. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
@@ -87,10 +88,11 @@ export function useClerkAuthProvider(): AuthProvider {
           strategy: 'email_code',
         });
         return { success: true, requiresVerification: true };
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Sign up error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during sign up';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to create account. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
@@ -114,30 +116,33 @@ export function useClerkAuthProvider(): AuthProvider {
             error: 'Verification incomplete. Please try again.',
           };
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Verification error:', error);
         const errorMessage =
-          error.errors?.[0]?.message || 'An error occurred during verification';
+          (error as { errors?: Array<{ message?: string }> })?.errors?.[0]
+            ?.message || 'Failed to verify email. Please try again.';
         return { success: false, error: errorMessage };
       }
     },
 
     signOut: async () => {
-      // This will be handled by Clerk's sign out functionality
-      // For now, navigate to sign in
-      router.replace('/(auth)/sign-in');
+      try {
+        await clerkSignOut();
+        router.replace('/');
+      } catch (error) {
+        console.error('Sign out error:', error);
+        throw error;
+      }
     },
 
     navigate: (path: string) => {
-      // Convert web paths to mobile paths
-      if (path === '/sign-up') {
-        router.push('/(auth)/sign-up');
-      } else if (path === '/sign-in') {
-        router.push('/(auth)/sign-in');
+      if (path === '/auth') {
+        router.push('/auth');
       } else if (path === '/') {
         router.replace('/');
       } else {
-        router.push(path as any);
+        // For other paths, use the path directly - Expo Router handles string paths
+        router.push(path as never);
       }
     },
 
