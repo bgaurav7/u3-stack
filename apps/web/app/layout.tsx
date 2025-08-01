@@ -1,12 +1,6 @@
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { TamaguiStyleTag } from './tamagui-style';
 
@@ -35,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }}
           >
             <SignedOut>
-              <SignInButton mode='modal'>
+              <Link href='/sign-in'>
                 <button
                   type='button'
                   style={{
@@ -51,8 +45,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 >
                   Sign In
                 </button>
-              </SignInButton>
-              <SignUpButton mode='modal'>
+              </Link>
+              <Link href='/sign-up'>
                 <button
                   type='button'
                   style={{
@@ -68,7 +62,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 >
                   Sign Up
                 </button>
-              </SignUpButton>
+              </Link>
             </SignedOut>
             <SignedIn>
               <UserButton />

@@ -1,5 +1,4 @@
-'use client';
-
+import type { AuthProvider } from '@u3/types/app/auth';
 import {
   LoadingLayout,
   type ProfileUser,
@@ -7,7 +6,6 @@ import {
   UserProfileLayout,
 } from '@u3/ui';
 import type React from 'react';
-import { useSignOut } from '../auth/clerk';
 import { useCurrentUser } from '../hooks/useAuthState';
 import { formatDate } from '../utils/formatDate';
 
@@ -15,6 +13,10 @@ import { formatDate } from '../utils/formatDate';
  * Props for the HomeScreen business logic component
  */
 export interface HomeScreenProps {
+  /**
+   * Authentication provider for the current platform
+   */
+  authProvider: AuthProvider;
   /**
    * Callback when user signs out
    */
@@ -38,17 +40,17 @@ export interface HomeScreenProps {
  * Handles authentication state and delegates UI rendering to @u3/ui
  */
 export function HomeScreen({
+  authProvider,
   onSignOut,
   style,
   loadingComponent,
   signedOutComponent,
-}: HomeScreenProps = {}) {
-  const { user, isLoading, isAuthenticated } = useCurrentUser();
-  const { signOut } = useSignOut();
+}: HomeScreenProps) {
+  const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await authProvider.signOut();
       onSignOut?.();
     } catch (error) {
       console.error('Sign out error:', error);

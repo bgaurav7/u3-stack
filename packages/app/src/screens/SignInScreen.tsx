@@ -1,16 +1,17 @@
 'use client';
 
+import type { AuthProvider } from '@u3/types';
 import { CenteredLayout, SignInForm } from '@u3/ui';
 import { useState } from 'react';
-import { getPlatformDeps } from '../utils/platform-deps';
-
-// Platform detection
-const isReactNative = typeof window === 'undefined';
 
 /**
  * Props for the SignInScreen component
  */
 export interface SignInScreenProps {
+  /**
+   * Platform-specific auth provider
+   */
+  authProvider: AuthProvider;
   /**
    * Callback when user successfully signs in
    */
@@ -30,66 +31,29 @@ export interface SignInScreenProps {
  * Uses SignInForm from @u3/ui for presentation
  */
 export function SignInScreen({
+  authProvider,
   onSignIn,
   style,
   onNavigateToSignUp,
-}: SignInScreenProps = {}) {
+}: SignInScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Get platform-specific dependencies safely
-  const platformDeps = getPlatformDeps();
-
-  // Use hooks unconditionally
-  const router = platformDeps?.useRouter?.() || {
-    replace: () => {},
-    push: () => {},
-  };
-  const signInHook = platformDeps?.useSignIn?.() || {
-    signIn: null,
-    setActive: null,
-    isLoaded: false,
-  };
-  const { signIn, setActive, isLoaded } = signInHook;
-  const Alert = platformDeps?.Alert || { alert: () => {} };
-
-  if (!platformDeps) {
-    return (
-      <CenteredLayout
-        title='Error'
-        subtitle='Platform dependencies not available'
-        style={style}
-      >
-        <div>Sign In functionality is not available</div>
-      </CenteredLayout>
-    );
-  }
-
   const handleSignIn = async () => {
-    if (!isLoaded || !signIn || !setActive) return;
-
     setIsLoading(true);
     try {
-      const signInAttempt = await signIn.create({
-        identifier: email,
-        password,
-      });
+      const result = await authProvider.signIn(email, password);
 
-      if (signInAttempt.status === 'complete') {
-        await setActive({ session: signInAttempt.createdSessionId });
+      if (result.success) {
         onSignIn?.();
-        router.replace('/');
+        authProvider.navigate('/');
       } else {
-        console.error(JSON.stringify(signInAttempt, null, 2));
-        Alert.alert('Error', 'Sign in incomplete. Please try again.');
+        authProvider.showAlert('Error', result.error || 'Sign in failed');
       }
-    } catch (err: unknown) {
-      console.error(JSON.stringify(err, null, 2));
-      const error = err as { errors?: Array<{ message: string }> };
-      const errorMessage =
-        error.errors?.[0]?.message || 'An error occurred during sign in';
-      Alert.alert('Error', errorMessage);
+    } catch (error) {
+      console.error('Sign in error:', error);
+      authProvider.showAlert('Error', 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -98,10 +62,8 @@ export function SignInScreen({
   const handleNavigateToSignUp = () => {
     if (onNavigateToSignUp) {
       onNavigateToSignUp();
-    } else if (isReactNative) {
-      router.push('/(auth)/sign-up');
     } else {
-      router.push('/sign-up');
+      authProvider.navigate('/sign-up');
     }
   };
 

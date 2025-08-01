@@ -1,20 +1,20 @@
-import { type AuthState, useAuthWrapper } from '../auth/clerk';
+import type { AppAuthState, AuthProvider } from '@u3/types/app/auth';
 
 /**
  * Custom hook that provides authentication state
- * This is a wrapper around Clerk's authentication that provides
+ * This is a wrapper around the platform's authentication that provides
  * a consistent interface across platforms
  */
-export function useAuthState(): AuthState {
-  return useAuthWrapper();
+export function useAuthState(authProvider: AuthProvider): AppAuthState {
+  return authProvider.useAuth();
 }
 
 /**
  * Hook that returns whether the user is authenticated
  * Useful for conditional rendering and route protection
  */
-export function useIsAuthenticated(): boolean {
-  const { isSignedIn } = useAuthState();
+export function useIsAuthenticated(authProvider: AuthProvider): boolean {
+  const { isSignedIn } = useAuthState(authProvider);
   return isSignedIn;
 }
 
@@ -22,8 +22,8 @@ export function useIsAuthenticated(): boolean {
  * Hook that returns the current user or null
  * Provides type-safe access to user data
  */
-export function useCurrentUser() {
-  const { user, isLoading } = useAuthState();
+export function useCurrentUser(authProvider: AuthProvider) {
+  const { user, isLoading } = useAuthState(authProvider);
 
   return {
     user,

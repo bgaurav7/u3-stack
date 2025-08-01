@@ -1,5 +1,8 @@
 import { SignInScreen } from '@u3/app';
+import { useClerkAuthProvider } from '../../../lib/clerk-auth-provider';
 
 export default function SignInPage() {
-  return <SignInScreen />;
+  const authProvider = useClerkAuthProvider();
+
+  return <SignInScreen authProvider={authProvider} />;
 }

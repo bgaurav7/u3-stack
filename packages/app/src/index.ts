@@ -2,13 +2,13 @@
  * @u3/app - Cross-platform app package
  *
  * This package provides shared screens, hooks, API utilities, and authentication
- * components that work across both web and React Native environments.
+ * interfaces that work across both web and React Native environments.
  *
  * Features:
- * - Clerk authentication integration
+ * - Platform-agnostic authentication interfaces
  * - tRPC client with React Query
  * - Cross-platform screens (Login, Home)
- * - Custom hooks for auth state management
+ * - Custom hooks for common functionality
  * - Utility functions for common operations
  */
 
@@ -27,7 +27,7 @@ export * from './screens';
 // ============================================================================
 
 /**
- * Custom hooks for authentication state and other common functionality
+ * Custom hooks for common functionality
  * Provides consistent interfaces across platforms
  */
 export * from './hooks';
@@ -41,16 +41,6 @@ export * from './hooks';
  * Includes cross-platform storage and error handling
  */
 export * from './api';
-
-// ============================================================================
-// AUTH - Authentication Components and Utilities
-// ============================================================================
-
-/**
- * Clerk authentication wrappers and utilities
- * Platform-agnostic authentication interface
- */
-export * from './auth';
 
 // ============================================================================
 // UTILS - Utility Functions

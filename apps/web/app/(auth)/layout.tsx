@@ -2,7 +2,7 @@
 
 import { useAuth } from '@clerk/nextjs';
 import { UIProvider } from '@u3/ui';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function AuthLayout({
@@ -11,12 +11,13 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const { isSignedIn } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (isSignedIn) {
-      redirect('/');
+      router.push('/');
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, router]);
 
   if (isSignedIn) {
     return null;
