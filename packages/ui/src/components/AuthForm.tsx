@@ -1,6 +1,15 @@
 'use client';
 
-import { Button, Input, Paragraph, Spinner, Text, YStack } from 'tamagui';
+import {
+  AnimatePresence,
+  Button,
+  Input,
+  Paragraph,
+  Spinner,
+  Text,
+  Theme,
+  YStack,
+} from 'tamagui';
 import type { AuthMode } from './AuthTabs';
 
 export interface AuthFormProps {
@@ -121,21 +130,30 @@ export function AuthForm({
         />
 
         {error && (
-          <Text color='$red10' fontSize='$3' textAlign='center'>
-            {error}
-          </Text>
+          <Theme name='error'>
+            <Text fontSize='$3' textAlign='center' color='$color'>
+              {error}
+            </Text>
+          </Theme>
         )}
 
         <YStack gap='$3'>
           <Button
             size='$4'
-            backgroundColor='$blue10'
-            color='white'
             fontWeight='600'
             onPress={onVerify}
             disabled={!canVerify}
             icon={
-              isLoading ? <Spinner color='white' size='small' /> : undefined
+              <AnimatePresence>
+                {isLoading && (
+                  <Spinner
+                    size='small'
+                    animation='quick'
+                    enterStyle={{ opacity: 0, scale: 0.5 }}
+                    exitStyle={{ opacity: 0, scale: 0.5 }}
+                  />
+                )}
+              </AnimatePresence>
             }
           >
             {isLoading ? 'Verifying...' : 'Verify Email'}
@@ -192,19 +210,32 @@ export function AuthForm({
       </YStack>
 
       {error && (
-        <Text color='$red10' fontSize='$3' textAlign='center'>
-          {error}
-        </Text>
+        <Theme name='error'>
+          <Text fontSize='$3' textAlign='center' color='$color'>
+            {error}
+          </Text>
+        </Theme>
       )}
 
       <Button
         size='$4'
-        backgroundColor='$blue10'
-        color='white'
         fontWeight='600'
         onPress={onSubmit}
         disabled={!canSubmit}
-        icon={isLoading ? <Spinner color='white' size='small' /> : undefined}
+        icon={
+          <AnimatePresence>
+            {isLoading && (
+              <Spinner
+                size='small'
+                animation='quick'
+                position='absolute'
+                left='60%'
+                enterStyle={{ opacity: 0, scale: 0.5 }}
+                exitStyle={{ opacity: 0, scale: 0.5 }}
+              />
+            )}
+          </AnimatePresence>
+        }
       >
         {isLoading
           ? isSignUp
@@ -218,7 +249,7 @@ export function AuthForm({
       {isSignUp && (
         <Paragraph
           fontSize='$2'
-          color='$gray10'
+          color='$color10'
           textAlign='center'
           lineHeight='$3'
         >

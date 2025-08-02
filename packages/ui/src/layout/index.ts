@@ -6,6 +6,12 @@ export {
   type AuthLayoutProps,
 } from './AuthLayout';
 
+// Home/Landing layout
+export {
+  HomeLayout,
+  type HomeLayoutProps,
+} from './HomeLayout';
+
 // Other layouts
 export {
   LoadingLayout,

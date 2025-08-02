@@ -10,12 +10,12 @@ export interface AuthLayoutProps {
 }
 
 /**
- * Minimal centered layout for authentication pages
- * Provides a clean, distraction-free environment
+ * Enhanced layout for authentication pages with card design and shadows
+ * Provides a polished, professional environment
  */
 export function AuthLayout({
   children,
-  backgroundColor = '$background',
+  backgroundColor = '$color1',
 }: AuthLayoutProps) {
   return (
     <View flex={1} backgroundColor={backgroundColor}>
@@ -24,7 +24,7 @@ export function AuthLayout({
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: 'center',
-          paddingHorizontal: 24,
+          paddingHorizontal: 20,
           paddingVertical: 32,
         }}
         showsVerticalScrollIndicator={false}
@@ -33,7 +33,7 @@ export function AuthLayout({
           flex={1}
           justifyContent='center'
           alignItems='center'
-          maxWidth={400}
+          maxWidth={440}
           width='100%'
           alignSelf='center'
           gap='$6'

@@ -1,36 +1,18 @@
+import { HomeLayout, type HomeLayoutProps } from '@u3/ui';
 import type React from 'react';
-import { Button, H1, Paragraph, YStack } from 'tamagui';
 
 /**
  * Props for the HomeScreen component
+ * Extends HomeLayoutProps for UI consistency
  */
-export interface HomeScreenProps {
-  /**
-   * Title text for the landing page
-   */
-  title?: string;
-  /**
-   * Subtitle text for the landing page
-   */
-  subtitle?: string;
-  /**
-   * Custom button text
-   */
-  buttonText?: string;
-  /**
-   * Callback when sign-in button is clicked
-   */
-  onSignInClick?: () => void;
-  /**
-   * Custom styling
-   */
-  style?: Record<string, unknown>;
+export interface HomeScreenProps extends HomeLayoutProps {
+  // No additional props needed - all UI props come from HomeLayoutProps
 }
 
 /**
- * Cross-platform public landing page component
- * Shows welcome content and sign-in call-to-action
- * Uses Tamagui for cross-platform compatibility
+ * Cross-platform home screen business logic component
+ * Delegates UI rendering to HomeLayout from @u3/ui
+ * Handles any business logic and state management for the landing page
  */
 export function HomeScreen({
   title = 'Welcome to U3-Stack',
@@ -40,49 +22,12 @@ export function HomeScreen({
   style,
 }: HomeScreenProps): React.ReactElement {
   return (
-    <YStack
-      flex={1}
-      justifyContent='center'
-      alignItems='center'
-      paddingHorizontal='$6'
-      paddingVertical='$8'
-      gap='$6'
+    <HomeLayout
+      title={title}
+      subtitle={subtitle}
+      buttonText={buttonText}
+      onSignInClick={onSignInClick}
       style={style}
-    >
-      <H1 size='$10' color='$gray12' textAlign='center' maxWidth='$20'>
-        {title}
-      </H1>
-
-      <Paragraph
-        size='$5'
-        color='$gray11'
-        textAlign='center'
-        maxWidth='$18'
-        lineHeight='$6'
-      >
-        {subtitle}
-      </Paragraph>
-
-      <Button
-        size='$5'
-        backgroundColor='$blue10'
-        color='white'
-        fontWeight='600'
-        paddingHorizontal='$8'
-        paddingVertical='$4'
-        borderRadius='$4'
-        pressStyle={{
-          backgroundColor: '$blue11',
-          transform: [{ translateY: -1 }],
-        }}
-        hoverStyle={{
-          backgroundColor: '$blue11',
-          transform: [{ translateY: -1 }],
-        }}
-        onPress={onSignInClick}
-      >
-        {buttonText}
-      </Button>
-    </YStack>
+    />
   );
 }

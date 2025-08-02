@@ -29,8 +29,8 @@ export function LoadingLayout({ loadingComponent, style }: LoadingLayoutProps) {
     >
       {loadingComponent || (
         <YStack alignItems='center' gap='$4'>
-          <Spinner size='large' color='$blue10' />
-          <Text color='$gray11' fontSize='$4'>
+          <Spinner size='large' color='$color' />
+          <Text color='$color11' fontSize='$4'>
             Loading...
           </Text>
         </YStack>

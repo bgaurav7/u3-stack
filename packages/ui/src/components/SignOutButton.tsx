@@ -36,14 +36,14 @@ export function SignOutButton({
   style,
   variant = 'destructive',
 }: SignOutButtonProps) {
-  const backgroundColor = variant === 'destructive' ? '$red10' : '$blue10';
+  const themeName = variant === 'destructive' ? 'error' : 'accent';
 
   return (
-    <Theme inverse>
+    <Theme name={themeName}>
       <Button
         size='$4'
-        backgroundColor={backgroundColor}
-        color='white'
+        backgroundColor='$background'
+        color='$color'
         fontWeight='600'
         disabled={isLoading}
         onPress={onSignOut}
