@@ -1,4 +1,5 @@
 import { ClerkProvider } from '@clerk/nextjs';
+import { UIProvider } from '@u3/ui';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { TamaguiStyleTag } from './tamagui-style';
@@ -16,7 +17,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <head>
           <TamaguiStyleTag />
         </head>
-        <body>{children}</body>
+        <body>
+          <UIProvider defaultTheme='dark' disableRootThemeClass={false}>
+            {children}
+          </UIProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
