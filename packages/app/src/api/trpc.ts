@@ -6,6 +6,7 @@
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from '@u3/types';
+import { getStorage, STORAGE_KEYS } from './storage';
 
 // Safe platform detection without React Native dependencies
 const isReactNative =
@@ -19,86 +20,11 @@ const isReactNative =
 export const trpc = createTRPCReact<AppRouter>();
 
 /**
- * Platform-specific storage utilities
- */
-const storage = {
-  getItem: async (key: string): Promise<string | null> => {
-    if (!isReactNative) {
-      // Web environment
-      if (typeof window === 'undefined') return null;
-      try {
-        return localStorage.getItem(key);
-      } catch (error) {
-        console.warn('Failed to retrieve from localStorage:', error);
-        return null;
-      }
-    } else {
-      // React Native environment
-      try {
-        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
-        const AsyncStorage = eval('require')(
-          '@react-native-async-storage/async-storage'
-        ).default;
-        return await AsyncStorage.getItem(key);
-      } catch (error) {
-        console.warn('Failed to retrieve from AsyncStorage:', error);
-        return null;
-      }
-    }
-  },
-
-  setItem: async (key: string, value: string): Promise<void> => {
-    if (!isReactNative) {
-      // Web environment
-      if (typeof window === 'undefined') return;
-      try {
-        localStorage.setItem(key, value);
-      } catch (error) {
-        console.warn('Failed to save to localStorage:', error);
-      }
-    } else {
-      // React Native environment
-      try {
-        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
-        const AsyncStorage = eval('require')(
-          '@react-native-async-storage/async-storage'
-        ).default;
-        await AsyncStorage.setItem(key, value);
-      } catch (error) {
-        console.warn('Failed to save to AsyncStorage:', error);
-      }
-    }
-  },
-
-  removeItem: async (key: string): Promise<void> => {
-    if (!isReactNative) {
-      // Web environment
-      if (typeof window === 'undefined') return;
-      try {
-        localStorage.removeItem(key);
-      } catch (error) {
-        console.warn('Failed to remove from localStorage:', error);
-      }
-    } else {
-      // React Native environment
-      try {
-        // biome-ignore lint/security/noGlobalEval: Required to prevent webpack from bundling React Native dependencies
-        const AsyncStorage = eval('require')(
-          '@react-native-async-storage/async-storage'
-        ).default;
-        await AsyncStorage.removeItem(key);
-      } catch (error) {
-        console.warn('Failed to remove from AsyncStorage:', error);
-      }
-    }
-  },
-};
-
-/**
  * Get authentication token from platform-specific storage
  */
 async function getAuthToken(): Promise<string | null> {
-  return await storage.getItem('auth-token');
+  const storage = getStorage();
+  return await storage.getItem(STORAGE_KEYS.AUTH_TOKEN);
 }
 
 /**
@@ -176,7 +102,8 @@ export function handleTRPCError(error: unknown): string {
  */
 export const auth = {
   async setToken(token: string): Promise<void> {
-    await storage.setItem('auth-token', token);
+    const storage = getStorage();
+    await storage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
   },
 
   async getToken(): Promise<string | null> {
@@ -184,7 +111,8 @@ export const auth = {
   },
 
   async removeToken(): Promise<void> {
-    await storage.removeItem('auth-token');
+    const storage = getStorage();
+    await storage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
   },
 
   async isAuthenticated(): Promise<boolean> {

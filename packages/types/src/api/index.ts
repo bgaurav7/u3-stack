@@ -5,5 +5,6 @@ export * from './context';
 export * from './health';
 export * from './middleware';
 export * from './router';
+export * from './storage';
 export * from './todo';
 export * from './user';

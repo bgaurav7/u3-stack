@@ -64,6 +64,9 @@ importers:
       '@clerk/clerk-expo':
         specifier: ^2.14.12
         version: 2.14.12(95483bc42b96e780c8de4a2c6d3f1eba)
+      '@react-native-async-storage/async-storage':
+        specifier: ^2.2.0
+        version: 2.2.0(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))
       '@react-navigation/native':
         specifier: ^7.1.6
         version: 7.1.16(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -151,7 +154,7 @@ importers:
         version: 6.27.1(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tamagui/next-plugin':
         specifier: ^1.132.12
-        version: 1.132.15(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))
+        version: 1.132.15(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)
       '@u3/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -1809,6 +1812,11 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@react-native-async-storage/async-storage@2.2.0':
+    resolution: {integrity: sha512-gvRvjR5JAaUZF8tv2Kcq/Gbt3JHwbKFYfmb445rhOj6NUMx3qPLixmDx5pZAyb9at1bYvJ4/eTUipU5aki45xw==}
+    peerDependencies:
+      react-native: ^0.0.0-0 || >=0.65 <1.0
 
   '@react-native/assets-registry@0.79.5':
     resolution: {integrity: sha512-N4Kt1cKxO5zgM/BLiyzuuDNquZPiIgfktEQ6TqJ/4nKA8zr4e8KJgU6Tb2eleihDO4E24HmkvGc73naybKRz/w==}
@@ -4534,6 +4542,10 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
 
+  is-plain-obj@2.1.0:
+    resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
+    engines: {node: '>=8'}
+
   is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
     engines: {node: '>=0.10.0'}
@@ -4907,6 +4919,10 @@ packages:
 
   memoize-one@6.0.0:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
+
+  merge-options@3.0.4:
+    resolution: {integrity: sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==}
+    engines: {node: '>=10'}
 
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -8440,6 +8456,11 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.14
 
+  '@react-native-async-storage/async-storage@2.2.0(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))':
+    dependencies:
+      merge-options: 3.0.4
+      react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+
   '@react-native/assets-registry@0.79.5': {}
 
   '@react-native/babel-plugin-codegen@0.79.5(@babel/core@7.28.0)':
@@ -9386,21 +9407,21 @@ snapshots:
       - react-dom
       - react-native
 
-  '@tamagui/next-plugin@1.132.15(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))':
+  '@tamagui/next-plugin@1.132.15(@babel/core@7.28.0)(next@15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)':
     dependencies:
       '@babel/preset-react': 7.27.1(@babel/core@7.28.0)
       '@tamagui/proxy-worm': 1.132.15
       '@tamagui/react-native-svg': 1.132.15
       '@tamagui/static': 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.100.2(esbuild@0.25.8))
+      babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.100.2)
       browserslist: 4.25.1
-      css-loader: 6.11.0(webpack@5.100.2(esbuild@0.25.8))
-      esbuild-loader: 4.3.0(webpack@5.100.2(esbuild@0.25.8))
-      file-loader: 6.2.0(webpack@5.100.2(esbuild@0.25.8))
-      html-webpack-plugin: 5.6.3(webpack@5.100.2(esbuild@0.25.8))
+      css-loader: 6.11.0(webpack@5.100.2)
+      esbuild-loader: 4.3.0(webpack@5.100.2)
+      file-loader: 6.2.0(webpack@5.100.2)
+      html-webpack-plugin: 5.6.3(webpack@5.100.2)
       next: 15.4.4(@babel/core@7.28.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      tamagui-loader: 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8))
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)))(webpack@5.100.2(esbuild@0.25.8))
+      tamagui-loader: 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2)
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.100.2))(webpack@5.100.2)
     transitivePeerDependencies:
       - '@babel/core'
       - '@rspack/core'
@@ -10610,12 +10631,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.2.1(@babel/core@7.28.0)(webpack@5.100.2(esbuild@0.25.8)):
+  babel-loader@9.2.1(@babel/core@7.28.0)(webpack@5.100.2):
     dependencies:
       '@babel/core': 7.28.0
       find-cache-dir: 4.0.0
       schema-utils: 4.3.2
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
 
   babel-plugin-istanbul@6.1.1:
     dependencies:
@@ -11106,7 +11127,7 @@ snapshots:
     dependencies:
       hyphenate-style-name: 1.1.0
 
-  css-loader@6.11.0(webpack@5.100.2(esbuild@0.25.8)):
+  css-loader@6.11.0(webpack@5.100.2):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -11117,7 +11138,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.2
     optionalDependencies:
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
 
   css-select@4.3.0:
     dependencies:
@@ -11410,12 +11431,12 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
-  esbuild-loader@4.3.0(webpack@5.100.2(esbuild@0.25.8)):
+  esbuild-loader@4.3.0(webpack@5.100.2):
     dependencies:
       esbuild: 0.25.8
       get-tsconfig: 4.10.1
       loader-utils: 2.0.4
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
       webpack-sources: 1.4.3
 
   esbuild-plugin-es5@2.1.1(esbuild@0.25.8):
@@ -11771,11 +11792,11 @@ snapshots:
     dependencies:
       escape-string-regexp: 1.0.5
 
-  file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)):
+  file-loader@6.2.0(webpack@5.100.2):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
 
   filelist@1.0.4:
     dependencies:
@@ -12076,7 +12097,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.43.1
 
-  html-webpack-plugin@5.6.3(webpack@5.100.2(esbuild@0.25.8)):
+  html-webpack-plugin@5.6.3(webpack@5.100.2):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -12084,7 +12105,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.2.2
     optionalDependencies:
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
 
   htmlparser2@6.1.0:
     dependencies:
@@ -12214,6 +12235,8 @@ snapshots:
   is-interactive@1.0.0: {}
 
   is-number@7.0.0: {}
+
+  is-plain-obj@2.1.0: {}
 
   is-plain-object@2.0.4:
     dependencies:
@@ -12610,6 +12633,10 @@ snapshots:
   memoize-one@5.2.1: {}
 
   memoize-one@6.0.0: {}
+
+  merge-options@3.0.4:
+    dependencies:
+      is-plain-obj: 2.1.0
 
   merge-stream@2.0.0: {}
 
@@ -13931,13 +13958,13 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tamagui-loader@1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2(esbuild@0.25.8)):
+  tamagui-loader@1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(webpack@5.100.2):
     dependencies:
       '@tamagui/cli-color': 1.132.15
       '@tamagui/core': 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/static': 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/web': 1.132.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      esbuild-loader: 4.3.0(webpack@5.100.2(esbuild@0.25.8))
+      esbuild-loader: 4.3.0(webpack@5.100.2)
       esm-resolve: 1.0.11
       fs-extra: 11.3.0
       loader-utils: 3.3.1
@@ -14042,16 +14069,14 @@ snapshots:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.14(esbuild@0.25.8)(webpack@5.100.2(esbuild@0.25.8)):
+  terser-webpack-plugin@5.3.14(webpack@5.100.2):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.29
       jest-worker: 27.5.1
       schema-utils: 4.3.2
       serialize-javascript: 6.0.2
       terser: 5.43.1
-      webpack: 5.100.2(esbuild@0.25.8)
-    optionalDependencies:
-      esbuild: 0.25.8
+      webpack: 5.100.2
 
   terser@5.43.1:
     dependencies:
@@ -14219,14 +14244,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@5.100.2(esbuild@0.25.8)))(webpack@5.100.2(esbuild@0.25.8)):
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.100.2))(webpack@5.100.2):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
-      webpack: 5.100.2(esbuild@0.25.8)
+      webpack: 5.100.2
     optionalDependencies:
-      file-loader: 6.2.0(webpack@5.100.2(esbuild@0.25.8))
+      file-loader: 6.2.0(webpack@5.100.2)
 
   use-latest-callback@0.2.4(react@19.0.0):
     dependencies:
@@ -14286,7 +14311,7 @@ snapshots:
 
   webpack-sources@3.3.3: {}
 
-  webpack@5.100.2(esbuild@0.25.8):
+  webpack@5.100.2:
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8
@@ -14310,7 +14335,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.2
       tapable: 2.2.2
-      terser-webpack-plugin: 5.3.14(esbuild@0.25.8)(webpack@5.100.2(esbuild@0.25.8))
+      terser-webpack-plugin: 5.3.14(webpack@5.100.2)
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:
