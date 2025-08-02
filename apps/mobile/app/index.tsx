@@ -1,15 +1,21 @@
-import { PrimitivesSample } from '@u3/ui';
-import { Stack } from 'expo-router';
+import { useAuth } from '@clerk/clerk-expo';
+import { HomeScreen } from '@u3/app';
+import { LoadingLayout } from '@u3/ui';
+import { Redirect, router } from 'expo-router';
 
-export default function HomePage() {
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          title: 'U3-Stack Mobile',
-        }}
-      />
-      <PrimitivesSample />
-    </>
-  );
+export default function RootPage() {
+  const { isSignedIn, isLoaded } = useAuth();
+
+  // Wait for auth to load
+  if (!isLoaded) {
+    return <LoadingLayout />;
+  }
+
+  // If signed in, redirect to protected app
+  if (isSignedIn) {
+    return <Redirect href='/app' />;
+  }
+
+  // If signed out, show landing page with sign in option
+  return <HomeScreen onSignInClick={() => router.push('/auth')} />;
 }

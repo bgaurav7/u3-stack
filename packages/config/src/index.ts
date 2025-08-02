@@ -6,7 +6,6 @@
 // Export environment configuration
 export { default as envConfig } from './env';
 export {
-  type Config,
   config,
   initializeConfig,
   isBrowser,

@@ -7,7 +7,6 @@ const nextConfig = {
     'expo',
     'expo-router',
     '@u3/ui',
-    '@u3/config',
     '@u3/types',
     'tamagui',
     '@tamagui/config',
@@ -49,13 +48,8 @@ const nextConfig = {
 
 const tamaguiConfig = withTamagui({
   config: '../../packages/ui/src/config/tamagui.config.ts',
-  components: ['tamagui', '@u3/ui'],
-  importsWhitelist: ['constants.js', 'colors.js'],
-  logTimings: true,
-  disableExtraction: process.env.NODE_ENV === 'development',
-  experimental: {
-    optimizeCss: true,
-  },
+  components: ['tamagui'], // Only core tamagui
+  disableExtraction: true, // Disable all extraction for now
 });
 
 module.exports = tamaguiConfig(nextConfig);

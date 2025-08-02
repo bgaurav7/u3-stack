@@ -1,14 +1,34 @@
 'use client';
 
-import { PrimitivesSample, UIProvider } from '@u3/ui';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { HomeScreen } from '@u3/app';
+import { LoadingLayout, UIProvider } from '@u3/ui';
+import { useRouter } from 'next/navigation';
 import type React from 'react';
+import { useEffect } from 'react';
 
 export default function HomePage(): React.ReactElement {
+  const router = useRouter();
+
   return (
     <UIProvider>
-      <div style={{ minHeight: '100vh', flex: 1 }}>
-        <PrimitivesSample />
-      </div>
+      {/* If signed in, redirect to /home */}
+      <SignedIn>
+        <AutoRedirect router={router} />
+      </SignedIn>
+
+      {/* If signed out, show landing page */}
+      <SignedOut>
+        <HomeScreen onSignInClick={() => router.push('/auth')} />
+      </SignedOut>
     </UIProvider>
   );
+}
+
+function AutoRedirect({ router }: { router: ReturnType<typeof useRouter> }) {
+  useEffect(() => {
+    router.push('/app');
+  }, [router]);
+
+  return <LoadingLayout />;
 }

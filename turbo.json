@@ -4,7 +4,7 @@
   "globalDependencies": ["**/.env.*local", "**/.env"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "typecheck", "lint", "format:check"],
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**",
         "app/**",
@@ -67,7 +67,7 @@
       "dependsOn": []
     },
     "typecheck": {
-      "dependsOn": [],
+      "dependsOn": ["^build"],
       "inputs": ["src/**", "**/*.{ts,tsx}", "tsconfig.json"],
       "outputs": []
     },

@@ -1,8 +1,10 @@
 /**
- * Type-safe environment configuration for U3-Stack using dotenv-flow and env-var
+ * Server-side environment configuration for U3-Stack using dotenv-flow and env-var
+ * This config is now server-only since individual apps use local .env files for client-side variables
  */
 
 import { resolve } from 'node:path';
+import type { Config } from '@u3/types';
 import { config as dotenvConfig } from 'dotenv-flow';
 import env from 'env-var';
 
@@ -51,8 +53,8 @@ function getEnvEnum<T extends string>(
     .asEnum([...allowedValues]) as T;
 }
 
-// Create a type-safe configuration object that works in both browser and server
-const config = {
+// Create a type-safe configuration object for server-side use
+const config: Config = {
   app: {
     nodeEnv: getEnvEnum(
       'NODE_ENV',
@@ -73,21 +75,17 @@ const config = {
     ),
   },
   auth: {
-    clerkPublishableKey: getEnvVar('CLERK_PUBLISHABLE_KEY'),
     clerkSecretKey: getEnvVar('CLERK_SECRET_KEY'),
   },
   database: {
     url: getEnvVar('DATABASE_URL'),
     directUrl: getEnvVar('DATABASE_DIRECT_URL'),
   },
-  api: {
-    url: getEnvVar('API_URL', 'http://localhost:3000/api'),
-  },
   features: {
     analytics: getEnvBoolean('ENABLE_ANALYTICS'),
     errorTracking: getEnvBoolean('ENABLE_ERROR_TRACKING'),
   },
-} as const;
+};
 
 // Environment-specific helpers
 export const isDevelopment = config.app.nodeEnv === 'development';
@@ -106,9 +104,6 @@ export function validateConfig(): void {
   try {
     // Validate required production variables
     if (isProduction) {
-      if (!config.auth.clerkPublishableKey) {
-        errors.push('CLERK_PUBLISHABLE_KEY is required in production');
-      }
       if (!config.auth.clerkSecretKey) {
         errors.push('CLERK_SECRET_KEY is required in production');
       }
@@ -138,14 +133,6 @@ export function validateConfig(): void {
         new URL(config.app.url);
       } catch {
         errors.push('APP_URL must be a valid URL');
-      }
-    }
-
-    if (config.api.url) {
-      try {
-        new URL(config.api.url);
-      } catch {
-        errors.push('API_URL must be a valid URL');
       }
     }
   } catch (error) {
@@ -183,11 +170,6 @@ export function initializeConfig(): void {
     }
   }
 }
-
-/**
- * Type definitions for the configuration object
- */
-export type Config = typeof config;
 
 /**
  * Export the configuration object

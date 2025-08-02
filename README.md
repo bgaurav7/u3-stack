@@ -364,9 +364,8 @@ validateConfig(); // Throws error if validation fails
 
 ### 📦 Package Imports
 ```typescript
-// Feature-based imports
-import { createTodo, updateTodo } from '@u3/features/todo';
-import { signIn, signOut } from '@u3/features/auth';
+// API imports (features are now part of the API package)
+import { authRouter, todoRouter } from '@u3/api';
 
 // UI component imports
 import { Button, Input } from '@u3/ui/core';

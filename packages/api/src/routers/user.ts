@@ -4,12 +4,12 @@
  */
 
 import { TRPCError } from '@trpc/server';
-import { userService } from '@u3/features/user';
+import { userService } from '../features/user';
 import {
   createUserSchema,
   updateUserSchema,
   userIdSchema,
-} from '@u3/features/user/schema';
+} from '../features/user/schema';
 import { protectedProcedure, publicProcedure, router } from '../trpc';
 
 export const userRouter = router({

@@ -1,15 +1,17 @@
 /**
  * Environment configuration exports
- * Provides centralized access to all environment-related utilities
+ * Server-side only configuration for U3-Stack
  */
 
-// Default export for convenience
+// Export server-side config (no browser support needed since apps use local .env files)
 export {
-  type Config,
   config,
   config as default,
+  initializeConfig,
+  isBrowser,
   isDevelopment,
   isProduction,
+  isServer,
   isTest,
   validateConfig,
 } from './config';

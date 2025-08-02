@@ -18,12 +18,13 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint . --write",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "clean": "rm -rf dist .turbo node_modules",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format"
   },
   "dependencies": {
+    "@u3/types": "workspace:*",
     "dotenv-flow": "^4.1.0",
     "env-var": "^7.5.0",
     "tslib": "^2.8.1"

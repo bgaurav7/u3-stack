@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { Button, Card, Text, YStack } from 'tamagui';
+import { Button, Card, Text, Theme, YStack } from 'tamagui';
 
 export interface PageNotFoundProps {
   /** Custom title for the error page */
@@ -36,13 +36,15 @@ export function PageNotFound({
           <Text fontSize='$6' fontWeight='600' textAlign='center'>
             {title}
           </Text>
-          <Text fontSize='$4' color='$gray10' textAlign='center'>
+          <Text fontSize='$4' color='$color11' textAlign='center'>
             {message}
           </Text>
           {actionButton || (
-            <Button size='$4' backgroundColor='$color' color='white'>
-              Go Home
-            </Button>
+            <Theme name='accent'>
+              <Button size='$4' backgroundColor='$background' color='$color'>
+                Go Home
+              </Button>
+            </Theme>
           )}
         </YStack>
       </Card>

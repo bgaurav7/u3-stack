@@ -1,5 +1,6 @@
-import { Button, PageNotFound } from '@u3/ui';
+import { PageNotFound } from '@u3/ui';
 import { router, Stack } from 'expo-router';
+import { Button } from 'tamagui';
 
 export default function NotFound() {
   return (

@@ -19,6 +19,9 @@ export const config = createTamagui({
   tokens,
 });
 
+// Default export for webpack loader compatibility
+export default config;
+
 // Types for the Tamagui configuration
 export type AppConfig = typeof config;
 

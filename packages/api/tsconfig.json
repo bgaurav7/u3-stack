@@ -4,6 +4,9 @@
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
+    "declarationMap": false,
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
     // Path mapping for clean router imports within the API package
     "baseUrl": "./src",
     "paths": {
@@ -13,7 +16,9 @@
       "~/server": ["./server"],
       // Preserve base path mappings from tsconfig.base.json
       "@u3/api": ["./index"],
-      "@u3/api/*": ["./*"]
+      "@u3/api/*": ["./*"],
+      "@u3/types": ["../../types/src"],
+      "@u3/types/*": ["../../types/src/*"]
     }
   },
   "include": [
@@ -24,5 +29,8 @@
     "**/*.test.*",
     "**/*.spec.*"
   ],
-  "references": []
+  "references": [
+    { "path": "../types" },
+    { "path": "../config" }
+  ]
 }

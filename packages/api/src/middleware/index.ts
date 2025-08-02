@@ -10,22 +10,7 @@ export {
   createSimpleMiddleware,
   SimpleMiddleware,
 } from './base';
-// Base middleware types and interfaces
-export type {
-  AuthenticatedContext,
-  AuthToken,
-  ComposedMiddleware,
-  MiddlewareConfig,
-  MiddlewareContext,
-  MiddlewareErrorHandler,
-  MiddlewareFunction,
-  MiddlewareMetadata,
-  MiddlewarePipeline,
-  MiddlewareResult,
-  RequestLog,
-  UserSession,
-  ValidationError,
-} from './types';
+
 // Middleware composition utilities
 export {
   composeMiddleware,

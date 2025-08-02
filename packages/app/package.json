@@ -1,0 +1,46 @@
+{
+  "name": "@u3/app",
+  "version": "0.1.0",
+  "description": "Cross-platform app package with authentication logic, business logic for screens, and utilities",
+  "main": "dist/cjs",
+  "module": "dist/jsx",
+  "module:jsx": "src",
+  "exports": {
+    ".": {
+      "import": "./dist/jsx/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tamagui-build --skip-types",
+    "dev": "tamagui-build --skip-types --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --write",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
+    "validate": "pnpm typecheck && pnpm lint && pnpm format"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.40.1",
+    "@trpc/client": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@u3/types": "workspace:*",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tamagui/build": "^1.132.12",
+    "@types/react": "~19.0.2",
+    "typescript": "~5.8.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
