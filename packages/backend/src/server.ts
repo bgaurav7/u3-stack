@@ -67,14 +67,11 @@ export async function createContext(
             (verifiedToken.email as string) ||
             (verifiedToken.email_address as string) ||
             '',
-          name:
-            (verifiedToken.name as string) ||
-            `${(verifiedToken.first_name as string) || ''} ${(verifiedToken.last_name as string) || ''}`.trim() ||
-            'Unknown User',
+          name: (verifiedToken.name as string) || 'Unknown User',
         };
       }
-    } catch (_error) {
-      console.error('Clerk token verification failed');
+    } catch (error) {
+      console.error('Clerk token verification failed:', error);
       // User remains undefined, will be handled by auth middleware
     }
   }

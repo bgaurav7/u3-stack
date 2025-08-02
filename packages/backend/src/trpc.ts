@@ -45,7 +45,7 @@ const authMiddleware = t.middleware(async ({ next, ctx }) => {
   // If no user in context, authentication is required but missing
   throw new TRPCError({
     code: 'UNAUTHORIZED',
-    message: 'Authentication required',
+    message: 'Valid authentication token required',
   });
 });
 
