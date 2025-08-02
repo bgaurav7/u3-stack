@@ -1,13 +1,13 @@
 'use client';
 
 import { SignedIn, SignedOut } from '@clerk/nextjs';
-import { HomeScreen } from '@u3/frontend';
+import { HomePage } from '@u3/frontend';
 import { LoadingLayout } from '@u3/ui';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useEffect } from 'react';
 
-export default function HomePage(): React.ReactElement {
+export default function HomeRoute(): React.ReactElement {
   const router = useRouter();
 
   return (
@@ -19,7 +19,7 @@ export default function HomePage(): React.ReactElement {
 
       {/* If signed out, show landing page */}
       <SignedOut>
-        <HomeScreen onSignInClick={() => router.push('/auth')} />
+        <HomePage onSignInClick={() => router.push('/auth')} />
       </SignedOut>
     </>
   );

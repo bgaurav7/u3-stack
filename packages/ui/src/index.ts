@@ -22,7 +22,7 @@ export {
 export { config } from './config';
 
 // Layout (updated exports)
-export * from './layout';
+export * from './layouts';
 
 // Provider
 export type { UIProviderProps } from './provider/UIProvider';

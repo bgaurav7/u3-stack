@@ -59,7 +59,9 @@
       "!*.d.ts",
       "!**/tsconfig*.json",
       "!examples/**",
-      "!**/.tamagui/tamagui.config.json"
+      "!**/.tamagui/tamagui.config.json",
+      "!**/ios/**",
+      "!**/android/**"
     ],
     "experimentalScannerIgnores": [
       "node_modules",

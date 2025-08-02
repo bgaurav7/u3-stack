@@ -3,11 +3,13 @@
  */
 
 import { useAuth, useSignIn, useSignUp, useUser } from '@clerk/nextjs';
-import type { AuthProvider } from '@u3/types/app/auth';
+import { setAuthTokenGetter } from '@u3/frontend/api/trpc';
+import type { AuthProvider } from '@u3/types';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 export function useClerkAuthProvider(): AuthProvider {
-  const { isSignedIn, isLoaded, signOut: clerkSignOut } = useAuth();
+  const { isSignedIn, isLoaded, signOut: clerkSignOut, getToken } = useAuth();
   const { user } = useUser();
   const {
     signIn,
@@ -20,6 +22,22 @@ export function useClerkAuthProvider(): AuthProvider {
     isLoaded: signUpLoaded,
   } = useSignUp();
   const router = useRouter();
+
+  // Register the auth token getter once with a function that checks current state
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We intentionally register only once
+  useMemo(() => {
+    setAuthTokenGetter(async () => {
+      if (isLoaded && isSignedIn && getToken) {
+        try {
+          return await getToken();
+        } catch (error) {
+          console.error('Failed to get Clerk token:', error);
+          return null;
+        }
+      }
+      return null;
+    });
+  }, []); // Empty dependency array - register once
 
   // Transform Clerk user to our AppAuthUser interface
   const transformedUser = user

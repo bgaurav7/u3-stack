@@ -1,9 +1,9 @@
 import { useSignIn, useSignUp } from '@clerk/clerk-expo';
-import { AuthScreen } from '@u3/frontend';
+import { AuthPage } from '@u3/frontend';
 import { AuthLayout } from '@u3/ui';
 import { router } from 'expo-router';
 
-export default function AuthPage() {
+export default function AuthRoute() {
   const clerkHooks = {
     useSignIn,
     useSignUp,
@@ -11,9 +11,9 @@ export default function AuthPage() {
 
   return (
     <AuthLayout>
-      <AuthScreen
+      <AuthPage
         clerkHooks={clerkHooks}
-        onNavigate={path => router.replace(path)}
+        onNavigate={(path: string) => router.replace(path)}
         onSuccess={() => router.replace('/app')}
       />
     </AuthLayout>

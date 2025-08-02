@@ -1,11 +1,10 @@
+import { verifyToken } from '@clerk/backend';
 import type { ProcedureRouterRecord } from '@trpc/server';
-import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 import type { Context } from '@u3/types';
-import { authRouter } from './routers/auth';
 // Router imports will be added here when routers are implemented
 import { healthRouter } from './routers/health';
 import { todoRouter } from './routers/todo';
-import { userRouter } from './routers/user';
 // Import tRPC utilities from separate file to avoid circular dependencies
 import { router } from './trpc';
 
@@ -37,17 +36,57 @@ export const appRouter = createAppRouter({
   // Feature routers:
   health: healthRouter,
   todo: todoRouter,
-  auth: authRouter,
-  user: userRouter,
 });
 
 /**
- * Context creator for Next.js integration
- * Creates the context object that will be passed to all tRPC procedures
+ * Context creator for Next.js App Router with Clerk authentication
+ * Extracts user information from Clerk JWT tokens and creates tRPC context
  */
-export function createContext({ req, res }: CreateNextContextOptions): Context {
+export async function createContext(
+  opts: FetchCreateContextFnOptions
+): Promise<Context> {
+  const request = opts.req;
+
+  // Extract auth token from headers
+  const authHeader = request.headers.get('authorization');
+  let user: { id: string; email: string; name: string } | undefined;
+
+  if (authHeader?.startsWith('Bearer ')) {
+    try {
+      const token = authHeader.substring(7);
+      // Verify the session token with Clerk
+      const verifiedToken = await verifyToken(token, {
+        secretKey: process.env.CLERK_SECRET_KEY,
+      });
+
+      if (verifiedToken.sub) {
+        // Extract user details from JWT claims to avoid Clerk API call
+        user = {
+          id: verifiedToken.sub,
+          email:
+            (verifiedToken.email as string) ||
+            (verifiedToken.email_address as string) ||
+            '',
+          name: (verifiedToken.name as string) || 'Unknown User',
+        };
+      }
+    } catch (error) {
+      console.error('Clerk token verification failed:', error);
+      // User remains undefined, will be handled by auth middleware
+    }
+  }
+
   return {
-    req,
-    res,
+    req: {
+      headers: Object.fromEntries(request.headers.entries()),
+      url: request.url,
+      method: request.method,
+    } as any,
+    res: {
+      setHeader: (_name: string, _value: string) => {
+        // Headers managed by App Router
+      },
+    } as any,
+    user, // Add user to context if authenticated
   };
 }

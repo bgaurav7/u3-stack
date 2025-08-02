@@ -1,4 +1,4 @@
-import type { AppAuthState, AuthProvider } from '@u3/types/app/auth';
+import type { AppAuthState, AuthProvider } from '@u3/types';
 
 /**
  * Custom hook that provides authentication state

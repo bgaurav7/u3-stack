@@ -63,7 +63,7 @@ The U3 Stack backend is powered by **tRPC** and **Next.js API Routes**, ensuring
 
 The U3 Stack uses **Clerk** for seamless authentication:
 
-- **🔐 Authentication Flows**: Sign In / Sign Up screens.
+- **🔐 Authentication Flows**: Sign In / Sign Up pages.
 - **🔄 Session Management**: Clerk handles user sessions securely.
 - **🛠 Integration**: Clerk JWTs are used in tRPC calls for user identity verification.
 
@@ -325,7 +325,7 @@ The U3 Stack is organized as a monorepo to ensure modularity, scalability, and m
 - **`packages/frontend/`**: Shared frontend utilities.
   - **`api/`**: API client utilities.
   - **`hooks/`**: Reusable React hooks.
-  - **`screens/`**: Screen components for the frontend.
+  - **`pages/`**: Page components for the frontend.
   - **`types/`**: TypeScript types for the frontend.
   - **`utils/`**: Utility functions for the frontend.
   - **`index.ts`**: Entry point for frontend utilities.

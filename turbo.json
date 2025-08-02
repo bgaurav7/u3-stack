@@ -26,6 +26,16 @@
       ],
       "outputs": ["dist/**", "build/**", ".next/**", ".expo/**", "!**/cache/**"]
     },
+    "validate": {
+      "dependsOn": ["lint", "format", "typecheck"],
+      "inputs": [
+        "src/**",
+        "app/**",
+        "**/*.{ts,tsx,js,jsx}",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true,
@@ -70,9 +80,10 @@
       "cache": false,
       "dependsOn": []
     },
-    "format:check": {
+    "format:fix": {
       "inputs": ["src/**", "**/*.{ts,tsx,js,jsx,json}", "biome.json"],
       "outputs": [],
+      "cache": false,
       "dependsOn": []
     },
     "typecheck": {

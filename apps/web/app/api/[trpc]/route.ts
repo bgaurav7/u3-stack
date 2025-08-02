@@ -21,23 +21,7 @@ const handler = (req: Request) =>
     endpoint: '/api',
     req,
     router: appRouter,
-    createContext: ({ req, resHeaders }) => {
-      // Adapt the context for fetch adapter
-      // Note: Using 'any' here because we need to adapt App Router Request/Response
-      // to the Pages Router format expected by createContext
-      return createContext({
-        req: {
-          headers: Object.fromEntries(req.headers.entries()),
-          url: req.url,
-          method: req.method,
-        } as any, // App Router Request adapted to Pages Router format
-        res: {
-          setHeader: (name: string, value: string) => {
-            resHeaders?.set(name, value);
-          },
-        } as any, // App Router Response adapted to Pages Router format
-      });
-    },
+    createContext: createContext,
     onError: ({ error, path, input, type }) => {
       // Log error details for debugging
       console.error(`❌ tRPC Error on ${type} ${path}:`, {

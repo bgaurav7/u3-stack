@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@trpc/server": "^10.45.2",
+    "@clerk/backend": "^1.15.6",
     "zod": "^3.23.8",
     "@u3/types": "workspace:*"
   }

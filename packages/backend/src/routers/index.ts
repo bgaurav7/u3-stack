@@ -9,11 +9,7 @@
 // This allows consumers to import router types directly from the routers barrel
 export type {} from // Router type definitions will be added here when routers are implemented
 '../server';
-// Auth router - provides authentication and authorization endpoints
-export { authRouter } from './auth';
 // Health router - provides system health and status endpoints
 export { healthRouter } from './health';
 // Todo router - provides CRUD operations for todo management
 export { todoRouter } from './todo';
-// User router - provides user management endpoints
-export { userRouter } from './user';

@@ -23,5 +23,8 @@
     "format:fix": "biome format --write .",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
     "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
   }
 }
