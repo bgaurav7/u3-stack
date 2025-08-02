@@ -1,6 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NODE_ENV", "CI", "ANDROID_HOME", "JAVA_HOME", "PATH"],
+  "globalEnv": [
+    "NODE_ENV",
+    "CI",
+    "ANDROID_HOME",
+    "JAVA_HOME",
+    "PATH",
+    "CLERK_SECRET_KEY",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY"
+  ],
   "globalDependencies": ["**/.env.*local", "**/.env"],
   "tasks": {
     "build": {
