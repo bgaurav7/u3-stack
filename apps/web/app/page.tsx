@@ -2,7 +2,7 @@
 
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { HomeScreen } from '@u3/app';
-import { UIProvider } from '@u3/ui';
+import { LoadingLayout, UIProvider } from '@u3/ui';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useEffect } from 'react';
@@ -30,16 +30,5 @@ function AutoRedirect({ router }: { router: ReturnType<typeof useRouter> }) {
     router.push('/app');
   }, [router]);
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '80vh',
-      }}
-    >
-      Redirecting to app...
-    </div>
-  );
+  return <LoadingLayout />;
 }
