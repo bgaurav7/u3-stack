@@ -330,7 +330,7 @@
 ### Tasks:
 
 #### 8.1: Authentication UI (Clerk)
-- [ ] Implement Sign In / Sign Up screens using Clerk components
+- [ ] Implement Sign In / Sign Up pages using Clerk components
 - [ ] Create authenticated layout wrapper
 - [ ] Add optional profile section with sign out functionality
 - [ ] Test authentication flow on both web and mobile

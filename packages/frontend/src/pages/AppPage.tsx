@@ -1,4 +1,4 @@
-import type { AuthProvider } from '@u3/types/app/auth';
+import type { AuthProvider } from '@u3/types';
 import { LoadingLayout, type ProfileUser, UserProfileLayout } from '@u3/ui';
 import type React from 'react';
 import { useEffect } from 'react';

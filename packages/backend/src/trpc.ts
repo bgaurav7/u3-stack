@@ -28,50 +28,30 @@ export const publicProcedure = t.procedure;
 export const middleware = t.middleware;
 
 /**
- * Basic authentication middleware (placeholder implementation)
- * This will be moved to packages/api/src/middleware/auth.ts in a later task
- * Currently provides mock authentication for development
+ * Clerk-based authentication middleware
+ * Verifies Clerk JWT tokens and ensures user context is available
  */
 const authMiddleware = t.middleware(async ({ next, ctx }) => {
-  // Mock authentication - will be replaced with real auth logic in middleware package
-  const authHeader = ctx.req?.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'Authentication required',
+  // Check if user is already in context (from createContext)
+  if (ctx.user) {
+    return next({
+      ctx: {
+        ...ctx,
+        user: ctx.user,
+      },
     });
   }
 
-  const token = authHeader.substring(7);
-
-  // Mock user validation - will be replaced with real token validation
-  if (token !== 'valid-token') {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'Invalid token',
-    });
-  }
-
-  // Mock user object - will be replaced with real user lookup
-  const user = {
-    id: 'fd005279-cfd7-4968-8b66-32239c0c15cd',
-    email: 'user@example.com',
-    name: 'Test User',
-  };
-
-  return next({
-    ctx: {
-      ...ctx,
-      user,
-    },
+  // If no user in context, authentication is required but missing
+  throw new TRPCError({
+    code: 'UNAUTHORIZED',
+    message: 'Authentication required',
   });
 });
 
 /**
  * Logging middleware for request tracking
- * This will be moved to packages/api/src/middleware/logging.ts in a later task
- * Provides request timing and path logging for debugging
+ * Provides request timing and path logging for debugging and monitoring
  */
 const loggingMiddleware = t.middleware(async ({ path, type, next }) => {
   const start = Date.now();

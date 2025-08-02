@@ -4,22 +4,18 @@
  */
 
 import { TRPCError } from '@trpc/server';
+import { createTodoSchema, todoIdSchema, updateTodoSchema } from '@u3/types';
 import { todoService } from '../features/todo';
-import {
-  createTodoSchema,
-  todoIdSchema,
-  updateTodoSchema,
-} from '../features/todo/schema';
-import { protectedProcedure, publicProcedure, router } from '../trpc';
+import { protectedProcedure, router } from '../trpc';
 
 export const todoRouter = router({
   /**
-   * List all todos - public endpoint for demo purposes
-   * In production, this might be protected and filtered by user
+   * List user's todos - protected endpoint requiring authentication
+   * Returns only todos belonging to the authenticated user
    */
-  list: publicProcedure.query(async () => {
+  list: protectedProcedure.query(async ({ ctx }) => {
     try {
-      return await todoService.getAllTodos();
+      return await todoService.getAllTodosByUser(ctx.user.id);
     } catch (error) {
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
@@ -30,33 +26,35 @@ export const todoRouter = router({
   }),
 
   /**
-   * Get todo by ID - public endpoint for demo purposes
-   * In production, this might be protected and filtered by user ownership
+   * Get todo by ID - protected endpoint requiring authentication
+   * Returns todo only if it belongs to the authenticated user
    */
-  getById: publicProcedure.input(todoIdSchema).query(async ({ input }) => {
-    try {
-      const todo = await todoService.getTodoById(input.id);
+  getById: protectedProcedure
+    .input(todoIdSchema)
+    .query(async ({ input, ctx }) => {
+      try {
+        const todo = await todoService.getTodoById(input.id, ctx.user.id);
 
-      if (!todo) {
+        if (!todo) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: `Todo with id ${input.id} not found or you don't have permission to access it`,
+          });
+        }
+
+        return todo;
+      } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
+
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `Todo with id ${input.id} not found`,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch todo',
+          cause: error,
         });
       }
-
-      return todo;
-    } catch (error) {
-      if (error instanceof TRPCError) {
-        throw error;
-      }
-
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Failed to fetch todo',
-        cause: error,
-      });
-    }
-  }),
+    }),
 
   /**
    * Create new todo - protected endpoint requiring authentication

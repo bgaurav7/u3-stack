@@ -1,13 +1,13 @@
 /**
  * @u3/frontend - Cross-platform frontend package
  *
- * This package provides shared screens, hooks, API utilities, and authentication
+ * This package provides shared pages, hooks, API utilities, and authentication
  * interfaces that work across both web and React Native environments.
  *
  * Features:
  * - Platform-agnostic authentication interfaces
  * - tRPC client with React Query
- * - Cross-platform screens (Login, Home)
+ * - Cross-platform pages (Login, Home, App)
  * - Custom hooks for common functionality
  * - Utility functions for common operations
  */

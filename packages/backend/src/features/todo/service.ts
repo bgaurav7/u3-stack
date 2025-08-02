@@ -3,24 +3,23 @@
  */
 
 import type { CreateTodoInput, Todo, UpdateTodoInput } from '@u3/types';
+import { todoSchema } from '@u3/types';
 import { generateUUID } from '../../utils';
-import { todoSchema } from './schema';
 
 // In-memory storage for demo (replace with database in production)
 const todos: Todo[] = [];
 
 export const todoService = {
-  async getAllTodos(): Promise<Todo[]> {
-    return todos;
+  async getAllTodosByUser(userId: string): Promise<Todo[]> {
+    return todos.filter(todo => todo.userId === userId);
   },
 
-  // Test utility - clear all todos (for testing only)
-  _clearTodos(): void {
-    todos.length = 0;
-  },
-
-  async getTodoById(id: string): Promise<Todo | null> {
+  async getTodoById(id: string, userId?: string): Promise<Todo | null> {
     const todo = todos.find(t => t.id === id);
+    // If userId is provided, ensure the todo belongs to the user
+    if (todo && userId && todo.userId !== userId) {
+      return null;
+    }
     return todo || null;
   },
 

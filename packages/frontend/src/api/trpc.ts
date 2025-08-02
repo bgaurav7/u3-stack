@@ -6,7 +6,6 @@
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from '@u3/types';
-import { getStorage, STORAGE_KEYS } from './storage';
 
 // Safe platform detection without React Native dependencies
 const isReactNative =
@@ -20,11 +19,33 @@ const isReactNative =
 export const trpc = createTRPCReact<AppRouter>();
 
 /**
- * Get authentication token from platform-specific storage
+ * Global auth token getter for use in tRPC headers
+ * This will be set by the auth provider when available
+ */
+let getAuthTokenFn: (() => Promise<string | null>) | null = null;
+
+/**
+ * Set the auth token getter function
+ * This should be called by the auth provider during initialization
+ */
+export function setAuthTokenGetter(getter: () => Promise<string | null>) {
+  getAuthTokenFn = getter;
+}
+
+/**
+ * Get authentication token from the registered auth provider
  */
 async function getAuthToken(): Promise<string | null> {
-  const storage = getStorage();
-  return await storage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+  if (getAuthTokenFn) {
+    try {
+      return await getAuthTokenFn();
+    } catch (error) {
+      console.error('Failed to get auth token:', error);
+    }
+  }
+
+  // No token available
+  return null;
 }
 
 /**
@@ -98,24 +119,16 @@ export function handleTRPCError(error: unknown): string {
 }
 
 /**
- * Cross-platform authentication utilities
+ * Authentication utilities for proper Clerk integration
+ * Uses the registered auth provider for token management
  */
 export const auth = {
-  async setToken(token: string): Promise<void> {
-    const storage = getStorage();
-    await storage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
-  },
-
   async getToken(): Promise<string | null> {
     return await getAuthToken();
   },
 
-  async removeToken(): Promise<void> {
-    const storage = getStorage();
-    await storage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-  },
-
   async isAuthenticated(): Promise<boolean> {
+    // Check if we have a valid token
     const token = await getAuthToken();
     return token !== null && token.length > 0;
   },

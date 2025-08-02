@@ -18,9 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <TamaguiStyleTag />
         </head>
         <body>
-          <UIProvider defaultTheme='dark'>
-            {children}
-          </UIProvider>
+          <UIProvider defaultTheme='dark'>{children}</UIProvider>
         </body>
       </html>
     </ClerkProvider>

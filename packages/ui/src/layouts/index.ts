@@ -1,4 +1,4 @@
-// Existing layout components
+// Layout components for different page types
 
 // Authentication layout
 export {
