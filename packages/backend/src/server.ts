@@ -1,4 +1,4 @@
-import { createClerkClient, verifyToken } from '@clerk/backend';
+import { verifyToken } from '@clerk/backend';
 import type { ProcedureRouterRecord } from '@trpc/server';
 import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 import type { Context } from '@u3/types';
@@ -60,22 +60,21 @@ export async function createContext(
       });
 
       if (verifiedToken.sub) {
-        // Create Clerk client to get user details
-        const clerk = createClerkClient({
-          secretKey: process.env.CLERK_SECRET_KEY,
-        });
-
-        const clerkUser = await clerk.users.getUser(verifiedToken.sub);
+        // Extract user details from JWT claims to avoid Clerk API call
         user = {
-          id: clerkUser.id,
-          email: clerkUser.emailAddresses[0]?.emailAddress || '',
+          id: verifiedToken.sub,
+          email:
+            (verifiedToken.email as string) ||
+            (verifiedToken.email_address as string) ||
+            '',
           name:
-            `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() ||
+            (verifiedToken.name as string) ||
+            `${(verifiedToken.first_name as string) || ''} ${(verifiedToken.last_name as string) || ''}`.trim() ||
             'Unknown User',
         };
       }
-    } catch (error) {
-      console.error('Clerk token verification failed:', error);
+    } catch (_error) {
+      console.error('Clerk token verification failed');
       // User remains undefined, will be handled by auth middleware
     }
   }

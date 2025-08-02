@@ -70,9 +70,10 @@
       "cache": false,
       "dependsOn": []
     },
-    "format:check": {
+    "format:fix": {
       "inputs": ["src/**", "**/*.{ts,tsx,js,jsx,json}", "biome.json"],
       "outputs": [],
+      "cache": false,
       "dependsOn": []
     },
     "typecheck": {

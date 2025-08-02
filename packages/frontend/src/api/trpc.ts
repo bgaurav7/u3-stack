@@ -19,33 +19,78 @@ const isReactNative =
 export const trpc = createTRPCReact<AppRouter>();
 
 /**
- * Global auth token getter for use in tRPC headers
- * This will be set by the auth provider when available
+ * Auth Token Manager - Singleton pattern for robust token management
+ * Prevents race conditions and supports multiple auth provider instances
  */
-let getAuthTokenFn: (() => Promise<string | null>) | null = null;
+class AuthTokenManager {
+  private static instance: AuthTokenManager;
+  private tokenGetter: (() => Promise<string | null>) | null = null;
+
+  private constructor() {}
+
+  public static getInstance(): AuthTokenManager {
+    if (!AuthTokenManager.instance) {
+      AuthTokenManager.instance = new AuthTokenManager();
+    }
+    return AuthTokenManager.instance;
+  }
+
+  /**
+   * Set the auth token getter function
+   * This should be called by the auth provider during initialization
+   */
+  public setAuthTokenGetter(getter: () => Promise<string | null>): void {
+    this.tokenGetter = getter;
+  }
+
+  /**
+   * Get authentication token from the registered auth provider
+   */
+  public async getAuthToken(): Promise<string | null> {
+    if (this.tokenGetter) {
+      try {
+        return await this.tokenGetter();
+      } catch (_error) {
+        console.error('Failed to get auth token');
+        return null;
+      }
+    }
+
+    // No token available
+    return null;
+  }
+
+  /**
+   * Clear the auth token getter (useful for testing or cleanup)
+   */
+  public clearAuthTokenGetter(): void {
+    this.tokenGetter = null;
+  }
+}
+
+// Export singleton instance
+const authTokenManager = AuthTokenManager.getInstance();
 
 /**
  * Set the auth token getter function
  * This should be called by the auth provider during initialization
  */
 export function setAuthTokenGetter(getter: () => Promise<string | null>) {
-  getAuthTokenFn = getter;
+  authTokenManager.setAuthTokenGetter(getter);
+}
+
+/**
+ * Clear the auth token getter (useful for testing or cleanup)
+ */
+export function clearAuthTokenGetter(): void {
+  authTokenManager.clearAuthTokenGetter();
 }
 
 /**
  * Get authentication token from the registered auth provider
  */
 async function getAuthToken(): Promise<string | null> {
-  if (getAuthTokenFn) {
-    try {
-      return await getAuthTokenFn();
-    } catch (error) {
-      console.error('Failed to get auth token:', error);
-    }
-  }
-
-  // No token available
-  return null;
+  return authTokenManager.getAuthToken();
 }
 
 /**
