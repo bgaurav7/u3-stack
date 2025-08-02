@@ -159,7 +159,7 @@
 
 ### Test Process:
 
-- [ ] `curl /api/trpc/health.ping` returns expected JSON.
+- [x] `curl /api/health.ping` returns expected JSON.
 - [ ] Add vitest tests for tRPC procedures in `packages/api/`.
 - [ ] Add unit tests for feature services in `packages/features/*/`.
 - [ ] Add integration tests for API routes + validation.
