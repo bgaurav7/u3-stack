@@ -23,9 +23,7 @@ export { config } from './config';
 
 // Layout (updated exports)
 export * from './layout';
-// Primitives
-export type { ButtonProps } from './primitives/Button';
-export { Button } from './primitives/Button';
+
 // Provider
 export type { UIProviderProps } from './provider/UIProvider';
 export { UIProvider } from './provider/UIProvider';
