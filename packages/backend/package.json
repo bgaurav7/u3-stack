@@ -1,7 +1,7 @@
 {
-  "name": "@u3/api",
+  "name": "@u3/backend",
   "version": "0.1.0",
-  "description": "tRPC API package for U3-Stack - Interface layer for type-safe API routing",
+  "description": "Backend API package for U3-Stack - tRPC server with routers, middleware, and services",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

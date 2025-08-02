@@ -1,5 +1,5 @@
 import { useAuth } from '@clerk/clerk-expo';
-import { HomeScreen } from '@u3/app';
+import { HomeScreen } from '@u3/frontend';
 import { LoadingLayout } from '@u3/ui';
 import { Redirect, router } from 'expo-router';
 

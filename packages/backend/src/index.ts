@@ -1,11 +1,11 @@
 /**
- * Barrel exports for @u3/api package
+ * Barrel exports for @u3/backend package
  * This file provides clean import paths for consuming packages
  *
  * Usage examples:
- * - Frontend: import type { AppRouter } from '@u3/api'
- * - Feature packages: import { router, publicProcedure } from '@u3/api'
- * - Middleware: import { authMiddleware } from '@u3/api/middleware'
+ * - Frontend: import type { AppRouter } from '@u3/backend'
+ * - Feature packages: import { router, publicProcedure } from '@u3/backend'
+ * - Middleware: import { authMiddleware } from '@u3/backend/middleware'
  */
 
 // ============================================================================
@@ -61,6 +61,6 @@ export * from './middleware';
 
 /**
  * All feature routers for direct access if needed
- * Allows importing specific routers: import { healthRouter } from '@u3/api'
+ * Allows importing specific routers: import { healthRouter } from '@u3/backend'
  */
 export * from './routers';

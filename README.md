@@ -365,7 +365,7 @@ validateConfig(); // Throws error if validation fails
 ### 📦 Package Imports
 ```typescript
 // API imports (features are now part of the API package)
-import { authRouter, todoRouter } from '@u3/api';
+import { authRouter, todoRouter } from '@u3/backend';
 
 // UI component imports
 import { Button, Input } from '@u3/ui/core';

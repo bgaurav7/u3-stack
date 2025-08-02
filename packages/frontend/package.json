@@ -1,7 +1,7 @@
 {
-  "name": "@u3/app",
+  "name": "@u3/frontend",
   "version": "0.1.0",
-  "description": "Cross-platform app package with authentication logic, business logic for screens, and utilities",
+  "description": "Frontend package for U3-Stack - Cross-platform components, hooks, and client utilities",
   "main": "dist/cjs",
   "module": "dist/jsx",
   "module:jsx": "src",

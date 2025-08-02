@@ -4,7 +4,7 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { initializeStorage } from '@u3/app/api/storage';
+import { initializeStorage } from '@u3/frontend/api/storage';
 import type { StorageInterface } from '@u3/types';
 
 /**

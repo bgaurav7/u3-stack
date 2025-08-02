@@ -1,6 +1,6 @@
 // Barrel exports for all routers
 // This file provides clean imports for router modules
-// Enables importing routers as: import { healthRouter, todoRouter } from '@u3/api/routers'
+// Enables importing routers as: import { healthRouter, todoRouter } from '@u3/backend/routers'
 
 // Feature routers will be exported here as they are implemented
 // These exports will be uncommented when the respective router files are created

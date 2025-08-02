@@ -18,8 +18,8 @@
   "dependencies": {
     "@clerk/nextjs": "^6.27.1",
     "@tamagui/next-plugin": "^1.132.12",
-    "@u3/api": "workspace:*",
-    "@u3/app": "workspace:*",
+    "@u3/backend": "workspace:*",
+    "@u3/frontend": "workspace:*",
     "@u3/ui": "workspace:*",
     "@u3/types": "workspace:*",
     "dotenv-flow": "^4.1.0",
