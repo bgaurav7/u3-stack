@@ -20,26 +20,21 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format"
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.40.1",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
-    "@u3/types": "workspace:*",
-    "tslib": "^2.8.1"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0"
+    "@u3/types": "workspace:*"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.132.12",
-    "@types/react": "~19.0.2",
-    "typescript": "~5.8.3"
+    "@tamagui/build": "^1.132.12"
   },
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "publishConfig": {
     "access": "restricted"
   }

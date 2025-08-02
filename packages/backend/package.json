@@ -25,6 +25,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
@@ -34,16 +35,11 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format"
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
   },
   "dependencies": {
     "@trpc/server": "^10.45.2",
     "zod": "^3.23.8",
-    "tslib": "^2.8.1",
     "@u3/types": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/node": "^22.16.5",
-    "typescript": "~5.8.3"
   }
 }

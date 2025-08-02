@@ -27,7 +27,6 @@
     "postinstall": "pnpm run prepare"
   },
   "dependencies": {
-    "caniuse-lite": "^1.0.30001727",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tamagui": "^1.132.12"
@@ -35,10 +34,13 @@
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
     "@swc/helpers": "^0.5.17",
+    "@types/node": "^24.1.0",
     "@types/react": "~19.0.0",
     "@types/react-dom": "^19.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
+    "tslib": "^2.8.1",
+    "tsx": "^4.19.2",
     "turbo": "^2.5.5",
     "typescript": "~5.8.3"
   },
@@ -59,8 +61,11 @@
       "react-native-renderer": "19.0.0",
       "@types/react": "~19.0.0",
       "@types/react-dom": "^19.0.0",
+      "@types/node": "^24.1.0",
       "tamagui": "^1.132.12",
       "@tamagui/*": "^1.132.12",
+      "tslib": "^2.8.1",
+      "tsx": "^4.19.2",
       "typescript": "~5.8.3"
     },
     "onlyBuiltDependencies": [
