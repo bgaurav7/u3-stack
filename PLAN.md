@@ -155,7 +155,7 @@
 - [ ] Define todos router in `packages/api/routers/todo.ts`: basic CRUD operations.
 - [ ] Add Zod-based validation and error handling in feature schemas.
 - [ ] Create `createAppRouter()` in `packages/api/server.ts` to combine feature routers.
-- [ ] Setup tRPC API handler at `apps/web/src/pages/api/trpc/[trpc].ts` that imports from `@u3/api`.
+- [ ] Setup tRPC API handler at `apps/web/src/pages/api/trpc/[trpc].ts` that imports from `@u3/backend`.
 
 ### Test Process:
 
@@ -163,11 +163,11 @@
 - [ ] Add vitest tests for tRPC procedures in `packages/api/`.
 - [ ] Add unit tests for feature services in `packages/features/*/`.
 - [ ] Add integration tests for API routes + validation.
-- [ ] Test feature package imports: `@u3/features/todo`, `@u3/api`.
+- [ ] Test feature package imports: `@u3/features/todo`, `@u3/backend`.
 
 ### Exit Criteria:
 
-- [ ] Next.js app serves tRPC APIs via isolated `@u3/api` package.
+- [ ] Next.js app serves tRPC APIs via isolated `@u3/backend` package.
 - [ ] Feature-based business logic properly separated in `@u3/features/*`.
 - [ ] Clean separation between interface layer (API) and application layer (features).
 
@@ -308,7 +308,7 @@
   - [ ] Import UI components from `@u3/ui/core`, `@u3/ui/layout`, `@u3/ui/auth`
   - [ ] Import business logic from `@u3/features/todo`, `@u3/features/auth`
   - [ ] Import shared hooks from `@u3/hooks` and utilities from `@u3/utils`
-- [ ] Use shared Tamagui UI and tRPC clients from `@u3/api`.
+- [ ] Use shared Tamagui UI and tRPC clients from `@u3/backend`.
 
 ### Test Process:
 

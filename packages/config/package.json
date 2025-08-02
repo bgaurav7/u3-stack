@@ -13,6 +13,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --build",
     "typecheck": "tsc --noEmit",
@@ -21,17 +22,11 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format"
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
   },
   "dependencies": {
     "@u3/types": "workspace:*",
     "dotenv-flow": "^4.1.0",
-    "env-var": "^7.5.0",
-    "tslib": "^2.8.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.16.5",
-    "tsx": "^4.19.2",
-    "typescript": "~5.8.3"
+    "env-var": "^7.5.0"
   }
 }

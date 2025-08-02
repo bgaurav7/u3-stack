@@ -1,5 +1,5 @@
 import { useSignIn, useSignUp } from '@clerk/clerk-expo';
-import { AuthScreen } from '@u3/app';
+import { AuthScreen } from '@u3/frontend';
 import { AuthLayout } from '@u3/ui';
 import { router } from 'expo-router';
 

@@ -1,5 +1,5 @@
 /**
- * @u3/app - Cross-platform app package
+ * @u3/frontend - Cross-platform frontend package
  *
  * This package provides shared screens, hooks, API utilities, and authentication
  * interfaces that work across both web and React Native environments.

@@ -1,7 +1,7 @@
 'use client';
 
 import { SignedIn, SignedOut } from '@clerk/nextjs';
-import { HomeScreen } from '@u3/app';
+import { HomeScreen } from '@u3/frontend';
 import { LoadingLayout } from '@u3/ui';
 import { useRouter } from 'next/navigation';
 import type React from 'react';

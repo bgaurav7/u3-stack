@@ -13,6 +13,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsc --build",
     "typecheck": "tsc --noEmit",
@@ -21,9 +22,6 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3"
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
   }
 }

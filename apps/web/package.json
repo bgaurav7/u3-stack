@@ -13,26 +13,17 @@
     "format:fix": "biome format --write .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .next .turbo .tamagui node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm typecheck && pnpm lint && pnpm format"
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.27.1",
     "@tamagui/next-plugin": "^1.132.12",
-    "@u3/api": "workspace:*",
-    "@u3/app": "workspace:*",
+    "@u3/backend": "workspace:*",
+    "@u3/frontend": "workspace:*",
     "@u3/ui": "workspace:*",
     "@u3/types": "workspace:*",
     "dotenv-flow": "^4.1.0",
     "expo": "~53.0.8",
-    "next": "^15.1.6",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "tamagui": "^1.132.12"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@types/react": "~19.0.2",
-    "@types/react-dom": "^19.0.2",
-    "typescript": "~5.8.3"
+    "next": "^15.1.6"
   }
 }

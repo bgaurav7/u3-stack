@@ -1,4 +1,4 @@
-import { AppScreen } from '@u3/app';
+import { AppScreen } from '@u3/frontend';
 import { Stack } from 'expo-router';
 import { useClerkAuthProvider } from '../../provider/auth-clerk-provider';
 

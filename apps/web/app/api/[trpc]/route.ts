@@ -2,7 +2,7 @@
  * tRPC API Route Handler for Next.js App Router
  *
  * This file creates the Next.js App Router API route that handles all tRPC requests.
- * It imports the appRouter from the @u3/api package and configures the
+ * It imports the appRouter from the @u3/backend package and configures the
  * fetchRequestHandler with proper context creation and error handling.
  *
  * Route: /api/[trpc]
@@ -10,7 +10,7 @@
  */
 
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter, createContext } from '@u3/api';
+import { appRouter, createContext } from '@u3/backend';
 
 /**
  * Handler function for all HTTP methods

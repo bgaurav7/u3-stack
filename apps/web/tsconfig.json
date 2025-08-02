@@ -16,14 +16,14 @@
       "@/*": ["./src/*"],
       "@u3/ui": ["../../packages/ui/src"],
       "@u3/ui/*": ["../../packages/ui/src/*"],
-      "@u3/api": ["../../packages/api/src"],
-      "@u3/api/*": ["../../packages/api/src/*"],
+      "@u3/backend": ["../../packages/backend/src"],
+      "@u3/backend/*": ["../../packages/backend/src/*"],
       "@u3/config": ["../../packages/config/src"],
       "@u3/config/*": ["../../packages/config/src/*"],
       "@u3/types": ["../../packages/types/src"],
       "@u3/types/*": ["../../packages/types/src/*"],
-      "@u3/app": ["../../packages/app/src"],
-      "@u3/app/*": ["../../packages/app/src/*"]
+      "@u3/frontend": ["../../packages/frontend/src"],
+      "@u3/frontend/*": ["../../packages/frontend/src/*"]
     }
   },
   "include": [
