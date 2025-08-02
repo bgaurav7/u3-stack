@@ -15,6 +15,9 @@ export {
   type AuthTabsProps,
 } from './components/AuthTabs';
 export { LogoHeader, type LogoHeaderProps } from './components/LogoHeader';
+// Navigation components
+export { NavBar, type NavBarProps } from './components/NavBar';
+export { SideBar, type SideBarProps } from './components/SideBar';
 export {
   SignOutButton,
   type SignOutButtonProps,
@@ -27,3 +30,5 @@ export * from './layouts';
 // Provider
 export type { UIProviderProps } from './provider/UIProvider';
 export { UIProvider } from './provider/UIProvider';
+
+// Layout Context removed - state is now managed directly in MainLayout

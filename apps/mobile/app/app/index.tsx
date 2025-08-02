@@ -9,7 +9,7 @@ export default function AppRoute() {
     <>
       <Stack.Screen
         options={{
-          title: 'U3-Stack App',
+          headerShown: false, // Hide native header since MainLayout provides NavBar
         }}
       />
       <AppPage authProvider={authProvider} />
