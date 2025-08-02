@@ -6,9 +6,9 @@ import { useCurrentUser } from '../hooks/useAuthState';
 import { formatDate } from '../utils/formatDate';
 
 /**
- * Props for the AppScreen business logic component
+ * Props for the AppPage business logic component
  */
-export interface AppScreenProps {
+export interface AppPageProps {
   /**
    * Authentication provider for the current platform
    */
@@ -28,16 +28,16 @@ export interface AppScreenProps {
 }
 
 /**
- * Cross-platform app screen business logic component
+ * Cross-platform app page business logic component
  * Handles authentication state and delegates UI rendering to @u3/ui
  * This is the main protected app content
  */
-export function AppScreen({
+export function AppPage({
   authProvider,
   onSignOut,
   style,
   loadingComponent,
-}: AppScreenProps) {
+}: AppPageProps) {
   const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
 
   const handleSignOut = async () => {

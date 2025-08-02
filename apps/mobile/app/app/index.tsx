@@ -1,8 +1,8 @@
-import { AppScreen } from '@u3/frontend';
+import { AppPage } from '@u3/frontend';
 import { Stack } from 'expo-router';
 import { useClerkAuthProvider } from '../../provider/auth-clerk-provider';
 
-export default function AppPage() {
+export default function AppRoute() {
   const authProvider = useClerkAuthProvider();
 
   return (
@@ -12,7 +12,7 @@ export default function AppPage() {
           title: 'U3-Stack App',
         }}
       />
-      <AppScreen authProvider={authProvider} />
+      <AppPage authProvider={authProvider} />
     </>
   );
 }

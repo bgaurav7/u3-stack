@@ -17,7 +17,7 @@ export interface ClerkHooks {
   };
 }
 
-export interface AuthScreenProps {
+export interface AuthPageProps {
   /**
    * Initial auth mode
    */
@@ -41,16 +41,16 @@ export interface AuthScreenProps {
 }
 
 /**
- * Unified authentication screen with Sign In / Sign Up toggle
+ * Unified authentication page with Sign In / Sign Up toggle
  * Uses Clerk headless APIs for authentication
  */
-export function AuthScreen({
+export function AuthPage({
   initialMode = 'signin',
   showLogo = true,
   onSuccess,
   onNavigate,
   clerkHooks,
-}: AuthScreenProps) {
+}: AuthPageProps) {
   const signInHook = clerkHooks.useSignIn();
   const signUpHook = clerkHooks.useSignUp();
 

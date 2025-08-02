@@ -1,9 +1,9 @@
 import { useAuth } from '@clerk/clerk-expo';
-import { HomeScreen } from '@u3/frontend';
+import { HomePage } from '@u3/frontend';
 import { LoadingLayout } from '@u3/ui';
 import { Redirect, router } from 'expo-router';
 
-export default function RootPage() {
+export default function HomeRoute() {
   const { isSignedIn, isLoaded } = useAuth();
 
   // Wait for auth to load
@@ -17,5 +17,5 @@ export default function RootPage() {
   }
 
   // If signed out, show landing page with sign in option
-  return <HomeScreen onSignInClick={() => router.push('/auth')} />;
+  return <HomePage onSignInClick={() => router.push('/auth')} />;
 }

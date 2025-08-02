@@ -13,14 +13,14 @@
  */
 
 // ============================================================================
-// SCREENS - UI Components
+// PAGES - UI Components
 // ============================================================================
 
 /**
- * Pre-built screens for common app flows
- * All screens are responsive and work on web and mobile
+ * Pre-built pages for common app flows
+ * All pages are responsive and work on web and mobile
  */
-export * from './screens';
+export * from './pages';
 
 // ============================================================================
 // HOOKS - Custom React Hooks
