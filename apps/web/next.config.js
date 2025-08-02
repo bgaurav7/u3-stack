@@ -49,7 +49,7 @@ const nextConfig = {
 const tamaguiConfig = withTamagui({
   config: '../../packages/ui/src/config/tamagui.config.ts',
   components: ['tamagui'], // Only core tamagui
-  disableExtraction: true, // Disable all extraction for now
+  disableExtraction: process.env.NODE_ENV === 'development', // Only disable in development
 });
 
 module.exports = tamaguiConfig(nextConfig);

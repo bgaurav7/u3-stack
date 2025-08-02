@@ -16,7 +16,7 @@ if (!publishableKey) {
 export default function RootLayout(): React.ReactNode {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-      <UIProvider>
+      <UIProvider defaultTheme='dark'>
         <Stack
           screenOptions={{
             headerStyle: {

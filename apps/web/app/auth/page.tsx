@@ -2,7 +2,7 @@
 
 import { useSignIn, useSignUp } from '@clerk/nextjs';
 import { AuthScreen } from '@u3/app';
-import { AuthLayout, UIProvider } from '@u3/ui';
+import { AuthLayout } from '@u3/ui';
 import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
@@ -14,14 +14,12 @@ export default function AuthPage() {
   };
 
   return (
-    <UIProvider>
-      <AuthLayout>
-        <AuthScreen
-          clerkHooks={clerkHooks}
-          onNavigate={path => router.push(path)}
-          onSuccess={() => router.push('/app')}
-        />
-      </AuthLayout>
-    </UIProvider>
+    <AuthLayout>
+      <AuthScreen
+        clerkHooks={clerkHooks}
+        onNavigate={path => router.push(path)}
+        onSuccess={() => router.push('/app')}
+      />
+    </AuthLayout>
   );
 }
