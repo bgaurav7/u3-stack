@@ -1,7 +1,7 @@
 'use client';
 
-import { memo, useEffect, useMemo, useState } from 'react';
-import { Button, ScrollView, Text, YStack } from 'tamagui';
+import { memo, useMemo, useState } from 'react';
+import { Button, ScrollView, Text, useMedia, YStack } from 'tamagui';
 import { Sheet } from '../components/Sheet';
 import { SheetHeader } from '../components/SheetHeader';
 import { TaskEditor } from '../components/TaskEditor';
@@ -14,29 +14,12 @@ export interface SheetLayoutProps {
 }
 
 const SheetLayoutComponent = ({ type, id, onClose }: SheetLayoutProps) => {
-  // SSR-safe responsive behavior
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  // Use Tamagui's useMedia hook for responsive behavior
+  const media = useMedia();
+  const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
+
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      if (typeof window !== 'undefined') {
-        const newIsSmallScreen = window.innerWidth < 768;
-        setIsSmallScreen(newIsSmallScreen);
-      }
-    };
-
-    // Initial check
-    checkScreenSize();
-
-    // Listen for resize events
-    window.addEventListener('resize', checkScreenSize);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-    };
-  }, []);
 
   // Handle navigation errors with fallback to /app
   const handleNavigationError = (error: Error) => {

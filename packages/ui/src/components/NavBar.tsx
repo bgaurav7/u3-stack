@@ -41,13 +41,11 @@ const NavBarComponent = ({
     return margin;
   }, [isSmallScreen, sidebarWidth]);
 
-  // Memoize left side content based on screen size
+  // Memoize left side content - hamburger menu now shown on all screen sizes
   const leftContent = useMemo(
     () => (
       <XStack alignItems='center' gap='$3'>
-        {isSmallScreen && (
-          <Button {...buttonStyles} icon={Menu} onPress={onToggleSidebar} />
-        )}
+        <Button {...buttonStyles} icon={Menu} onPress={onToggleSidebar} />
 
         <Text
           fontSize='$6'
@@ -59,7 +57,7 @@ const NavBarComponent = ({
         </Text>
       </XStack>
     ),
-    [isSmallScreen, onToggleSidebar]
+    [onToggleSidebar]
   );
 
   // Memoize right side content based on screen size

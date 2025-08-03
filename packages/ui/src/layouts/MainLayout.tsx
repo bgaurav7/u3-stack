@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
-import { AnimatePresence, YStack } from 'tamagui';
+import { AnimatePresence, useMedia, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { getSheetConfig } from '../utils';
@@ -46,61 +46,39 @@ export function MainLayout({
     // Default to expanded for SSR to prevent layout shifts
     return 'expanded';
   });
-  // SSR-safe responsive behavior - avoid useMedia during SSR
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [isHydrated, setIsHydrated] = useState(false);
+  // Store the sidebar mode before sheet opens, so we can restore it when sheet closes
+  const [previousSidebarMode, setPreviousSidebarMode] =
+    useState<SidebarMode | null>(null);
 
-  // Handle responsive behavior after hydration
-  useEffect(() => {
-    setIsHydrated(true);
-
-    // Check screen size after hydration
-    const checkScreenSize = () => {
-      if (typeof window !== 'undefined') {
-        const newIsSmallScreen = window.innerWidth < 768;
-        setIsSmallScreen(newIsSmallScreen);
-      }
-    };
-
-    // Initial check
-    checkScreenSize();
-
-    // Listen for resize events
-    window.addEventListener('resize', checkScreenSize);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-    };
-  }, []);
+  // Use Tamagui's useMedia hook for responsive behavior
+  const media = useMedia();
+  const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
 
   // Adjust sidebar mode when screen size changes
   useEffect(() => {
-    if (!isHydrated) return; // Wait for hydration
-
     if (hideSidebar) {
       setSidebarMode('hidden');
       return;
     }
 
-    // Handle screen size changes
+    // Handle screen size changes - simplified to only hidden/expanded
     setSidebarMode(prev => {
       if (isSmallScreen) {
-        // On small screens, hide sidebar if it's currently expanded or collapsed
+        // On small screens, hide sidebar if it's currently expanded
         if (prev === 'expanded' || prev === 'collapsed') {
           console.log('Switching to small screen: hiding sidebar');
           return 'hidden';
         }
       } else {
         // On large screens, expand sidebar if it's currently hidden
-        if (prev === 'hidden') {
+        if (prev === 'hidden' || prev === 'collapsed') {
           console.log('Switching to large screen: expanding sidebar');
           return 'expanded';
         }
-        // Collapsed mode is preserved when transitioning from small to large
       }
       return prev; // No change needed
     });
-  }, [isHydrated, isSmallScreen, hideSidebar]);
+  }, [isSmallScreen, hideSidebar]);
 
   // Handle platform-specific behavior
   useEffect(() => {
@@ -115,24 +93,31 @@ export function MainLayout({
   const toggleSidebar = useCallback(() => {
     setSidebarMode(prev => {
       if (isSmallScreen) {
-        // Small screen: toggle between hidden and expanded
+        // Mobile: toggle between hidden and expanded (close completely for screen space)
         return prev === 'hidden' ? 'expanded' : 'hidden';
       } else {
-        // Large screen: toggle between collapsed and expanded
-        return prev === 'expanded' ? 'collapsed' : 'expanded';
+        // Desktop: toggle between collapsed and expanded (always visible)
+        return prev === 'collapsed' ? 'expanded' : 'collapsed';
       }
     });
-  }, [isSmallScreen]);
-
-  const toggleCollapse = useCallback(() => {
-    if (!isSmallScreen) {
-      setSidebarMode(prev => (prev === 'collapsed' ? 'expanded' : 'collapsed'));
-    }
   }, [isSmallScreen]);
 
   const hideSidebarFn = useCallback(() => {
     setSidebarMode('hidden');
   }, []);
+
+  // Enhanced sheet close handler that also restores sidebar state
+  const handleSheetClose = useCallback(() => {
+    // Restore previous sidebar mode if we have one stored
+    if (previousSidebarMode !== null) {
+      setSidebarMode(previousSidebarMode);
+      setPreviousSidebarMode(null);
+    }
+    // Call the original onSheetClose callback
+    if (onSheetClose) {
+      onSheetClose();
+    }
+  }, [previousSidebarMode, onSheetClose]);
 
   // Memoize derived state based on screen size
   const sidebarWidth = useMemo(() => {
@@ -168,6 +153,21 @@ export function MainLayout({
     if (!currentPath) return null;
     return getSheetConfig(currentPath);
   }, [currentPath]);
+
+  // Handle sidebar closing when sheet opens and restoring when sheet closes
+  useEffect(() => {
+    if (sheetConfig && !hideSidebar) {
+      // Sheet is opening - store current sidebar mode and hide sidebar
+      if (sidebarMode !== 'hidden') {
+        setPreviousSidebarMode(sidebarMode);
+        setSidebarMode('hidden');
+      }
+    } else if (!sheetConfig && previousSidebarMode !== null) {
+      // Sheet is closing - restore previous sidebar mode
+      setSidebarMode(previousSidebarMode);
+      setPreviousSidebarMode(null);
+    }
+  }, [sheetConfig, hideSidebar, sidebarMode, previousSidebarMode]);
 
   // Calculate if sheet should be rendered as side panel (web) or overlay (mobile)
   const isSheetSidePanel = useMemo(() => {
@@ -232,7 +232,6 @@ export function MainLayout({
             isSmallScreen={isSmallScreen}
             sidebarWidth={sidebarWidth}
             onHideSidebar={hideSidebarFn}
-            onToggleCollapse={toggleCollapse}
             onNavigate={onNavigate}
             user={user}
             onSignOut={onSignOut}
@@ -275,7 +274,7 @@ export function MainLayout({
             type={sheetConfig.type}
             id={sheetConfig.id}
             basePath={sheetConfig.basePath}
-            onClose={onSheetClose}
+            onClose={handleSheetClose}
           />
         )}
       </AnimatePresence>

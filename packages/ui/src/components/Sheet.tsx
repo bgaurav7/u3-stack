@@ -1,8 +1,8 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
-import { YStack } from 'tamagui';
+import { memo, useMemo } from 'react';
+import { useMedia, YStack } from 'tamagui';
 
 export interface SheetProps {
   children: ReactNode;
@@ -11,27 +11,9 @@ export interface SheetProps {
 }
 
 const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
-  // SSR-safe responsive behavior
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      if (typeof window !== 'undefined') {
-        const newIsSmallScreen = window.innerWidth < 768;
-        setIsSmallScreen(newIsSmallScreen);
-      }
-    };
-
-    // Initial check
-    checkScreenSize();
-
-    // Listen for resize events
-    window.addEventListener('resize', checkScreenSize);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-    };
-  }, []);
+  // Use Tamagui's useMedia hook for responsive behavior
+  const media = useMedia();
+  const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
 
   // Platform-specific sheet configuration
   const sheetConfig = useMemo(() => {
