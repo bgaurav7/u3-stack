@@ -1,9 +1,10 @@
-import { AppPage } from '@u3/frontend';
-import { Stack } from 'expo-router';
+import { TaskPage } from '@u3/frontend';
+import { Stack, usePathname } from 'expo-router';
 import { useClerkAuthProvider } from '../../provider/auth-clerk-provider';
 
-export default function AppRoute() {
+export default function TasksRoute() {
   const authProvider = useClerkAuthProvider();
+  const currentPath = usePathname();
 
   return (
     <>
@@ -12,7 +13,7 @@ export default function AppRoute() {
           headerShown: false, // Hide native header since MainLayout provides NavBar
         }}
       />
-      <AppPage authProvider={authProvider} />
+      <TaskPage authProvider={authProvider} currentPath={currentPath} />
     </>
   );
 }

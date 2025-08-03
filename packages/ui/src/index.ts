@@ -29,11 +29,15 @@ export {
 } from './components/UserProfile';
 export { config } from './config';
 
+// Hooks
+export { useSidebarBehavior } from './hooks/useSidebarBehavior';
+
 // Layout (updated exports)
 export * from './layouts';
-
 // Provider
 export type { UIProviderProps } from './provider/UIProvider';
 export { UIProvider } from './provider/UIProvider';
+// Utilities
+export * from './utils';
 
 // Layout Context removed - state is now managed directly in MainLayout

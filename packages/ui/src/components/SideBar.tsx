@@ -3,12 +3,9 @@
 import {
   Bell,
   CheckSquare,
-  ChevronLeft,
-  ChevronRight,
   HelpCircle,
   Home,
   Settings,
-  X,
 } from '@tamagui/lucide-icons';
 import { memo, useCallback, useMemo } from 'react';
 import { Button, ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
@@ -24,7 +21,6 @@ export interface SideBarProps {
   isSmallScreen: boolean;
   sidebarWidth: number;
   onHideSidebar: () => void;
-  onToggleCollapse: () => void;
   onNavigate?: (href: string) => void; // Add navigation callback
   user?: SideBarUser | null; // User data for profile section
   onSignOut?: () => void; // Sign out handler
@@ -58,81 +54,59 @@ const collapsedButtonStyles = {
   padding: 0, // Remove padding for centered icon
 };
 
-const closeButtonStyles = {
-  size: '$3' as const,
-  circular: true,
-  backgroundColor: 'transparent',
-  hoverStyle: { backgroundColor: '$color4' },
-  pressStyle: { backgroundColor: '$color5' },
-};
-
 const SideBarComponent = ({
   sidebarMode,
   isSmallScreen,
   sidebarWidth,
   onHideSidebar,
-  onToggleCollapse,
   onNavigate,
   user,
   onSignOut,
 }: SideBarProps) => {
   // Memoize navigation item click handler
   const handleNavItemClick = useCallback(
-    (itemId: string, href?: string) => {
-      // Close sidebar on small screens first
-      if (isSmallScreen) {
-        onHideSidebar();
+    (_itemId: string, href?: string) => {
+      // Handle navigation immediately
+      if (onNavigate && href) {
+        onNavigate(href);
       }
 
-      // Handle navigation if callback and href are provided
-      if (onNavigate && href) {
-        // Small delay to allow sidebar close animation to start
-        if (isSmallScreen) {
-          setTimeout(() => onNavigate(href), 100);
-        } else {
-          onNavigate(href);
-        }
-      } else {
-        // Fallback: log navigation attempt for debugging
-        console.log(
-          `Navigation requested for ${itemId}${href ? ` to ${href}` : ''}`
-        );
+      // Close sidebar only on small screens (mobile) after navigation
+      if (isSmallScreen) {
+        onHideSidebar();
       }
     },
     [isSmallScreen, onHideSidebar, onNavigate]
   );
 
-  // Determine if sidebar is in collapsed mode
-  const isCollapsed = sidebarMode === 'collapsed';
+  // Determine if sidebar is in collapsed or expanded mode
   const isOpen = sidebarMode === 'expanded';
+  const isCollapsed = sidebarMode === 'collapsed';
 
-  // Memoize sidebar container styles with animations
+  // Memoize sidebar container styles with simplified animations
   const sidebarStyles = useMemo(
     () => ({
       width: sidebarWidth,
-      height: '100vh', // Full viewport height
+      height: '100vh', // Full viewport height - extends to top
       backgroundColor: '$color2',
       borderRightWidth: isSmallScreen ? 0 : 1,
       borderRightColor: '$color6',
-      position: 'absolute' as const, // Use absolute for Tamagui compatibility
+      position: 'absolute' as const,
       left: 0,
-      top: 0,
-      zIndex: 1001,
+      top: 0, // Start from the very top
+      zIndex: 200, // Above NavBar (100) but below Sheet (400)
+      // Add fixed positioning for web
+      ...(typeof window !== 'undefined' && { position: 'fixed' as any }),
       // Optimize shadow rendering for small screens
       shadowColor: isSmallScreen ? '$shadowColor' : undefined,
       shadowOffset: isSmallScreen ? { width: 2, height: 0 } : undefined,
       shadowOpacity: isSmallScreen ? 0.1 : undefined,
       shadowRadius: isSmallScreen ? 8 : undefined,
-      // Animation properties
-      animation: 'quick',
-      animateOnly: isSmallScreen ? ['x'] : ['width'],
-      // Small screen slide animation
+      // Simplified animation properties - no conflicting animations
       ...(isSmallScreen && {
         x: isOpen ? 0 : -sidebarWidth,
-        enterStyle: { x: -sidebarWidth },
-        exitStyle: { x: -sidebarWidth },
+        // Remove enter/exit styles that might conflict
       }),
-      // Large screen width animation - no enter/exit styles needed as width changes smoothly
     }),
     [isSmallScreen, isOpen, sidebarWidth]
   );
@@ -187,36 +161,27 @@ const SideBarComponent = ({
 
   return (
     <YStack {...sidebarStyles}>
-      {/* Fixed Header */}
+      {/* Header Section */}
       <XStack
         height={60}
         alignItems='center'
-        justifyContent={
-          isCollapsed && !isSmallScreen ? 'center' : 'space-between'
-        }
+        justifyContent='center'
         paddingHorizontal={isCollapsed && !isSmallScreen ? '$2' : '$4'}
         borderBottomWidth={1}
         borderBottomColor='$color6'
         backgroundColor='$color2'
-        zIndex={1}
       >
-        {(!isCollapsed || isSmallScreen) && (
-          <Text fontSize='$5' fontWeight='600' color='$color12'>
-            Navigation
-          </Text>
-        )}
-
-        {isSmallScreen && (
-          <Button {...closeButtonStyles} icon={X} onPress={onHideSidebar} />
-        )}
-
-        {/* Collapse toggle for large screens */}
-        {!isSmallScreen && (
-          <Button
-            {...closeButtonStyles}
-            icon={isCollapsed ? ChevronRight : ChevronLeft}
-            onPress={onToggleCollapse}
-          />
+        {isCollapsed && !isSmallScreen ? (
+          // Collapsed state: show only icon
+          <CheckSquare size='$1.5' color='$color12' />
+        ) : (
+          // Expanded state: show icon + text
+          <XStack alignItems='center' gap='$2'>
+            <CheckSquare size='$1.5' color='$color12' />
+            <Text fontSize='$5' fontWeight='600' color='$color12'>
+              ToDo
+            </Text>
+          </XStack>
         )}
       </XStack>
 

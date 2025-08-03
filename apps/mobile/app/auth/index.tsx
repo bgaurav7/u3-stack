@@ -14,7 +14,7 @@ export default function AuthRoute() {
       <AuthPage
         clerkHooks={clerkHooks}
         onNavigate={(path: string) => router.replace(path)}
-        onSuccess={() => router.replace('/app')}
+        onSuccess={() => router.replace('/t')}
       />
     </AuthLayout>
   );

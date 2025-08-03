@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Bell,
-  Menu,
-  Moon,
-  MoreHorizontal,
-  Sun,
-  User,
-} from '@tamagui/lucide-icons';
+import { Github, Menu, Moon, MoreHorizontal, Sun } from '@tamagui/lucide-icons';
 import { memo, useMemo } from 'react';
 import { Button, Text, XStack } from 'tamagui';
 
@@ -41,13 +34,11 @@ const NavBarComponent = ({
     return margin;
   }, [isSmallScreen, sidebarWidth]);
 
-  // Memoize left side content based on screen size
+  // Memoize left side content - hamburger menu now shown on all screen sizes
   const leftContent = useMemo(
     () => (
       <XStack alignItems='center' gap='$3'>
-        {isSmallScreen && (
-          <Button {...buttonStyles} icon={Menu} onPress={onToggleSidebar} />
-        )}
+        <Button {...buttonStyles} icon={Menu} onPress={onToggleSidebar} />
 
         <Text
           fontSize='$6'
@@ -59,7 +50,7 @@ const NavBarComponent = ({
         </Text>
       </XStack>
     ),
-    [isSmallScreen, onToggleSidebar]
+    [onToggleSidebar]
   );
 
   // Memoize right side content based on screen size
@@ -73,14 +64,20 @@ const NavBarComponent = ({
           onPress={onThemeToggle}
         />
 
-        {isSmallScreen ? (
-          <Button {...buttonStyles} icon={MoreHorizontal} />
-        ) : (
-          <>
-            <Button {...buttonStyles} icon={Bell} />
-            <Button {...buttonStyles} icon={User} />
-          </>
-        )}
+        {/* GitHub Link */}
+        <Button
+          {...buttonStyles}
+          icon={Github}
+          onPress={() =>
+            window.open(
+              'https://github.com/bgaurav7/u3-stack',
+              '_blank',
+              'noopener,noreferrer'
+            )
+          }
+        />
+
+        {isSmallScreen && <Button {...buttonStyles} icon={MoreHorizontal} />}
       </XStack>
     ),
     [isSmallScreen, currentTheme, onThemeToggle]
@@ -96,9 +93,14 @@ const NavBarComponent = ({
       justifyContent='space-between'
       paddingHorizontal='$4'
       marginLeft={navBarMargin}
-      zIndex={1000}
+      position='absolute'
+      top={0}
+      left={0}
+      right={0}
+      zIndex={100}
       animation='quick'
       animateOnly={['marginLeft']}
+      style={{ position: 'fixed' }}
     >
       {leftContent}
       {rightContent}

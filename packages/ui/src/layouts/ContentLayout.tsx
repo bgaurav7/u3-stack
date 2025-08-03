@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
 import { H1, ScrollView, YStack } from 'tamagui';
 
-export interface PageLayoutProps {
+export interface ContentLayoutProps {
   children: ReactNode;
   title?: string;
   scrollable?: boolean;
@@ -13,27 +13,28 @@ export interface PageLayoutProps {
   isVisible: boolean;
 }
 
-const PageLayoutComponent = ({
+const ContentLayoutComponent = ({
   children,
   title,
   scrollable = true,
   isSmallScreen,
   sidebarWidth,
   isVisible,
-}: PageLayoutProps) => {
+}: ContentLayoutProps) => {
   // Enhanced memoization with viewport-based values
   const layoutConfig = useMemo(() => {
     const marginLeft = isVisible && !isSmallScreen ? sidebarWidth : 0;
+    const width =
+      isVisible && !isSmallScreen ? `calc(100% - ${sidebarWidth}px)` : '100%';
 
     return {
       marginLeft,
       padding: isSmallScreen ? '$4' : '$6',
-      maxWidth: isSmallScreen ? '100%' : '1200px',
-      width: '100%',
+      width,
       flex: 1,
       backgroundColor: '$color1',
       animation: 'quick',
-      animateOnly: ['marginLeft'],
+      animateOnly: ['marginLeft', 'width'],
     };
   }, [isSmallScreen, sidebarWidth, isVisible]);
 
@@ -65,4 +66,4 @@ const PageLayoutComponent = ({
 };
 
 // Export memoized component - context handles optimization
-export const PageLayout = memo(PageLayoutComponent);
+export const ContentLayout = memo(ContentLayoutComponent);
