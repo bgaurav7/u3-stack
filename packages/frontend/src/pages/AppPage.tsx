@@ -1,7 +1,7 @@
 import type { AuthProvider } from '@u3/types';
-import { LoadingLayout, type ProfileUser, UserProfileLayout } from '@u3/ui';
+import { H1, LoadingLayout, MainLayout, Text, YStack } from '@u3/ui';
 import type React from 'react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useCurrentUser } from '../hooks/useAuthState';
 import { formatDate } from '../utils/formatDate';
 
@@ -40,14 +40,15 @@ export function AppPage({
 }: AppPageProps) {
   const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
 
-  const handleSignOut = async () => {
+  // Handle sign out
+  const handleSignOut = useCallback(async () => {
     try {
       await authProvider.signOut();
       onSignOut?.();
     } catch (error) {
       console.error('Sign out error:', error);
     }
-  };
+  }, [authProvider, onSignOut]);
 
   // Redirect to auth if not authenticated
   useEffect(() => {
@@ -66,8 +67,11 @@ export function AppPage({
     return null;
   }
 
-  // Transform user data to match UI component interface
-  const profileUser: ProfileUser | null = user
+  // Format current date
+  const currentDate = formatDate(new Date(), { dateStyle: 'full' });
+
+  // Transform user data for sidebar
+  const sidebarUser = user
     ? {
         id: user.id,
         email: user.email,
@@ -80,16 +84,39 @@ export function AppPage({
       }
     : null;
 
-  // Format current date
-  const currentDate = formatDate(new Date(), { dateStyle: 'full' });
-
-  // Show user profile
+  // Show welcome page using MainLayout
   return (
-    <UserProfileLayout
-      user={profileUser}
+    <MainLayout
+      title='Dashboard'
+      scrollable={true}
+      user={sidebarUser}
       onSignOut={handleSignOut}
-      currentDate={currentDate}
-      style={style}
-    />
+    >
+      <YStack
+        gap='$6'
+        alignItems='center'
+        justifyContent='center'
+        flex={1}
+        {...style}
+      >
+        {/* Welcome Message */}
+        <YStack alignItems='center' gap='$4'>
+          <H1 size='$10' color='$color12' textAlign='center'>
+            Welcome!
+          </H1>
+          <Text fontSize='$5' color='$color11' textAlign='center'>
+            {currentDate}
+          </Text>
+          <Text
+            fontSize='$4'
+            color='$color10'
+            textAlign='center'
+            maxWidth={400}
+          >
+            Here will be your task list.
+          </Text>
+        </YStack>
+      </YStack>
+    </MainLayout>
   );
 }

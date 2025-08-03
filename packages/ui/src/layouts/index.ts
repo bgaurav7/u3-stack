@@ -22,9 +22,3 @@ export { PageLayout, type PageLayoutProps } from './PageLayout';
 
 export type { PageNotFoundProps } from './PageNotFound';
 export { PageNotFound } from './PageNotFound';
-
-export {
-  type ProfileUser,
-  UserProfileLayout,
-  type UserProfileLayoutProps,
-} from './UserProfileLayout';

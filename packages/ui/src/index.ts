@@ -22,6 +22,11 @@ export {
   SignOutButton,
   type SignOutButtonProps,
 } from './components/SignOutButton';
+export {
+  UserProfile,
+  type UserProfileProps,
+  type UserProfileUser,
+} from './components/UserProfile';
 export { config } from './config';
 
 // Layout (updated exports)

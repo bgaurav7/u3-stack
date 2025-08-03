@@ -1,6 +1,13 @@
 'use client';
 
-import { Bell, Menu, MoreHorizontal, User } from '@tamagui/lucide-icons';
+import {
+  Bell,
+  Menu,
+  Moon,
+  MoreHorizontal,
+  Sun,
+  User,
+} from '@tamagui/lucide-icons';
 import { memo, useMemo } from 'react';
 import { Button, Text, XStack } from 'tamagui';
 
@@ -8,6 +15,8 @@ export interface NavBarProps {
   isSmallScreen: boolean;
   sidebarWidth: number;
   onToggleSidebar: () => void;
+  currentTheme?: 'light' | 'dark';
+  onThemeToggle?: () => void;
 }
 
 // Memoized button styles to prevent recreation on each render
@@ -23,6 +32,8 @@ const NavBarComponent = ({
   isSmallScreen,
   sidebarWidth,
   onToggleSidebar,
+  currentTheme = 'dark',
+  onThemeToggle,
 }: NavBarProps) => {
   // Calculate navbar margin based on sidebar state
   const navBarMargin = useMemo(() => {
@@ -55,6 +66,13 @@ const NavBarComponent = ({
   const rightContent = useMemo(
     () => (
       <XStack alignItems='center' gap='$2'>
+        {/* Theme Toggle */}
+        <Button
+          {...buttonStyles}
+          icon={currentTheme === 'dark' ? Sun : Moon}
+          onPress={onThemeToggle}
+        />
+
         {isSmallScreen ? (
           <Button {...buttonStyles} icon={MoreHorizontal} />
         ) : (
@@ -65,7 +83,7 @@ const NavBarComponent = ({
         )}
       </XStack>
     ),
-    [isSmallScreen]
+    [isSmallScreen, currentTheme, onThemeToggle]
   );
 
   return (

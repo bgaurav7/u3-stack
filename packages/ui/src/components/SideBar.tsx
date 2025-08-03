@@ -7,14 +7,17 @@ import {
   ChevronRight,
   HelpCircle,
   Home,
-  Moon,
   Settings,
-  Sun,
-  User,
   X,
 } from '@tamagui/lucide-icons';
 import { memo, useCallback, useMemo } from 'react';
 import { Button, ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
+import { UserProfile, type UserProfileUser } from './UserProfile';
+
+/**
+ * User data interface for the sidebar profile section
+ */
+export interface SideBarUser extends UserProfileUser {}
 
 export interface SideBarProps {
   sidebarMode: 'hidden' | 'collapsed' | 'expanded';
@@ -22,9 +25,9 @@ export interface SideBarProps {
   sidebarWidth: number;
   onHideSidebar: () => void;
   onToggleCollapse: () => void;
-  currentTheme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
   onNavigate?: (href: string) => void; // Add navigation callback
+  user?: SideBarUser | null; // User data for profile section
+  onSignOut?: () => void; // Sign out handler
 }
 
 // Move navigation items outside component to prevent recreation
@@ -69,9 +72,9 @@ const SideBarComponent = ({
   sidebarWidth,
   onHideSidebar,
   onToggleCollapse,
-  currentTheme = 'dark',
-  onThemeToggle,
   onNavigate,
+  user,
+  onSignOut,
 }: SideBarProps) => {
   // Memoize navigation item click handler
   const handleNavItemClick = useCallback(
@@ -157,8 +160,8 @@ const SideBarComponent = ({
     [handleNavItemClick, isCollapsed, isSmallScreen]
   );
 
-  // Memoize theme toggle content
-  const themeToggleContent = useMemo(
+  // Memoize user profile content
+  const bottomSectionContent = useMemo(
     () => (
       <YStack
         padding={isCollapsed && !isSmallScreen ? '$2' : '$4'}
@@ -166,35 +169,20 @@ const SideBarComponent = ({
       >
         <Separator marginBottom='$4' backgroundColor='$color6' />
 
-        <Button
-          {...(isCollapsed && !isSmallScreen
-            ? collapsedButtonStyles
-            : buttonStyles)}
-          icon={
-            isCollapsed && !isSmallScreen
-              ? currentTheme === 'dark'
-                ? Sun
-                : Moon
-              : undefined
-          }
-          iconAfter={
-            !isCollapsed || isSmallScreen
-              ? currentTheme === 'dark'
-                ? Sun
-                : Moon
-              : undefined
-          }
-          onPress={onThemeToggle}
-        >
-          {(!isCollapsed || isSmallScreen) && (
-            <Text color='$color11' fontSize='$4'>
-              {currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-            </Text>
-          )}
-        </Button>
+        {/* User Profile Section */}
+        {user && (
+          <YStack gap='$3'>
+            <UserProfile
+              user={user}
+              onSignOut={onSignOut}
+              isCollapsed={isCollapsed && !isSmallScreen}
+              isSmallScreen={isSmallScreen}
+            />
+          </YStack>
+        )}
       </YStack>
     ),
-    [currentTheme, onThemeToggle, isCollapsed, isSmallScreen]
+    [isCollapsed, isSmallScreen, user, onSignOut]
   );
 
   return (
@@ -255,20 +243,6 @@ const SideBarComponent = ({
               {...(isCollapsed && !isSmallScreen
                 ? collapsedButtonStyles
                 : buttonStyles)}
-              icon={isCollapsed && !isSmallScreen ? User : undefined}
-              iconAfter={!isCollapsed || isSmallScreen ? User : undefined}
-              onPress={() => handleNavItemClick('profile', '/app/profile')}
-            >
-              {(!isCollapsed || isSmallScreen) && (
-                <Text color='$color11' fontSize='$4'>
-                  Profile
-                </Text>
-              )}
-            </Button>
-            <Button
-              {...(isCollapsed && !isSmallScreen
-                ? collapsedButtonStyles
-                : buttonStyles)}
               icon={isCollapsed && !isSmallScreen ? Bell : undefined}
               iconAfter={!isCollapsed || isSmallScreen ? Bell : undefined}
               onPress={() =>
@@ -297,8 +271,8 @@ const SideBarComponent = ({
             </Button>
           </YStack>
 
-          {/* Fixed Bottom Section - Theme Toggle */}
-          {themeToggleContent}
+          {/* Fixed Bottom Section - User Profile */}
+          {bottomSectionContent}
         </ScrollView>
       </YStack>
     </YStack>

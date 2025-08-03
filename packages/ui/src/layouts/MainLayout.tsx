@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
 import { AnimatePresence, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
-import { SideBar } from '../components/SideBar';
+import { SideBar, type SideBarUser } from '../components/SideBar';
 import { PageLayout } from './PageLayout';
 
 export interface MainLayoutProps {
@@ -18,6 +18,8 @@ export interface MainLayoutProps {
   currentTheme?: 'light' | 'dark';
   onThemeToggle?: () => void;
   onNavigate?: (href: string) => void; // Add navigation callback
+  user?: SideBarUser | null; // User data for sidebar profile
+  onSignOut?: () => void; // Sign out handler
 }
 
 export function MainLayout({
@@ -28,6 +30,8 @@ export function MainLayout({
   currentTheme = 'dark',
   onThemeToggle,
   onNavigate,
+  user,
+  onSignOut,
 }: MainLayoutProps) {
   // Initialize sidebar mode with SSR-safe default
   const [sidebarMode, setSidebarMode] = useState<SidebarMode>(() => {
@@ -187,6 +191,8 @@ export function MainLayout({
         isSmallScreen={isSmallScreen}
         sidebarWidth={sidebarWidth}
         onToggleSidebar={toggleSidebar}
+        currentTheme={currentTheme}
+        onThemeToggle={onThemeToggle}
       />
 
       {/* Fixed Sidebar with AnimatePresence for smooth mount/unmount */}
@@ -199,9 +205,9 @@ export function MainLayout({
             sidebarWidth={sidebarWidth}
             onHideSidebar={hideSidebarFn}
             onToggleCollapse={toggleCollapse}
-            currentTheme={currentTheme}
-            onThemeToggle={onThemeToggle}
             onNavigate={onNavigate}
+            user={user}
+            onSignOut={onSignOut}
           />
         )}
       </AnimatePresence>
