@@ -211,6 +211,11 @@ export function buildSheetRoute(type: SheetType, id: string): string {
     throw new Error('Sheet ID is required');
   }
 
+  // Validate ID format based on type
+  if (type === 'task' && !isValidTaskId(id)) {
+    throw new Error('Invalid task ID format');
+  }
+
   switch (type) {
     case 'task':
       return `/t/${encodeURIComponent(id)}`;
@@ -251,8 +256,8 @@ function isValidTaskId(id: string): boolean {
   }
 
   // Task IDs should be non-empty and not contain invalid characters
-  // Allow alphanumeric, hyphens, underscores, and dots
-  const validIdPattern = /^[a-zA-Z0-9._-]+$/;
+  // Allow alphanumeric, hyphens, and underscores (no dots to prevent path traversal)
+  const validIdPattern = /^[a-zA-Z0-9_-]+$/;
   return validIdPattern.test(id) && id.length > 0 && id.length <= 100;
 }
 

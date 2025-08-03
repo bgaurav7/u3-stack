@@ -38,11 +38,6 @@ const ContentLayoutComponent = ({
     };
   }, [isSmallScreen, sidebarWidth, isVisible]);
 
-  // Remove the transform that was causing title visibility issues
-  const contentTransform = useMemo(() => {
-    return {};
-  }, []);
-
   // Memoize ContentWrapper selection to prevent component recreation
   const ContentWrapper = useMemo(
     () => (scrollable ? ScrollView : YStack),
@@ -62,7 +57,7 @@ const ContentLayoutComponent = ({
 
   return (
     <ContentWrapper {...layoutConfig}>
-      <YStack gap='$4' flex={1} {...contentTransform}>
+      <YStack gap='$4' flex={1}>
         {titleComponent}
         {children}
       </YStack>

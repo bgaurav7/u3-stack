@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, ScrollView, Text, useMedia, YStack } from 'tamagui';
 import { Sheet } from '../components/Sheet';
 import { SheetHeader } from '../components/SheetHeader';
@@ -9,7 +9,6 @@ import { TaskEditor } from '../components/TaskEditor';
 export interface SheetLayoutProps {
   type: 'task';
   id: string;
-  basePath: string;
   onClose?: () => void;
   sidebarWidth?: number; // Pass sidebar width for web positioning
   isOpen?: boolean; // Control sheet visibility
@@ -40,36 +39,12 @@ const SheetLayoutComponent = ({
     }
   }, [type]);
 
-  // Handle navigation errors with fallback to /app
-  const handleNavigationError = (error: Error) => {
-    console.error('Sheet navigation error:', error);
-    setHasError(true);
-    setErrorMessage('Failed to load sheet content');
-
-    // Attempt to close sheet and navigate to /app
+  // Safe close handler - memoized to prevent unnecessary re-renders
+  const handleSafeClose = useCallback(() => {
     if (onClose) {
-      try {
-        onClose();
-      } catch (navError) {
-        console.error('Failed to close sheet:', navError);
-        // If onClose fails, try to navigate directly
-        if (typeof window !== 'undefined') {
-          window.location.href = '/app';
-        }
-      }
+      onClose();
     }
-  };
-
-  // Safe close handler
-  const handleSafeClose = () => {
-    try {
-      if (onClose) {
-        onClose();
-      }
-    } catch (error) {
-      handleNavigationError(error as Error);
-    }
-  };
+  }, [onClose]);
 
   // Render sheet content based on type
   const renderSheetContent = useMemo(() => {

@@ -65,15 +65,10 @@ const SideBarComponent = ({
 }: SideBarProps) => {
   // Memoize navigation item click handler
   const handleNavItemClick = useCallback(
-    (itemId: string, href?: string) => {
+    (_itemId: string, href?: string) => {
       // Handle navigation immediately
       if (onNavigate && href) {
         onNavigate(href);
-      } else {
-        // Fallback: log navigation attempt for debugging
-        console.log(
-          `Navigation requested for ${itemId}${href ? ` to ${href}` : ''}`
-        );
       }
 
       // Close sidebar only on small screens (mobile) after navigation
@@ -100,6 +95,8 @@ const SideBarComponent = ({
       left: 0,
       top: 0, // Start from the very top
       zIndex: 200, // Above NavBar (100) but below Sheet (400)
+      // Add fixed positioning for web
+      ...(typeof window !== 'undefined' && { position: 'fixed' as any }),
       // Optimize shadow rendering for small screens
       shadowColor: isSmallScreen ? '$shadowColor' : undefined,
       shadowOffset: isSmallScreen ? { width: 2, height: 0 } : undefined,

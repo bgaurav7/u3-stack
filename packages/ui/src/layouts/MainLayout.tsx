@@ -272,7 +272,6 @@ export function MainLayout({
             key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
             type={sheetConfig.type}
             id={sheetConfig.id}
-            basePath={sheetConfig.basePath}
             sidebarWidth={sidebarWidth}
             onClose={handleSheetClose}
           />

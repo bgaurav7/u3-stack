@@ -32,9 +32,6 @@ const TaskEditorComponent = ({ taskId }: TaskEditorProps) => {
       setIsLoading(true);
       setErrorMessage('');
 
-      // Simulate save operation
-      console.log('Save task:', { taskId, title, description, completed });
-
       // Basic validation
       if (!title.trim()) {
         throw new Error('Task title is required');
@@ -54,7 +51,6 @@ const TaskEditorComponent = ({ taskId }: TaskEditorProps) => {
 
   const handleCancel = () => {
     try {
-      console.log('Cancel task editing');
       // Reset any error state
       setErrorMessage('');
     } catch (error) {
