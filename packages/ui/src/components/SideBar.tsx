@@ -96,7 +96,7 @@ const SideBarComponent = ({
       backgroundColor: '$color2',
       borderRightWidth: isSmallScreen ? 0 : 1,
       borderRightColor: '$color6',
-      position: 'fixed' as const, // Use fixed to stay in place during scroll
+      position: 'absolute' as const,
       left: 0,
       top: 0, // Start from the very top
       zIndex: 200, // Above NavBar (100) but below Sheet (400)
