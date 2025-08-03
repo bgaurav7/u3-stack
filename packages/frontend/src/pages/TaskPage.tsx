@@ -1,18 +1,22 @@
 import type { AuthProvider } from '@u3/types';
-import { H1, LoadingLayout, MainLayout, Text, YStack } from '@u3/ui';
+import { Button, H1, LoadingLayout, MainLayout, Text, YStack } from '@u3/ui';
 import type React from 'react';
 import { useCallback, useEffect } from 'react';
 import { useCurrentUser } from '../hooks/useAuthState';
 import { formatDate } from '../utils/formatDate';
 
 /**
- * Props for the AppPage business logic component
+ * Props for the TaskPage business logic component
  */
-export interface AppPageProps {
+export interface TaskPageProps {
   /**
    * Authentication provider for the current platform
    */
   authProvider: AuthProvider;
+  /**
+   * Current path/route for sheet detection and navigation
+   */
+  currentPath: string;
   /**
    * Callback when user signs out
    */
@@ -28,17 +32,31 @@ export interface AppPageProps {
 }
 
 /**
- * Cross-platform app page business logic component
+ * Cross-platform task page business logic component
  * Handles authentication state and delegates UI rendering to @u3/ui
- * This is the main protected app content
+ * This is the main protected task management content
  */
-export function AppPage({
+export function TaskPage({
   authProvider,
+  currentPath,
   onSignOut,
   style,
   loadingComponent,
-}: AppPageProps) {
+}: TaskPageProps) {
   const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
+
+  // Handle sheet close navigation
+  const handleSheetClose = useCallback(() => {
+    authProvider.navigate('/t');
+  }, [authProvider]);
+
+  // Handle navigation updates
+  const handleNavigate = useCallback(
+    (href: string) => {
+      authProvider.navigate(href);
+    },
+    [authProvider]
+  );
 
   // Handle sign out
   const handleSignOut = useCallback(async () => {
@@ -91,6 +109,10 @@ export function AppPage({
       scrollable={true}
       user={sidebarUser}
       onSignOut={handleSignOut}
+      // Enhanced with sheet support
+      currentPath={currentPath}
+      onSheetClose={handleSheetClose}
+      onNavigate={handleNavigate}
     >
       <YStack
         gap='$6'
@@ -115,6 +137,16 @@ export function AppPage({
           >
             Here will be your task list.
           </Text>
+
+          {/* Test link for sheet functionality */}
+          <Button
+            onPress={() => handleNavigate('/t/123')}
+            backgroundColor='$blue9'
+            color='white'
+            marginTop='$4'
+          >
+            Open Task Sheet (Test)
+          </Button>
         </YStack>
       </YStack>
     </MainLayout>

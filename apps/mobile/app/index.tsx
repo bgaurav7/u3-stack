@@ -13,7 +13,7 @@ export default function HomeRoute() {
 
   // If signed in, redirect to protected app
   if (isSignedIn) {
-    return <Redirect href='/app' />;
+    return <Redirect href='/t' />;
   }
 
   // If signed out, show landing page with sign in option

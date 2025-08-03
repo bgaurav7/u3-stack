@@ -8,7 +8,9 @@ import { Platform } from 'react-native';
 import { AnimatePresence, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
+import { getSheetConfig } from '../utils';
 import { PageLayout } from './PageLayout';
+import { SheetLayout } from './SheetLayout';
 
 export interface MainLayoutProps {
   children: ReactNode;
@@ -20,6 +22,9 @@ export interface MainLayoutProps {
   onNavigate?: (href: string) => void; // Add navigation callback
   user?: SideBarUser | null; // User data for sidebar profile
   onSignOut?: () => void; // Sign out handler
+  // New sheet-related props
+  currentPath?: string;
+  onSheetClose?: () => void;
 }
 
 export function MainLayout({
@@ -32,6 +37,8 @@ export function MainLayout({
   onNavigate,
   user,
   onSignOut,
+  currentPath,
+  onSheetClose,
 }: MainLayoutProps) {
   // Initialize sidebar mode with SSR-safe default
   const [sidebarMode, setSidebarMode] = useState<SidebarMode>(() => {
@@ -156,6 +163,27 @@ export function MainLayout({
     return visible;
   }, [sidebarMode, isSmallScreen]);
 
+  // Detect if current route should show a sheet using utility function
+  const sheetConfig = useMemo(() => {
+    if (!currentPath) return null;
+    return getSheetConfig(currentPath);
+  }, [currentPath]);
+
+  // Calculate if sheet should be rendered as side panel (web) or overlay (mobile)
+  const isSheetSidePanel = useMemo(() => {
+    return sheetConfig && !isSmallScreen;
+  }, [sheetConfig, isSmallScreen]);
+
+  // Calculate main content width adjustment for side panel
+  const mainContentStyle = useMemo(() => {
+    if (isSheetSidePanel) {
+      return {
+        marginRight: 480, // Side panel width
+      };
+    }
+    return {};
+  }, [isSheetSidePanel]);
+
   // Memoize layout configuration
   const layoutConfig = useMemo(
     () => ({
@@ -212,8 +240,8 @@ export function MainLayout({
         )}
       </AnimatePresence>
 
-      {/* Main Content Area - with margin for sidebar */}
-      <YStack flex={1}>
+      {/* Main Content Area - with margin for sidebar and sheet */}
+      <YStack flex={1} {...mainContentStyle}>
         <PageLayout
           title={title}
           scrollable={scrollable}
@@ -235,6 +263,19 @@ export function MainLayout({
             animation='quick'
             enterStyle={{ opacity: 0 }}
             exitStyle={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sheet overlay system */}
+      <AnimatePresence>
+        {sheetConfig && (
+          <SheetLayout
+            key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
+            type={sheetConfig.type}
+            id={sheetConfig.id}
+            basePath={sheetConfig.basePath}
+            onClose={onSheetClose}
           />
         )}
       </AnimatePresence>
