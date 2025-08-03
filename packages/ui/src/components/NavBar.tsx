@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Bell,
-  Menu,
-  Moon,
-  MoreHorizontal,
-  Sun,
-  User,
-} from '@tamagui/lucide-icons';
+import { Github, Menu, Moon, MoreHorizontal, Sun } from '@tamagui/lucide-icons';
 import { memo, useMemo } from 'react';
 import { Button, Text, XStack } from 'tamagui';
 
@@ -71,14 +64,16 @@ const NavBarComponent = ({
           onPress={onThemeToggle}
         />
 
-        {isSmallScreen ? (
-          <Button {...buttonStyles} icon={MoreHorizontal} />
-        ) : (
-          <>
-            <Button {...buttonStyles} icon={Bell} />
-            <Button {...buttonStyles} icon={User} />
-          </>
-        )}
+        {/* GitHub Link */}
+        <Button
+          {...buttonStyles}
+          icon={Github}
+          onPress={() =>
+            window.open('https://github.com/bgaurav7/u3-stack', '_blank')
+          }
+        />
+
+        {isSmallScreen && <Button {...buttonStyles} icon={MoreHorizontal} />}
       </XStack>
     ),
     [isSmallScreen, currentTheme, onThemeToggle]
@@ -94,7 +89,11 @@ const NavBarComponent = ({
       justifyContent='space-between'
       paddingHorizontal='$4'
       marginLeft={navBarMargin}
-      zIndex={1000}
+      position='fixed'
+      top={0}
+      left={0}
+      right={0}
+      zIndex={100}
       animation='quick'
       animateOnly={['marginLeft']}
     >

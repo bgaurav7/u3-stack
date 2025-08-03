@@ -15,29 +15,31 @@ const SheetHeaderComponent = ({ title, onClose }: SheetHeaderProps) => {
     <XStack
       height={60}
       alignItems='center'
-      justifyContent='space-between'
+      justifyContent='flex-start'
       paddingHorizontal='$4'
       borderBottomWidth={1}
       borderBottomColor='$color6'
       backgroundColor='$color1'
     >
-      {/* Title */}
-      <H2 size='$6' color='$color12' fontWeight='600'>
-        {title}
-      </H2>
+      {/* Close Button and Title grouped together on the left */}
+      <XStack alignItems='center' gap='$3'>
+        {/* Close Button - positioned before the title */}
+        <Button
+          size='$3'
+          circular
+          backgroundColor='transparent'
+          hoverStyle={{ backgroundColor: '$color4' }}
+          pressStyle={{ backgroundColor: '$color5' }}
+          icon={X}
+          onPress={onClose}
+          accessibilityLabel='Close sheet'
+          accessibilityRole='button'
+        />
 
-      {/* Close Button */}
-      <Button
-        size='$3'
-        circular
-        backgroundColor='transparent'
-        hoverStyle={{ backgroundColor: '$color4' }}
-        pressStyle={{ backgroundColor: '$color5' }}
-        icon={X}
-        onPress={onClose}
-        accessibilityLabel='Close sheet'
-        accessibilityRole='button'
-      />
+        <H2 size='$6' color='$color12' fontWeight='600'>
+          {title}
+        </H2>
+      </XStack>
     </XStack>
   );
 };

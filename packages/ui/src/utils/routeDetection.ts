@@ -29,13 +29,13 @@ export interface RouteValidationResult {
 // Route patterns for different sheet types
 const SHEET_ROUTE_PATTERNS = {
   task: {
-    pattern: /^\/t\/([^/]+)$/,
+    pattern: /^\/t\/([^/]+)\/?$/,
     basePath: '/t',
     type: 'task' as const,
   },
   // Future sheet types can be added here
   // project: {
-  //   pattern: /^\/app\/p\/([^\/]+)$/,
+  //   pattern: /^\/app\/p\/([^\/]+)\/?$/,
   //   basePath: '/app',
   //   type: 'project' as const,
   // },
@@ -63,22 +63,36 @@ export function isSheetRoute(pathname: string): boolean {
  * @returns SheetConfig object or null if not a valid sheet route
  */
 export function getSheetConfig(pathname: string): SheetConfig | null {
+  console.log('getSheetConfig called with:', pathname);
+
   if (!pathname || typeof pathname !== 'string') {
+    console.log('getSheetConfig: Invalid pathname');
     return null;
   }
 
   // Check each pattern to find a match
   for (const [, config] of Object.entries(SHEET_ROUTE_PATTERNS)) {
     const match = pathname.match(config.pattern);
+    console.log(
+      'Testing pattern:',
+      config.pattern,
+      'against:',
+      pathname,
+      'match:',
+      match
+    );
     if (match?.[1]) {
-      return {
+      const result = {
         type: config.type,
         id: match[1],
         basePath: config.basePath,
       };
+      console.log('getSheetConfig: Found match:', result);
+      return result;
     }
   }
 
+  console.log('getSheetConfig: No match found');
   return null;
 }
 

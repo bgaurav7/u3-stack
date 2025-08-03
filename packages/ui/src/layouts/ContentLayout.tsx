@@ -24,28 +24,24 @@ const ContentLayoutComponent = ({
   // Enhanced memoization with viewport-based values
   const layoutConfig = useMemo(() => {
     const marginLeft = isVisible && !isSmallScreen ? sidebarWidth : 0;
+    const width =
+      isVisible && !isSmallScreen ? `calc(100% - ${sidebarWidth}px)` : '100%';
 
     return {
       marginLeft,
       padding: isSmallScreen ? '$4' : '$6',
-      width: '100%',
+      width,
       flex: 1,
       backgroundColor: '$color1',
       animation: 'quick',
-      animateOnly: ['marginLeft'],
+      animateOnly: ['marginLeft', 'width'],
     };
   }, [isSmallScreen, sidebarWidth, isVisible]);
 
-  // Calculate transform to center content accounting for sidebar
+  // Remove the transform that was causing title visibility issues
   const contentTransform = useMemo(() => {
-    if (isVisible && !isSmallScreen && sidebarWidth > 0) {
-      // Shift content left by half the sidebar width to center it in the viewport
-      return {
-        transform: `translateX(-${sidebarWidth / 2}px)`,
-      };
-    }
     return {};
-  }, [isVisible, isSmallScreen, sidebarWidth]);
+  }, []);
 
   // Memoize ContentWrapper selection to prevent component recreation
   const ContentWrapper = useMemo(

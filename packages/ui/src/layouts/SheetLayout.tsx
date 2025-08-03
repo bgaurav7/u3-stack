@@ -11,9 +11,17 @@ export interface SheetLayoutProps {
   id: string;
   basePath: string;
   onClose?: () => void;
+  sidebarWidth?: number; // Pass sidebar width for web positioning
 }
 
-const SheetLayoutComponent = ({ type, id, onClose }: SheetLayoutProps) => {
+const SheetLayoutComponent = ({
+  type,
+  id,
+  onClose,
+  sidebarWidth = 0,
+}: SheetLayoutProps) => {
+  console.log('SheetLayout rendering:', { type, id, sidebarWidth });
+
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
   const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
@@ -175,7 +183,7 @@ const SheetLayoutComponent = ({ type, id, onClose }: SheetLayoutProps) => {
   }, [type, id, handleSafeClose, isSmallScreen, hasError, errorMessage]);
 
   return (
-    <Sheet isOpen={true} onClose={onClose}>
+    <Sheet isOpen={true} onClose={onClose} sidebarWidth={sidebarWidth}>
       {renderSheetContent}
     </Sheet>
   );

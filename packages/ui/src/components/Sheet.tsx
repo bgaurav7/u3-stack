@@ -8,9 +8,19 @@ export interface SheetProps {
   children: ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
+  contentHeight?: number; // For mobile content-based sizing
+  sidebarWidth?: number; // For web split-screen positioning
 }
 
-const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
+const SheetComponent = ({
+  children,
+  isOpen = true,
+  onClose,
+  contentHeight,
+  sidebarWidth = 0,
+}: SheetProps) => {
+  console.log('Sheet component rendering:', { isOpen, sidebarWidth });
+
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
   const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
@@ -18,19 +28,24 @@ const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
   // Platform-specific sheet configuration
   const sheetConfig = useMemo(() => {
     const baseConfig = {
-      position: 'absolute' as const,
       backgroundColor: '$color1',
-      zIndex: 2000,
+      zIndex: 400, // Highest level for modal content
     };
 
     if (isSmallScreen) {
-      // Mobile: Bottom sheet covering ~80% of screen
+      // Mobile: Bottom sheet with content-based height (max 80% of screen)
+      const maxHeight = '80vh';
+      const calculatedHeight = contentHeight
+        ? `${Math.min(contentHeight, window.innerHeight * 0.8)}px`
+        : maxHeight;
+
       return {
         ...baseConfig,
         bottom: 0,
         left: 0,
         right: 0,
-        height: '80vh',
+        height: calculatedHeight,
+        maxHeight,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
         shadowColor: '$shadowColor',
@@ -39,32 +54,40 @@ const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
         shadowRadius: 16,
       };
     } else {
-      // Web: Side panel from the right
+      // Web: Right-side panel positioned at the right edge
+      const width = '40vw'; // Take 40% of viewport width
+      const minWidth = 400; // Minimum width for usability
+      const maxWidth = 600; // Maximum width to avoid too wide panels
+
       return {
         ...baseConfig,
-        top: 0,
-        right: 0,
-        width: 480, // Fixed width for side panel
-        height: '100vh',
+        top: 60, // Start below navbar (assuming 60px navbar height)
+        right: 0, // Position at right edge
+        width: `clamp(${minWidth}px, ${width}, ${maxWidth}px)`,
+        height: 'calc(100vh - 60px)', // Full height minus navbar
         borderLeftWidth: 1,
         borderLeftColor: '$color6',
         shadowColor: '$shadowColor',
-        shadowOffset: { width: -4, height: 0 },
+        shadowOffset: { width: -2, height: 0 },
         shadowOpacity: 0.15,
         shadowRadius: 20,
+        // Make it resizable later (future enhancement)
+        resize: 'horizontal' as const,
       };
     }
-  }, [isSmallScreen]);
+  }, [isSmallScreen, contentHeight, sidebarWidth]);
 
   // Animation configuration
   const animationConfig = useMemo(() => {
     if (isSmallScreen) {
+      // Mobile: slide up from bottom
       return {
         animation: 'bouncy',
         enterStyle: { y: '100%' },
         exitStyle: { y: '100%' },
       };
     } else {
+      // Web: slide in from right
       return {
         animation: 'quick',
         enterStyle: { x: '100%' },
@@ -89,7 +112,7 @@ const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
           bottom={0}
           backgroundColor='$color8'
           opacity={0.5}
-          zIndex={1999}
+          zIndex={300}
           onPress={onClose}
           animation='quick'
           enterStyle={{ opacity: 0 }}
@@ -98,7 +121,16 @@ const SheetComponent = ({ children, isOpen = true, onClose }: SheetProps) => {
       )}
 
       {/* Sheet container */}
-      <YStack {...sheetConfig} {...animationConfig}>
+      <YStack
+        {...animationConfig}
+        position='absolute'
+        backgroundColor='$color1'
+        zIndex={400}
+        style={{
+          position: 'fixed', // Override with raw CSS
+          ...sheetConfig,
+        }}
+      >
         {children}
       </YStack>
     </>

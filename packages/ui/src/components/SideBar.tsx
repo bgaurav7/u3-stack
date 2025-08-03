@@ -92,14 +92,14 @@ const SideBarComponent = ({
   const sidebarStyles = useMemo(
     () => ({
       width: sidebarWidth,
-      height: '100vh', // Full viewport height
+      height: '100vh', // Full viewport height - extends to top
       backgroundColor: '$color2',
       borderRightWidth: isSmallScreen ? 0 : 1,
       borderRightColor: '$color6',
-      position: 'absolute' as const, // Use absolute for Tamagui compatibility
+      position: 'fixed' as const, // Use fixed to stay in place during scroll
       left: 0,
-      top: 0,
-      zIndex: 1001,
+      top: 0, // Start from the very top
+      zIndex: 200, // Above NavBar (100) but below Sheet (400)
       // Optimize shadow rendering for small screens
       shadowColor: isSmallScreen ? '$shadowColor' : undefined,
       shadowOffset: isSmallScreen ? { width: 2, height: 0 } : undefined,
@@ -164,7 +164,7 @@ const SideBarComponent = ({
 
   return (
     <YStack {...sidebarStyles}>
-      {/* Fixed Header */}
+      {/* Header Section */}
       <XStack
         height={60}
         alignItems='center'
@@ -173,7 +173,6 @@ const SideBarComponent = ({
         borderBottomWidth={1}
         borderBottomColor='$color6'
         backgroundColor='$color2'
-        zIndex={1}
       >
         {isCollapsed && !isSmallScreen ? (
           // Collapsed state: show only icon
