@@ -12,6 +12,7 @@ export interface SheetLayoutProps {
   basePath: string;
   onClose?: () => void;
   sidebarWidth?: number; // Pass sidebar width for web positioning
+  isOpen?: boolean; // Control sheet visibility
 }
 
 const SheetLayoutComponent = ({
@@ -19,6 +20,7 @@ const SheetLayoutComponent = ({
   id,
   onClose,
   sidebarWidth = 0,
+  isOpen = true,
 }: SheetLayoutProps) => {
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
@@ -191,7 +193,7 @@ const SheetLayoutComponent = ({
   }, [type, id, handleSafeClose, isSmallScreen, hasError, errorMessage]);
 
   return (
-    <Sheet isOpen={true} onClose={onClose} sidebarWidth={sidebarWidth}>
+    <Sheet isOpen={isOpen} onClose={onClose} sidebarWidth={sidebarWidth}>
       {renderSheetContent}
     </Sheet>
   );

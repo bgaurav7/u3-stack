@@ -69,7 +69,11 @@ const NavBarComponent = ({
           {...buttonStyles}
           icon={Github}
           onPress={() =>
-            window.open('https://github.com/bgaurav7/u3-stack', '_blank')
+            window.open(
+              'https://github.com/bgaurav7/u3-stack',
+              '_blank',
+              'noopener,noreferrer'
+            )
           }
         />
 

@@ -73,7 +73,8 @@ const SheetComponent = ({
         shadowOpacity: 0.15,
         shadowRadius: 20,
         // Make it resizable later (future enhancement) - only on web
-        ...(typeof window !== 'undefined' && 'document' in window
+        ...(typeof window !== 'undefined' &&
+        typeof window.document !== 'undefined'
           ? { resize: 'horizontal' as const }
           : {}),
       };

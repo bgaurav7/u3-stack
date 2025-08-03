@@ -140,7 +140,7 @@ export function TaskPage({
 
           {/* Test link for sheet functionality */}
           <Button
-            onPress={() => handleNavigate('/t/123')}
+            onPress={() => handleNavigate('/t/sample-task')}
             backgroundColor='$blue9'
             color='white'
             marginTop='$4'

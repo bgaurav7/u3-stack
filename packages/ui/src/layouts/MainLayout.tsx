@@ -124,7 +124,10 @@ export function MainLayout({
         width = 0;
         break;
       case 'collapsed':
-        width = isSmallScreen ? 0 : 40; // Collapsed not available on small screens
+        // On small screens, there is not enough space to show a collapsed sidebar,
+        // so the sidebar is fully hidden (width = 0) instead of collapsed. On larger screens,
+        // the collapsed sidebar is shown with a width of 40px.
+        width = isSmallScreen ? 0 : 40;
         break;
       case 'expanded':
         width = 240;
