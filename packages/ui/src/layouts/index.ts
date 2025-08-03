@@ -5,7 +5,7 @@ export {
   AuthLayout,
   type AuthLayoutProps,
 } from './AuthLayout';
-
+export { ContentLayout, type ContentLayoutProps } from './ContentLayout';
 // Home/Landing layout
 export {
   HomeLayout,
@@ -18,7 +18,6 @@ export {
 } from './LoadingLayout';
 // Main application layout
 export { MainLayout, type MainLayoutProps } from './MainLayout';
-export { PageLayout, type PageLayoutProps } from './PageLayout';
 export type { PageNotFoundProps } from './PageNotFound';
 export { PageNotFound } from './PageNotFound';
 // Sheet layout for overlays

@@ -9,7 +9,7 @@ import { AnimatePresence, useMedia, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { getSheetConfig } from '../utils';
-import { PageLayout } from './PageLayout';
+import { ContentLayout } from './ContentLayout';
 import { SheetLayout } from './SheetLayout';
 
 export interface MainLayoutProps {
@@ -241,7 +241,7 @@ export function MainLayout({
 
       {/* Main Content Area - with margin for sidebar and sheet */}
       <YStack flex={1} {...mainContentStyle}>
-        <PageLayout
+        <ContentLayout
           title={title}
           scrollable={scrollable}
           isSmallScreen={isSmallScreen}
@@ -249,7 +249,7 @@ export function MainLayout({
           isVisible={isVisible}
         >
           {children}
-        </PageLayout>
+        </ContentLayout>
       </YStack>
 
       {/* Mobile overlay with AnimatePresence */}

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
 import { H1, ScrollView, YStack } from 'tamagui';
 
-export interface PageLayoutProps {
+export interface ContentLayoutProps {
   children: ReactNode;
   title?: string;
   scrollable?: boolean;
@@ -13,14 +13,14 @@ export interface PageLayoutProps {
   isVisible: boolean;
 }
 
-const PageLayoutComponent = ({
+const ContentLayoutComponent = ({
   children,
   title,
   scrollable = true,
   isSmallScreen,
   sidebarWidth,
   isVisible,
-}: PageLayoutProps) => {
+}: ContentLayoutProps) => {
   // Enhanced memoization with viewport-based values
   const layoutConfig = useMemo(() => {
     const marginLeft = isVisible && !isSmallScreen ? sidebarWidth : 0;
@@ -28,7 +28,6 @@ const PageLayoutComponent = ({
     return {
       marginLeft,
       padding: isSmallScreen ? '$4' : '$6',
-      maxWidth: isSmallScreen ? '100%' : '1200px',
       width: '100%',
       flex: 1,
       backgroundColor: '$color1',
@@ -36,6 +35,17 @@ const PageLayoutComponent = ({
       animateOnly: ['marginLeft'],
     };
   }, [isSmallScreen, sidebarWidth, isVisible]);
+
+  // Calculate transform to center content accounting for sidebar
+  const contentTransform = useMemo(() => {
+    if (isVisible && !isSmallScreen && sidebarWidth > 0) {
+      // Shift content left by half the sidebar width to center it in the viewport
+      return {
+        transform: `translateX(-${sidebarWidth / 2}px)`,
+      };
+    }
+    return {};
+  }, [isVisible, isSmallScreen, sidebarWidth]);
 
   // Memoize ContentWrapper selection to prevent component recreation
   const ContentWrapper = useMemo(
@@ -56,7 +66,7 @@ const PageLayoutComponent = ({
 
   return (
     <ContentWrapper {...layoutConfig}>
-      <YStack gap='$4' flex={1}>
+      <YStack gap='$4' flex={1} {...contentTransform}>
         {titleComponent}
         {children}
       </YStack>
@@ -65,4 +75,4 @@ const PageLayoutComponent = ({
 };
 
 // Export memoized component - context handles optimization
-export const PageLayout = memo(PageLayoutComponent);
+export const ContentLayout = memo(ContentLayoutComponent);
