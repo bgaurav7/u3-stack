@@ -68,7 +68,7 @@ export function getSheetConfig(pathname: string): SheetConfig | null {
   }
 
   // Check each pattern to find a match
-  for (const [, config] of Object.entries(SHEET_ROUTE_PATTERNS)) {
+  for (const [_, config] of Object.entries(SHEET_ROUTE_PATTERNS)) {
     const match = pathname.match(config.pattern);
     if (match?.[1]) {
       const result = {

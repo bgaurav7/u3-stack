@@ -1,5 +1,7 @@
 'use client';
 
+import { isSheetRoute } from './routeDetection';
+
 /**
  * Navigation error types
  */
@@ -144,7 +146,6 @@ export const isValidSheetRoute = (path: string): boolean => {
     return false;
   }
 
-  // Check if it matches sheet route pattern
-  const sheetRoutePattern = /^\/t\/[a-zA-Z0-9\-_]+$/;
-  return sheetRoutePattern.test(path);
+  // Use shared validation logic from routeDetection.ts
+  return isSheetRoute(path);
 };

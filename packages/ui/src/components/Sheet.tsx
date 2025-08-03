@@ -72,8 +72,10 @@ const SheetComponent = ({
         shadowOffset: { width: -2, height: 0 },
         shadowOpacity: 0.15,
         shadowRadius: 20,
-        // Make it resizable later (future enhancement)
-        resize: 'horizontal' as const,
+        // Make it resizable later (future enhancement) - only on web
+        ...(typeof window !== 'undefined' && 'document' in window
+          ? { resize: 'horizontal' as const }
+          : {}),
       };
     }
   }, [isSmallScreen, contentHeight, sidebarWidth]);

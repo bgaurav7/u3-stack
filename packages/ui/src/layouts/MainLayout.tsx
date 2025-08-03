@@ -12,6 +12,10 @@ import { getSheetConfig } from '../utils';
 import { ContentLayout } from './ContentLayout';
 import { SheetLayout } from './SheetLayout';
 
+// Sheet sizing constants
+const SHEET_WIDTH_CLAMP = 'clamp(400px, 40vw, 600px)';
+const MAIN_CONTENT_MIN_WIDTH = '300px';
+
 export interface MainLayoutProps {
   children: ReactNode;
   title?: string;
@@ -166,10 +170,10 @@ export function MainLayout({
     if (isSheetSidePanel) {
       // On web, the sheet takes up space on the right side
       // Content layout needs to be narrower to accommodate the sheet
-      const sheetWidth = 'clamp(400px, 40vw, 600px)';
+      const sheetWidth = SHEET_WIDTH_CLAMP;
       return {
         width: `calc(100% - ${sheetWidth})`,
-        minWidth: '300px', // Ensure content doesn't get too narrow
+        minWidth: MAIN_CONTENT_MIN_WIDTH, // Ensure content doesn't get too narrow
         marginRight: 0, // No right margin since sheet is on the right
       };
     }

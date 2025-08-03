@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Button, ScrollView, Text, useMedia, YStack } from 'tamagui';
 import { Sheet } from '../components/Sheet';
 import { SheetHeader } from '../components/SheetHeader';
@@ -26,6 +26,17 @@ const SheetLayoutComponent = ({
 
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  // Check for invalid sheet type and set error state
+  useEffect(() => {
+    if (type !== 'task') {
+      setHasError(true);
+      setErrorMessage(`Unknown sheet type: ${type}`);
+    } else {
+      setHasError(false);
+      setErrorMessage('');
+    }
+  }, [type]);
 
   // Handle navigation errors with fallback to /app
   const handleNavigationError = (error: Error) => {
@@ -146,8 +157,7 @@ const SheetLayoutComponent = ({
             </YStack>
           );
         default:
-          // Don't call setState inside useMemo - this could cause infinite loops
-          console.error('Unknown sheet type:', type);
+          // Return error UI for unknown sheet type
           return (
             <YStack
               flex={1}
