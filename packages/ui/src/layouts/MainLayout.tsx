@@ -64,14 +64,12 @@ export function MainLayout({
       if (isSmallScreen) {
         // On small screens, hide sidebar if it's currently expanded
         if (prev === 'expanded') {
-          console.log('Switching to small screen: hiding sidebar');
           return 'hidden';
         }
         // Keep collapsed as collapsed, hidden as hidden
       } else {
         // On large screens, only expand if it's hidden (not if it's collapsed)
         if (prev === 'hidden') {
-          console.log('Switching to large screen: expanding sidebar');
           return 'expanded';
         }
         // Keep collapsed as collapsed (don't auto-expand)
@@ -130,9 +128,6 @@ export function MainLayout({
       default:
         width = 0;
     }
-    console.log(
-      `Sidebar width calculation: mode=${sidebarMode}, isSmallScreen=${isSmallScreen}, width=${width}`
-    );
     return width;
   }, [sidebarMode, isSmallScreen]);
 
@@ -146,11 +141,9 @@ export function MainLayout({
   // Detect if current route should show a sheet using utility function
   const sheetConfig = useMemo(() => {
     if (!currentPath) {
-      console.log('MainLayout: No currentPath provided');
       return null;
     }
     const config = getSheetConfig(currentPath);
-    console.log('MainLayout: Sheet detection', { currentPath, config });
     return config;
   }, [currentPath]);
 

@@ -145,6 +145,6 @@ export const isValidSheetRoute = (path: string): boolean => {
   }
 
   // Check if it matches sheet route pattern
-  const sheetRoutePattern = /^\/app\/t\/[a-zA-Z0-9\-_]+$/;
+  const sheetRoutePattern = /^\/t\/[a-zA-Z0-9\-_]+$/;
   return sheetRoutePattern.test(path);
 };

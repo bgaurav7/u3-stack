@@ -19,8 +19,6 @@ const SheetComponent = ({
   contentHeight,
   sidebarWidth = 0,
 }: SheetProps) => {
-  console.log('Sheet component rendering:', { isOpen, sidebarWidth });
-
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
   const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
@@ -36,7 +34,10 @@ const SheetComponent = ({
       // Mobile: Bottom sheet with content-based height (max 80% of screen)
       const maxHeight = '80vh';
       const calculatedHeight = contentHeight
-        ? `${Math.min(contentHeight, window.innerHeight * 0.8)}px`
+        ? `${Math.min(
+            contentHeight,
+            typeof window !== 'undefined' ? window.innerHeight * 0.8 : 0
+          )}px`
         : maxHeight;
 
       return {

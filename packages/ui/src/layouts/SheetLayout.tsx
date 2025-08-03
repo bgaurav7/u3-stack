@@ -20,8 +20,6 @@ const SheetLayoutComponent = ({
   onClose,
   sidebarWidth = 0,
 }: SheetLayoutProps) => {
-  console.log('SheetLayout rendering:', { type, id, sidebarWidth });
-
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
   const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
