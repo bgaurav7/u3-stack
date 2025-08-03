@@ -27,7 +27,7 @@ export default function HomeRoute(): React.ReactElement {
 
 function AutoRedirect({ router }: { router: ReturnType<typeof useRouter> }) {
   useEffect(() => {
-    router.push('/app');
+    router.push('/t');
   }, [router]);
 
   return <LoadingLayout />;
