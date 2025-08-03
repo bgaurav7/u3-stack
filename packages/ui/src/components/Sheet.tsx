@@ -9,7 +9,6 @@ export interface SheetProps {
   isOpen?: boolean;
   onClose?: () => void;
   contentHeight?: number; // For mobile content-based sizing
-  sidebarWidth?: number; // For web split-screen positioning
 }
 
 const SheetComponent = ({
@@ -17,7 +16,6 @@ const SheetComponent = ({
   isOpen = true,
   onClose,
   contentHeight,
-  sidebarWidth = 0,
 }: SheetProps) => {
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
@@ -74,7 +72,7 @@ const SheetComponent = ({
         shadowRadius: 20,
       };
     }
-  }, [isSmallScreen, contentHeight, sidebarWidth]);
+  }, [isSmallScreen, contentHeight]);
 
   // Animation configuration
   const animationConfig = useMemo(() => {

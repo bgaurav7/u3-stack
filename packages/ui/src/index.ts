@@ -29,6 +29,9 @@ export {
 } from './components/UserProfile';
 export { config } from './config';
 
+// Hooks
+export { useSidebarBehavior } from './hooks/useSidebarBehavior';
+
 // Layout (updated exports)
 export * from './layouts';
 // Provider

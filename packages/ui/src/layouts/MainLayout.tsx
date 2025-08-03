@@ -1,13 +1,13 @@
 'use client';
 
-import type { SidebarMode } from '@u3/types/ui';
 import { StatusBar } from 'expo-status-bar';
 import type { ReactNode } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Platform } from 'react-native';
 import { AnimatePresence, useMedia, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
+import { useSidebarBehavior } from '../hooks/useSidebarBehavior';
 import { getSheetConfig } from '../utils';
 import { ContentLayout } from './ContentLayout';
 import { SheetLayout } from './SheetLayout';
@@ -44,43 +44,16 @@ export function MainLayout({
   currentPath,
   onSheetClose,
 }: MainLayoutProps) {
-  // Initialize sidebar mode with SSR-safe default
-  const [sidebarMode, setSidebarMode] = useState<SidebarMode>(() => {
-    if (hideSidebar) return 'hidden';
-    // Default to expanded for SSR to prevent layout shifts
-    return 'expanded';
-  });
-  // No need to store previous sidebar mode since we don't restore it
-
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
   const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
 
-  // Adjust sidebar mode when screen size changes
-  useEffect(() => {
-    if (hideSidebar) {
-      setSidebarMode('hidden');
-      return;
-    }
-
-    // Handle screen size changes - respect user's current sidebar state
-    setSidebarMode(prev => {
-      if (isSmallScreen) {
-        // On small screens, hide sidebar if it's currently expanded
-        if (prev === 'expanded') {
-          return 'hidden';
-        }
-        // Keep collapsed as collapsed, hidden as hidden
-      } else {
-        // On large screens, only expand if it's hidden (not if it's collapsed)
-        if (prev === 'hidden') {
-          return 'expanded';
-        }
-        // Keep collapsed as collapsed (don't auto-expand)
-      }
-      return prev; // No change needed
+  // Use custom hook for sidebar behavior
+  const { sidebarMode, setSidebarMode, toggleSidebar, hideSidebarFn } =
+    useSidebarBehavior({
+      hideSidebar,
+      isSmallScreen,
     });
-  }, [isSmallScreen, hideSidebar]);
 
   // Handle platform-specific behavior
   useEffect(() => {
@@ -90,23 +63,6 @@ export function MainLayout({
       // It's controlled via the StatusBar component props
     }
   }, [isSmallScreen]);
-
-  // Memoize callback functions
-  const toggleSidebar = useCallback(() => {
-    setSidebarMode(prev => {
-      if (isSmallScreen) {
-        // Mobile: toggle between hidden and expanded (close completely for screen space)
-        return prev === 'hidden' ? 'expanded' : 'hidden';
-      } else {
-        // Desktop: toggle between collapsed and expanded (always visible)
-        return prev === 'collapsed' ? 'expanded' : 'collapsed';
-      }
-    });
-  }, [isSmallScreen]);
-
-  const hideSidebarFn = useCallback(() => {
-    setSidebarMode('hidden');
-  }, []);
 
   // Sheet close handler - no sidebar restoration
   const handleSheetClose = useCallback(() => {
@@ -272,7 +228,6 @@ export function MainLayout({
             key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
             type={sheetConfig.type}
             id={sheetConfig.id}
-            sidebarWidth={sidebarWidth}
             onClose={handleSheetClose}
           />
         )}
