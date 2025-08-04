@@ -24,7 +24,7 @@ export {
  * Create app router factory function for composing feature routers
  * Allows dynamic composition of routers from different feature packages
  */
-export function createAppRouter(routers: ProcedureRouterRecord = {}) {
+export function createAppRouter<T extends ProcedureRouterRecord>(routers: T) {
   return router(routers);
 }
 

@@ -10,7 +10,7 @@ export const todoSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().optional(),
   completed: z.boolean().default(false),
-  userId: z.string().uuid(),
+  userId: z.string().min(1), // Changed from .uuid() to .min(1) to accept Clerk user IDs
   createdAt: z.date(),
   updatedAt: z.date(),
 });

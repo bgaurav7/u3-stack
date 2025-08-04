@@ -1,6 +1,11 @@
 'use client';
 
-import type { AuthProvider, Todo, UpdateTodoInput } from '@u3/types';
+import {
+  type AuthProvider,
+  type Todo,
+  todoFromApi,
+  type UpdateTodoInput,
+} from '@u3/types';
 import {
   AddTaskForm,
   EditTaskSheet,
@@ -123,13 +128,16 @@ export function TaskPage({
 
   // tRPC API hooks for task operations
   const {
-    data: tasks,
+    data: tasksApiResponse,
     isLoading: isTasksLoading,
     error: tasksError,
     refetch: refetchTasks,
   } = trpc.todo.list.useQuery(undefined, {
     enabled: isAuthenticated, // Only fetch when authenticated
   });
+
+  // Transform API response (string dates) to internal format (Date objects)
+  const tasks = tasksApiResponse?.map(todoFromApi);
 
   const createTaskMutation = trpc.todo.create.useMutation({
     onSuccess: () => {

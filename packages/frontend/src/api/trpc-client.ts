@@ -7,10 +7,11 @@
  */
 
 import { httpBatchLink, loggerLink } from '@trpc/client';
-import { createTRPCReact } from '@trpc/react-query';
+import { type CreateTRPCReact, createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from '@u3/backend';
 
-export const trpc = createTRPCReact<AppRouter>();
+export const trpc: CreateTRPCReact<AppRouter, unknown, null> =
+  createTRPCReact<AppRouter>();
 
 /**
  * Auth Token Manager - Singleton pattern for robust token management
