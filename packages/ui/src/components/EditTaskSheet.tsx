@@ -314,9 +314,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
                     ? '$red8'
                     : '$blue8',
               }}
-              // Accessibility
-              accessibilityLabel='Task title'
-              accessibilityHint='Enter the title for this task'
               // Auto-focus on mobile
               autoFocus={isSmallScreen}
             />
@@ -347,9 +344,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
               maxHeight={200}
               borderColor='$color6'
               focusStyle={{ borderColor: '$blue8' }}
-              // Accessibility
-              accessibilityLabel='Task description'
-              accessibilityHint='Enter an optional description for this task'
               // Text area specific props
               textAlignVertical='top'
               multiline
@@ -383,9 +377,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
               checked={formState.completed}
               onCheckedChange={handleCompletedChange}
               size='$3'
-              // Accessibility
-              accessibilityLabel={`Mark task as ${formState.completed ? 'pending' : 'completed'}`}
-              accessibilityHint='Toggle the completion status of this task'
             />
           </XStack>
 
@@ -432,9 +423,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
               borderColor='$color6'
               color='$color11'
               disabled={formState.isSubmitting}
-              // Accessibility
-              accessibilityLabel='Cancel editing'
-              accessibilityHint='Close the edit form without saving changes'
             >
               Cancel
             </Button>
@@ -446,9 +434,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
               hoverStyle={{ backgroundColor: '$blue10' }}
               pressStyle={{ backgroundColor: '$blue8' }}
               disabled={formState.isSubmitting || !formState.title.trim()}
-              // Accessibility
-              accessibilityLabel='Save task changes'
-              accessibilityHint='Save the changes made to this task'
             >
               {formState.isSubmitting ? 'Saving...' : 'Save Task'}
             </Button>
@@ -472,9 +457,6 @@ export const EditTaskSheet: React.FC<EditTaskSheetProps> = ({
               }}
               disabled={formState.isSubmitting}
               onPress={handleDelete}
-              // Accessibility
-              accessibilityLabel='Delete task'
-              accessibilityHint='Permanently delete this task'
             >
               Delete Task
             </Button>

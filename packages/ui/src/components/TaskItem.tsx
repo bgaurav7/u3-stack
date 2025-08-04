@@ -114,10 +114,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         borderColor: '$blue8',
         borderWidth: 2,
       }}
-      // Accessibility properties
-      accessibilityRole='button'
-      accessibilityLabel={`Task: ${task.title}${task.description ? `. ${task.description}` : ''}. Status: ${task.completed ? 'Completed' : 'Pending'}`}
-      accessibilityHint='Double tap to edit this task'
       // Apply pressed state styling if needed
       {...(isPressed && {
         backgroundColor: '$color3',
@@ -138,8 +134,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({
             color='$color12'
             flex={1}
             numberOfLines={2}
-            // Ensure text is accessible
-            accessibilityRole='text'
           >
             {task.title}
           </Text>
@@ -154,7 +148,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({
             color='$color10'
             numberOfLines={3}
             lineHeight='$1'
-            accessibilityRole='text'
           >
             {task.description}
           </Text>
@@ -166,7 +159,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
           justifyContent='space-between'
           marginTop='$1'
         >
-          <Text fontSize='$2' color='$color9' accessibilityRole='text'>
+          <Text fontSize='$2' color='$color9'>
             Created {formatDate(task.createdAt)}
           </Text>
 
@@ -174,7 +167,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
           {task.updatedAt &&
             new Date(task.updatedAt).getTime() !==
               new Date(task.createdAt).getTime() && (
-              <Text fontSize='$2' color='$color9' accessibilityRole='text'>
+              <Text fontSize='$2' color='$color9'>
                 Updated {formatDate(task.updatedAt)}
               </Text>
             )}

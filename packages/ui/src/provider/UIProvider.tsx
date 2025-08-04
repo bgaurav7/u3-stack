@@ -11,7 +11,7 @@ export interface UIProviderProps extends PropsWithChildren {
 export function UIProvider({
   children,
   disableRootThemeClass,
-  defaultTheme,
+  defaultTheme = 'light',
 }: UIProviderProps) {
   return (
     <SafeAreaProvider>

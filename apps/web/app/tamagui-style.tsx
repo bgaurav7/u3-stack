@@ -1,22 +1,33 @@
 'use client';
 
 import { config } from '@u3/ui';
+import { useEffect, useRef } from 'react';
 
 export function TamaguiStyleTag() {
-  // Ensure config is properly loaded before getting CSS
-  if (!config) {
-    console.warn(
-      'Tamagui config not loaded - ensure @u3/ui package is properly imported and configured'
-    );
-    return null;
-  }
+  const hasInjected = useRef(false);
 
-  return (
-    <style
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: Tamagui requires this for CSS injection
-      dangerouslySetInnerHTML={{
-        __html: config.getNewCSS(),
-      }}
-    />
-  );
+  useEffect(() => {
+    // Only inject CSS once on client side
+    if (!hasInjected.current && config) {
+      const css = config.getNewCSS();
+      if (css) {
+        // Remove any existing tamagui styles
+        const existingStyle = document.getElementById('tamagui-css');
+        if (existingStyle) {
+          existingStyle.remove();
+        }
+
+        // Create and inject new style element
+        const style = document.createElement('style');
+        style.id = 'tamagui-css';
+        style.textContent = css;
+        document.head.appendChild(style);
+
+        hasInjected.current = true;
+      }
+    }
+  }, []);
+
+  // Return null to avoid any hydration mismatches
+  return null;
 }

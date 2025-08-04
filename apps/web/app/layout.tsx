@@ -17,9 +17,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang='en'>
         <head>
           <TamaguiStyleTag />
+          {/* Ensure proper theme class is applied to prevent hydration issues */}
+          <meta name='color-scheme' content='light dark' />
         </head>
         <body>
-          <UIProvider defaultTheme='system'>
+          <UIProvider defaultTheme='light' disableRootThemeClass={false}>
             <TRPCClientProvider>{children}</TRPCClientProvider>
           </UIProvider>
         </body>

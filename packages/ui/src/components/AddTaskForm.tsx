@@ -247,9 +247,6 @@ export function AddTaskForm({
           onKeyPress={handleKeyPress}
           onSubmitEditing={handleSubmit}
           returnKeyType='done'
-          // Accessibility
-          accessibilityLabel='Task title input'
-          accessibilityHint='Enter the title for your new task'
           // Styling
           borderColor={
             showValidation && formState.touched && formState.validationError
@@ -274,10 +271,6 @@ export function AddTaskForm({
           disabled={isSubmitDisabled}
           // Loading state
           opacity={isSubmitDisabled ? 0.6 : 1}
-          // Accessibility
-          accessibilityLabel={buttonText}
-          accessibilityHint='Tap to create a new task'
-          accessibilityRole='button'
           // Styling
           backgroundColor='$blue9'
           color='$white1'

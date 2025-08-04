@@ -32,8 +32,6 @@ const SheetHeaderComponent = ({ title, onClose }: SheetHeaderProps) => {
           pressStyle={{ backgroundColor: '$color5' }}
           icon={X}
           onPress={onClose}
-          accessibilityLabel='Close sheet'
-          accessibilityRole='button'
         />
 
         <H2 size='$6' color='$color12' fontWeight='600'>
