@@ -63,7 +63,7 @@ export function clearAuthTokenGetter(): void {
  * tRPC client configuration factory
  */
 export function createTRPCClientConfig(baseUrl?: string) {
-  const apiUrl = baseUrl || '/api';
+  const apiUrl = baseUrl || '/api/trpc';
 
   return {
     links: [

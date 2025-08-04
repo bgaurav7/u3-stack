@@ -1,6 +1,13 @@
 # 🧑‍💻 AI Instructions: U3-Stack
 
-These are coding guidelines and rules for generating or modifying code in the U3-Stack project.
+These are coding guidelines and## ✨ AI-Specific Tips
+
+- **Package naming**: Use `@u3/` prefix for all internal packages
+- **tRPC structure**: All API calls go through `/api/trpc/[trpc]` endpoint  
+- **No direct API routes**: Use tRPC procedures instead of raw Next.js API routes
+- **Cross-platform**: Code should work on both web and mobile unless platform-specific
+- **File structure**: Follow established monorepo patterns, don't create new folder structures
+- **Environment**: Use relative URLs (`/api/trpc`) for same-origin requests for generating or modifying code in the U3-Stack project.
 
 ---
 
@@ -17,37 +24,42 @@ These are coding guidelines and rules for generating or modifying code in the U3
 
 ### Frontend
 
-- Shared logic and hooks: `u3/frontend`
-- All screens (web/mobile): `u3/frontend/screens`
-- Use UI components only from `u3/ui`
+- Shared logic and hooks: `@u3/frontend`
+- Page components: `@u3/frontend/src/pages`
+- tRPC client config: `@u3/frontend/src/api`
+- Use UI components only from `@u3/ui`
 
 ### Backend
 
-- Use **Next.js API routes** (`apps/web/pages/api`) as the main backend interface
-- Keep business logic in `u3/backend`, not in route handlers
-- Use **tRPC** for all API communication — no raw fetch
+- **tRPC endpoint**: `apps/web/app/api/trpc/[trpc]/route.ts` (App Router)
+- **Business logic**: `@u3/backend/src/routers` (tRPC routers)
+- **No raw Next.js route handlers** - use tRPC procedures instead
+- Keep route handler minimal - delegate to tRPC routers
 
 ### Types & Config
 
-- Always import types from `u3/types`
-- Use `u3/config` for accessing constants or env vars
+- Always import types from `@u3/types`
+- Use `@u3/config` for accessing constants or env vars
 - Avoid hardcoded strings for config or keys
 
 ---
 
 ## 📦 Component & UI Rules
 
-- Use **Tamāgui components** from `u3/ui`
-- Maintain accessibility via ARIA roles when possible
-- Themes and tokens must be derived from Tamagui config
+- Use **Tamagui components** from `@u3/ui` package only
+- **Cross-platform compatibility**: Avoid React Native accessibility props on web
+- **No accessibility props**: `accessibilityLabel`, `accessibilityRole`, `accessibilityHint` cause web warnings
+- Themes and design tokens must be derived from Tamagui configuration
+- Use semantic HTML elements for web accessibility instead of RN props
 
 ---
 
 ## 🔐 Auth Rules
 
-- Use `useAuth()` and Clerk-provided hooks for authentication
-- Never manually decode tokens or access session storage
-- Protect backend procedures inside `u3/backend` using Clerk middleware
+- Use Clerk hooks (`useAuth()`, `useUser()`) for authentication state
+- Auth tokens automatically handled by tRPC client configuration  
+- Protect tRPC procedures in `@u3/backend` using Clerk context middleware
+- Never manually decode tokens or access session storage directly
 
 ---
 

@@ -5,7 +5,7 @@
  * It imports the appRouter from the @u3/backend package and configures the
  * fetchRequestHandler with proper context creation and error handling.
  *
- * Route: /api/[trpc]
+ * Route: /api/trpc/[trpc]
  * Handles: All tRPC procedure calls (queries and mutations)
  */
 
@@ -18,7 +18,7 @@ import { appRouter, createContext } from '@u3/backend';
  */
 const handler = (req: Request) =>
   fetchRequestHandler({
-    endpoint: '/api',
+    endpoint: '/api/trpc',
     req,
     router: appRouter,
     createContext: createContext,

@@ -2,7 +2,7 @@
 
 ## 🧠 Summary
 
-U3-Stack is a **Universal TypeScript-based Application** designed to work across **Web and Mobile** platforms using a **single shared codebase**. It uses **Next.js API routes** for backend functionality and Expo for native apps, with a clean, modular monorepo structure.
+U3-Stack is a **Universal TypeScript-based Application** designed to work across **Web and Mobile** platforms using a **single shared codebase**. It uses **Next.js 15 App Router** with API routes for backend functionality and Expo for native apps, with a clean, modular monorepo structure.
 
 ---
 
@@ -12,18 +12,18 @@ U3-Stack is a **Universal TypeScript-based Application** designed to work across
 
 | App         | Stack               | Purpose                 |
 |-------------|---------------------|--------------------------|
-| `apps/web`  | Next.js (React)     | Universal Web frontend + API |
+| `apps/web`  | Next.js 15 App Router | Universal Web frontend + API |
 | `apps/mobile` | Expo (React Native) | Mobile app for iOS and Android |
 
 ### 📦 Packages
 
 | Package            | Purpose                                                  |
 |--------------------|----------------------------------------------------------|
-| `u3/frontend`      | Shared client logic (hooks, API utils, screens)          |
-| `u3/backend`       | API-side logic (procedures, database access, auth logic) |
-| `u3/types`         | Shared types across backend and frontend (fully typed)   |
-| `u3/config`        | Centralized environment config and constants             |
-| `u3/ui`            | Tamagui theme + reusable UI components                   |
+| `@u3/frontend`     | Shared client logic (hooks, tRPC client, pages)         |
+| `@u3/backend`      | tRPC routers, procedures, database access, auth logic   |
+| `@u3/types`        | Shared TypeScript types across all packages             |
+| `@u3/config`       | Environment configuration and constants                  |
+| `@u3/ui`           | Tamagui components + cross-platform design system       |
 
 ---
 
@@ -31,37 +31,36 @@ U3-Stack is a **Universal TypeScript-based Application** designed to work across
 
 - **Clerk** is used for authentication across all platforms
 - JWT/session management works consistently via Clerk SDK
+- Auth tokens handled automatically by tRPC client configuration
 
 ---
 
 ## 🌐 API Layer
 
-- The API is defined via **Next.js API routes** under `apps/web/pages/api`
-- All procedures (auth, data access, etc.) live in `u3/backend`
-- **tRPC** is used for type-safe RPC calls between client and server
+- **tRPC v10** endpoint: `/apps/web/app/api/trpc/[trpc]/route.ts` (App Router)
+- All business logic lives in `@u3/backend` tRPC routers
+- **Type-safe** RPC calls between client and server
+- Client configuration in `@u3/frontend/src/api/trpc-client.ts`
 
 ---
 
 ## 🔧 Tech Stack
 
+- **Runtime**: Next.js 15.4.4 (App Router), Expo SDK
 - **Language**: TypeScript (strict mode)
 - **UI**: Tamagui (cross-platform design system)
-- **State**: React Query, tRPC
-- **Data**: PostgreSQL via Prisma
-- **Deployment**:
-  - Web: Cloudflare Pages / Vercel
-  - API: Next.js (serverless or self-hosted)
-  - Mobile: Expo EAS (OTA updates)
-- **Monorepo Tooling**: pnpm workspaces, TurboRepo (optional)
-- **Monitoring**: Sentry, PostHog
+- **API**: tRPC with React Query integration
+- **Auth**: Clerk (universal authentication)
+- **Monorepo**: pnpm workspaces, Turbo build system
+- **Development**: Hot reload, type-safe development environment
 
 ---
 
 ## 🧠 AI Guidance
 
-- Reuse shared logic from `u3/frontend`, `u3/backend`, `u3/types`
-- Do not duplicate UI — use `u3/ui` components
-- Never write raw fetch — use tRPC hooks
-- All code must be **type-safe and cross-platform aware**
-- Backend logic should go into `u3/backend` and be surfaced via Next.js API
-- Check library-level details inside `docs/libs/`or online documentation as needed.
+- **Package imports**: Use `@u3/frontend`, `@u3/backend`, `@u3/types`, `@u3/ui`, `@u3/config`
+- **API communication**: Always use tRPC hooks, never raw fetch
+- **UI components**: Only use components from `@u3/ui` package
+- **Cross-platform**: Avoid React Native-specific props in web contexts
+- **tRPC endpoint**: Located at `/api/trpc/[trpc]` (App Router structure)
+- **Type safety**: All code must be fully typed and cross-platform aware
