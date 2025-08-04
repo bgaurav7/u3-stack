@@ -1,9 +1,18 @@
-import type { AuthProvider } from '@u3/types';
-import { Button, H1, LoadingLayout, MainLayout, Text, YStack } from '@u3/ui';
+'use client';
+
+import type { AuthProvider, Todo, UpdateTodoInput } from '@u3/types';
+import {
+  AddTaskForm,
+  EditTaskSheet,
+  LoadingLayout,
+  MainLayout,
+  TaskList,
+  YStack,
+} from '@u3/ui';
 import type React from 'react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { handleTRPCError, trpc } from '../api';
 import { useCurrentUser } from '../hooks/useAuthState';
-import { formatDate } from '../utils/formatDate';
 
 /**
  * Props for the TaskPage business logic component
@@ -32,9 +41,76 @@ export interface TaskPageProps {
 }
 
 /**
+ * Internal state interface for TaskPage component
+ */
+export interface TaskPageState {
+  /**
+   * Currently selected task for editing (null when no task is selected)
+   */
+  selectedTask: Todo | null;
+  /**
+   * Whether the edit sheet overlay is currently open
+   */
+  isEditSheetOpen: boolean;
+  /**
+   * Loading state for async operations
+   */
+  isLoading: boolean;
+  /**
+   * Error message for display to user (null when no error)
+   */
+  error: string | null;
+}
+
+/**
+ * API response types for task operations
+ */
+export interface TasksApiResponse {
+  /**
+   * Array of tasks fetched from the API
+   */
+  tasks: Todo[] | undefined;
+  /**
+   * Loading state for tasks fetch operation
+   */
+  isLoading: boolean;
+  /**
+   * Error state for tasks fetch operation
+   */
+  error: unknown;
+  /**
+   * Function to refetch tasks
+   */
+  refetch: () => void;
+}
+
+/**
+ * Error state types for better error handling
+ */
+export interface TasksErrorState {
+  /**
+   * User-friendly error message
+   */
+  message: string;
+  /**
+   * Whether the error is retryable
+   */
+  isRetryable: boolean;
+  /**
+   * Function to retry the failed operation
+   */
+  retry?: () => void;
+}
+
+/**
  * Cross-platform task page business logic component
  * Handles authentication state and delegates UI rendering to @u3/ui
  * This is the main protected task management content
+ *
+ * Requirements addressed:
+ * - 1.1: Fetch and display all tasks using todoRouter.getAll API
+ * - 4.1: Render properly using Tamagui components with responsive design
+ * - 5.1: Use tRPC hooks for all API interactions with full type safety
  */
 export function TaskPage({
   authProvider,
@@ -44,6 +120,47 @@ export function TaskPage({
   loadingComponent,
 }: TaskPageProps) {
   const { user, isLoading, isAuthenticated } = useCurrentUser(authProvider);
+
+  // tRPC API hooks for task operations
+  const {
+    data: tasks,
+    isLoading: isTasksLoading,
+    error: tasksError,
+    refetch: refetchTasks,
+  } = trpc.todo.list.useQuery(undefined, {
+    enabled: isAuthenticated, // Only fetch when authenticated
+  });
+
+  const createTaskMutation = trpc.todo.create.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch tasks after successful creation
+      refetchTasks();
+    },
+  });
+
+  const updateTaskMutation = trpc.todo.update.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch tasks after successful update
+      refetchTasks();
+      handleEditSheetClose();
+    },
+  });
+
+  const deleteTaskMutation = trpc.todo.delete.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch tasks after successful deletion
+      refetchTasks();
+      handleEditSheetClose();
+    },
+  });
+
+  // Component state management for task operations
+  const [taskState, setTaskState] = useState<TaskPageState>({
+    selectedTask: null,
+    isEditSheetOpen: false,
+    isLoading: false,
+    error: null,
+  });
 
   // Handle sheet close navigation
   const handleSheetClose = useCallback(() => {
@@ -56,6 +173,72 @@ export function TaskPage({
       authProvider.navigate(href);
     },
     [authProvider]
+  );
+
+  // Task selection handler - opens edit sheet
+  const handleTaskSelect = useCallback((task: Todo) => {
+    setTaskState(prev => ({
+      ...prev,
+      selectedTask: task,
+      isEditSheetOpen: true,
+      error: null,
+    }));
+  }, []);
+
+  // Add task handler using tRPC mutation
+  const handleAddTask = useCallback(
+    async (title: string) => {
+      if (!title.trim()) {
+        throw new Error('Task title is required');
+      }
+
+      try {
+        await createTaskMutation.mutateAsync({
+          title: title.trim(),
+          description: '',
+        });
+      } catch (error) {
+        console.error('Failed to create task:', error);
+        throw new Error('Failed to create task. Please try again.');
+      }
+    },
+    [createTaskMutation]
+  );
+
+  // Edit sheet handlers
+  const handleEditSheetClose = useCallback(() => {
+    setTaskState(prev => ({
+      ...prev,
+      selectedTask: null,
+      isEditSheetOpen: false,
+      error: null,
+    }));
+  }, []);
+
+  // Task save handler using tRPC mutation
+  const handleTaskSave = useCallback(
+    async (updatedTask: UpdateTodoInput) => {
+      try {
+        await updateTaskMutation.mutateAsync(updatedTask);
+      } catch (error) {
+        console.error('Failed to update task:', error);
+        throw new Error('Failed to update task. Please try again.');
+      }
+    },
+    [updateTaskMutation]
+  );
+
+  // Task delete handler using tRPC mutation
+  const handleTaskDelete = useCallback(
+    async (taskId: string) => {
+      try {
+        await deleteTaskMutation.mutateAsync({ id: taskId });
+      } catch (error) {
+        console.error('Failed to delete task:', error);
+        throw new Error('Failed to delete task. Please try again.');
+      }
+    },
+    [deleteTaskMutation]
   );
 
   // Handle sign out
@@ -85,9 +268,6 @@ export function TaskPage({
     return null;
   }
 
-  // Format current date
-  const currentDate = formatDate(new Date(), { dateStyle: 'full' });
-
   // Transform user data for sidebar
   const sidebarUser = user
     ? {
@@ -102,10 +282,10 @@ export function TaskPage({
       }
     : null;
 
-  // Show welcome page using MainLayout
+  // Show task management interface using MainLayout
   return (
     <MainLayout
-      title='Dashboard'
+      title='Tasks'
       scrollable={true}
       user={sidebarUser}
       onSignOut={handleSignOut}
@@ -114,119 +294,80 @@ export function TaskPage({
       onSheetClose={handleSheetClose}
       onNavigate={handleNavigate}
     >
-      <YStack
-        gap='$6'
-        alignItems='center'
-        justifyContent='center'
-        flex={1}
-        {...style}
-      >
-        {/* Welcome Message */}
-        <YStack alignItems='center' gap='$4'>
-          <H1 size='$10' color='$color12' textAlign='center'>
-            Welcome!
-          </H1>
-          <Text fontSize='$5' color='$color11' textAlign='center'>
-            {currentDate}
-          </Text>
-          <Text
-            fontSize='$4'
-            color='$color10'
-            textAlign='center'
-            maxWidth={400}
+      <YStack flex={1} backgroundColor='$background' {...style}>
+        {/* Main container with responsive design */}
+        <YStack
+          flex={1}
+          maxWidth='100%'
+          width='100%'
+          paddingHorizontal='$4'
+          paddingTop='$4'
+          paddingBottom='$6'
+          gap='$4'
+          // Safe area handling for mobile platforms
+          $gtSm={{
+            maxWidth: 1200,
+            alignSelf: 'center',
+            paddingHorizontal: '$6',
+          }}
+          $gtMd={{
+            paddingHorizontal: '$8',
+          }}
+        >
+          {/* Task List Container - Scrollable content area */}
+          <YStack
+            flex={1}
+            gap='$3'
+            paddingBottom='$20' // Space for sticky form
           >
-            Here will be your task list.
-          </Text>
+            <TaskList
+              tasks={tasks}
+              isLoading={isTasksLoading}
+              error={tasksError ? handleTRPCError(tasksError) : null}
+              isRetryable={!!tasksError}
+              onRetry={tasksError ? refetchTasks : undefined}
+              onTaskClick={handleTaskSelect}
+            />
+          </YStack>
 
-          {/* Test link for sheet functionality */}
-          <Button
-            onPress={() => handleNavigate('/t/sample-task')}
-            backgroundColor='$blue9'
-            color='white'
-            marginTop='$4'
+          {/* Sticky Add Task Form Container - Fixed at bottom */}
+          <YStack
+            position='absolute'
+            bottom='$4'
+            left='$4'
+            right='$4'
+            // Responsive positioning
+            $gtSm={{
+              left: '$6',
+              right: '$6',
+              maxWidth: 1200,
+              alignSelf: 'center',
+            }}
+            $gtMd={{
+              left: '$8',
+              right: '$8',
+            }}
           >
-            Open Task Sheet (Test)
-          </Button>
-        </YStack>
+            <AddTaskForm
+              onSubmit={handleAddTask}
+              isLoading={createTaskMutation.isLoading}
+              placeholder='Enter task title...'
+              buttonText='Add Task'
+              showValidation={true}
+            />
+          </YStack>
 
-        {/* Lorem Ipsum content for scroll testing */}
-        <YStack gap='$4' maxWidth={800} paddingHorizontal='$4'>
-          <H1 size='$6' color='$color12'>
-            Lorem Ipsum Content
-          </H1>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-            eos qui ratione voluptatem sequi nesciunt.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-            consectetur, adipisci velit, sed quia non numquam eius modi tempora
-            incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
-            enim ad minima veniam, quis nostrum exercitationem ullam corporis
-            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui
-            blanditiis praesentium voluptatum deleniti atque corrupti quos
-            dolores et quas molestias excepturi sint occaecati cupiditate non
-            provident, similique sunt in culpa qui officia deserunt mollitia
-            animi, id est laborum et dolorum fuga.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Et harum quidem rerum facilis est et expedita distinctio. Nam libero
-            tempore, cum soluta nobis est eligendi optio cumque nihil impedit
-            quo minus id quod maxime placeat facere possimus, omnis voluptas
-            assumenda est, omnis dolor repellendus. Temporibus autem quibusdam
-            et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et
-            voluptates repudiandae sint et molestiae non recusandae.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Itaque earum rerum hic tenetur a sapiente delectus, ut aut
-            reiciendis voluptatibus maiores alias consequatur aut perferendis
-            doloribus asperiores repellat. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum. Sed ut perspiciatis unde omnis iste natus error
-            sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-            eaque ipsa quae ab illo inventore veritatis et quasi architecto
-            beatae vitae dicta sunt explicabo.
-          </Text>
-
-          <Text fontSize='$4' color='$color11' lineHeight='$6'>
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-            fugit, sed quia consequuntur magni dolores eos qui ratione
-            voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
-            ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non
-            numquam eius modi tempora incidunt ut labore et dolore magnam
-            aliquam quaerat voluptatem.
-          </Text>
+          {/* Edit Task Sheet Overlay - Modal/sliding panel */}
+          <EditTaskSheet
+            task={taskState.selectedTask}
+            isOpen={taskState.isEditSheetOpen}
+            onClose={handleEditSheetClose}
+            onSave={handleTaskSave}
+            onDelete={handleTaskDelete}
+            isLoading={
+              updateTaskMutation.isLoading || deleteTaskMutation.isLoading
+            }
+          />
         </YStack>
       </YStack>
     </MainLayout>

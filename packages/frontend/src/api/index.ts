@@ -1,9 +1,15 @@
 export {
-  auth,
+  createFallbackStorage,
+  getStorage,
+  initializeStorage,
+  type StorageInterface,
+} from './storage';
+export {
+  clearAuthTokenGetter,
   createTRPCClientConfig,
   handleTRPCError,
   setAuthTokenGetter,
   trpc,
   trpcClientConfig,
-  usePing,
-} from './trpc';
+} from './trpc-client';
+export { BaseTRPCProvider } from './trpc-provider-base';

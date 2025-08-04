@@ -7,6 +7,8 @@ export * from '@tamagui/toast';
 
 // Re-export Tamagui core and configuration
 export * from 'tamagui';
+// Task components
+export { AddTaskForm, type AddTaskFormProps } from './components/AddTaskForm';
 // Auth components
 export { AuthForm, type AuthFormProps } from './components/AuthForm';
 export {
@@ -14,6 +16,10 @@ export {
   AuthTabs,
   type AuthTabsProps,
 } from './components/AuthTabs';
+export {
+  EditTaskSheet,
+  type EditTaskSheetProps,
+} from './components/EditTaskSheet';
 export { LogoHeader, type LogoHeaderProps } from './components/LogoHeader';
 // Navigation components
 export { NavBar, type NavBarProps } from './components/NavBar';
@@ -22,6 +28,8 @@ export {
   SignOutButton,
   type SignOutButtonProps,
 } from './components/SignOutButton';
+export { TaskItem, type TaskItemProps } from './components/TaskItem';
+export { TaskList, type TaskListProps } from './components/TaskList';
 export {
   UserProfile,
   type UserProfileProps,

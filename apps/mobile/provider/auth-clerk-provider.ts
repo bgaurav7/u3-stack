@@ -3,7 +3,7 @@
  */
 
 import { useAuth, useSignIn, useSignUp, useUser } from '@clerk/clerk-expo';
-import { setAuthTokenGetter } from '@u3/frontend/api/trpc';
+import { setAuthTokenGetter } from '@u3/frontend';
 import type { AuthProvider } from '@u3/types';
 import { useRouter } from 'expo-router';
 import { useMemo } from 'react';

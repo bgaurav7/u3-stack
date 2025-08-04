@@ -5,5 +5,9 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["dist", "**/*.test.*", "**/*.spec.*"]
+  "exclude": ["dist", "**/*.test.*", "**/*.spec.*"],
+  "references": [
+    { "path": "../backend" },
+    { "path": "../types" }
+  ]
 }

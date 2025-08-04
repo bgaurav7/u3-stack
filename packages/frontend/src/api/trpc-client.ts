@@ -1,11 +1,14 @@
 /**
- * Cross-platform tRPC Client Configuration
- * For mobile apps, pass the full server URL to createTRPCClientConfig()
+ * Base tRPC Client Configuration
+ *
+ * This provides the base tRPC client setup that can be used across platforms.
+ * Platform-specific implementations should extend this with their own
+ * authentication and configuration logic.
  */
 
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from '@u3/types';
+import type { AppRouter } from '@u3/backend';
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -113,23 +116,4 @@ export function handleTRPCError(error: unknown): string {
   }
 
   return 'An unexpected error occurred';
-}
-
-/**
- * Authentication utilities for Clerk integration
- */
-export const auth = {
-  async getToken(): Promise<string | null> {
-    return await authTokenManager.getAuthToken();
-  },
-
-  async isAuthenticated(): Promise<boolean> {
-    const token = await authTokenManager.getAuthToken();
-    return token !== null && token.length > 0;
-  },
-};
-
-export function usePing() {
-  // biome-ignore lint/suspicious/noExplicitAny: tRPC client typing limitation
-  return (trpc as any).health.ping.useQuery();
 }

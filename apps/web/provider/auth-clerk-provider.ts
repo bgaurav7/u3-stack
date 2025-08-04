@@ -3,7 +3,7 @@
  */
 
 import { useAuth, useSignIn, useSignUp, useUser } from '@clerk/nextjs';
-import { setAuthTokenGetter } from '@u3/frontend/api/trpc';
+import { setAuthTokenGetter } from '@u3/frontend';
 import type { AuthProvider } from '@u3/types';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';

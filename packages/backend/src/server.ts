@@ -39,6 +39,13 @@ export const appRouter = createAppRouter({
 });
 
 /**
+ * App Router Type
+ * Available for direct import by frontend packages for tRPC client setup
+ * Not exported from main package index to keep it contained
+ */
+export type AppRouter = typeof appRouter;
+
+/**
  * Context creator for Next.js App Router with Clerk authentication
  * Extracts user information from Clerk JWT tokens and creates tRPC context
  */

@@ -3,7 +3,7 @@
  * Implements StorageInterface for web environments
  */
 
-import { initializeStorage } from '@u3/frontend/api/storage';
+import { initializeStorage } from '@u3/frontend';
 import type { StorageInterface } from '@u3/types';
 
 /**

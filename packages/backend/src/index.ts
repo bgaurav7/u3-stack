@@ -3,7 +3,7 @@
  * This file provides clean import paths for consuming packages
  *
  * Usage examples:
- * - Frontend: import type { AppRouter } from '@u3/backend'
+ * - Frontend tRPC: import type { AppRouter } from '@u3/backend'
  * - Feature packages: import { router, publicProcedure } from '@u3/backend'
  * - Middleware: import { authMiddleware } from '@u3/backend/middleware'
  */
@@ -16,7 +16,7 @@
  * Main app router instance - Used by Next.js API handler
  * This is the composed router that includes all feature routers
  */
-export { appRouter } from './server';
+export { type AppRouter, appRouter } from './server';
 
 // ============================================================================
 // SERVER UTILITIES - For building routers and procedures

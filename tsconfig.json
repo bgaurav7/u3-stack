@@ -7,9 +7,10 @@
   "references": [
     { "path": "./packages/types" },
     { "path": "./packages/config" },
-    { "path": "./packages/api" },
+    { "path": "./packages/backend" },
+    { "path": "./packages/frontend" },
     { "path": "./packages/ui" },
-    { "path": "./packages/app" },
-    { "path": "./apps" }
+    { "path": "./apps/web" },
+    { "path": "./apps/mobile" }
   ]
 }
