@@ -84,12 +84,8 @@ export function MainLayout({
     }
   }, [sidebarMode, isSmallScreen]);
 
-  const isVisible = useMemo(() => {
-    const visible =
-      sidebarMode !== 'hidden' &&
-      (!isSmallScreen || sidebarMode === 'expanded');
-    return visible;
-  }, [sidebarMode, isSmallScreen]);
+  const isVisible =
+    sidebarMode !== 'hidden' && (!isSmallScreen || sidebarMode === 'expanded');
 
   // Detect if current route should show a sheet using utility function
   const sheetConfig = useMemo(() => {
@@ -139,19 +135,13 @@ export function MainLayout({
   );
 
   return (
-    <YStack flex={1} backgroundColor='$color1' position='relative'>
+    <YStack flex={1} backgroundColor='$color1'>
       <StatusBar {...layoutConfig.statusBarProps} />
       <XStack flex={1} width='100%' height='100%'>
         {/* Sidebar */}
         {isVisible && (
           <YStack
-            width={
-              sidebarMode === 'expanded'
-                ? '$12'
-                : sidebarMode === 'collapsed' && !isSmallScreen
-                  ? 40
-                  : 0
-            }
+            width={sidebarWidth}
             minWidth={0}
             height='100%'
             backgroundColor='$color2'
@@ -178,9 +168,6 @@ export function MainLayout({
         >
           <ContentLayout
             title={title}
-            isSmallScreen={isSmallScreen}
-            sidebarWidth={sidebarWidth}
-            isVisible={isVisible}
             navBarProps={{
               isSmallScreen,
               onToggleSidebar: toggleSidebar,

@@ -10,9 +10,6 @@ import { NavBar, type NavBarProps } from '../components/NavBar';
 export interface ContentLayoutProps {
   children: ReactNode;
   title?: string;
-  isSmallScreen: boolean;
-  sidebarWidth: number;
-  isVisible: boolean;
   navBarProps: NavBarProps;
 }
 
@@ -23,21 +20,15 @@ const StyledContent = styled(YStack, {
   overflow: 'scroll',
   position: 'relative',
   backgroundColor: '$color1',
-  padding: '$4',
 });
 
 const ContentLayoutComponent = ({
   children,
   title,
-  isSmallScreen,
-  sidebarWidth,
-  isVisible,
   navBarProps,
 }: ContentLayoutProps) => {
-  const marginLeft = isVisible && !isSmallScreen ? sidebarWidth : 0;
-
   return (
-    <StyledContent style={{ marginLeft }}>
+    <StyledContent>
       <NavBar {...navBarProps} />
       {title && (
         <H1 size='$8' fontWeight='600' color='$color12' marginBottom='$2'>
