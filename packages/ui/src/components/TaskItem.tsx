@@ -14,165 +14,57 @@
 
 import type { Todo } from '@u3/types';
 import type React from 'react';
-import { useCallback } from 'react';
-import { Card, Text, XStack, YStack } from 'tamagui';
+import { memo } from 'react';
+import { Text, XStack, YStack } from 'tamagui';
 
 /**
  * Props for the TaskItem component
  */
 export interface TaskItemProps {
-  /**
-   * Task data to display
-   */
   task: Todo;
-  /**
-   * Callback when the task item is pressed/clicked
-   */
-  onPress: () => void;
-  /**
-   * Optional variant for different styling
-   */
-  variant?: 'default' | 'completed';
-  /**
-   * Whether the item is currently pressed (for visual feedback)
-   */
-  isPressed?: boolean;
+  onClick: () => void;
+  isSelected?: boolean;
 }
-
-/**
- * Status badge component for displaying task completion status
- */
-interface StatusBadgeProps {
-  completed: boolean;
-}
-
-const StatusBadge: React.FC<StatusBadgeProps> = ({ completed }) => (
-  <Card
-    size='$2'
-    backgroundColor={completed ? '$green4' : '$yellow4'}
-    borderColor={completed ? '$green7' : '$yellow7'}
-    paddingHorizontal='$3'
-    paddingVertical='$1'
-  >
-    <Text
-      fontSize='$2'
-      fontWeight='600'
-      color={completed ? '$green11' : '$yellow11'}
-    >
-      {completed ? 'Completed' : 'Pending'}
-    </Text>
-  </Card>
-);
 
 /**
  * TaskItem component - Reusable component for displaying individual tasks
  */
-export const TaskItem: React.FC<TaskItemProps> = ({
+
+const TaskItemComponent: React.FC<TaskItemProps> = ({
   task,
-  onPress,
-  variant = 'default',
-  isPressed = false,
+  onClick,
+  isSelected,
 }) => {
-  // Handle press with proper callback
-  const handlePress = useCallback(() => {
-    onPress();
-  }, [onPress]);
-
-  // Format creation date for display
-  const formatDate = useCallback((date: Date) => {
-    return new Date(date).toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  }, []);
-
+  if (!task || !task.id || !task.title) return null;
   return (
-    <Card
-      elevate
-      size='$4'
-      bordered
-      animation='bouncy'
-      onPress={handlePress}
+    <YStack
+      padding='$3'
+      backgroundColor={isSelected ? '$color3' : '$color1'}
+      borderBottomWidth={1}
+      borderBottomColor='$color6'
+      onPress={onClick}
       cursor='pointer'
-      backgroundColor='$background'
-      borderColor='$borderColor'
-      // Cross-platform touch targets - minimum 44px height for accessibility
-      minHeight={60}
-      padding='$4'
-      // Visual feedback for interactions
-      hoverStyle={{
-        scale: 0.98,
-        borderColor: '$color8',
-        backgroundColor: '$color2',
-      }}
-      pressStyle={{
-        scale: 0.95,
-        backgroundColor: '$color3',
-      }}
-      focusStyle={{
-        borderColor: '$blue8',
-        borderWidth: 2,
-      }}
-      // Apply pressed state styling if needed
-      {...(isPressed && {
-        backgroundColor: '$color3',
-        scale: 0.95,
-      })}
-      // Apply variant-specific styling
-      {...(variant === 'completed' && {
-        opacity: 0.8,
-        backgroundColor: '$green2',
-      })}
     >
-      <YStack gap='$2'>
-        {/* Task Title and Status Row */}
-        <XStack alignItems='center' justifyContent='space-between' gap='$3'>
-          <Text
-            fontSize='$5'
-            fontWeight='600'
-            color='$color12'
-            flex={1}
-            numberOfLines={2}
-          >
-            {task.title}
-          </Text>
-
-          <StatusBadge completed={task.completed} />
-        </XStack>
-
-        {/* Task Description (if available) */}
-        {task.description && (
-          <Text
-            fontSize='$3'
-            color='$color10'
-            numberOfLines={3}
-            lineHeight='$1'
-          >
-            {task.description}
-          </Text>
-        )}
-
-        {/* Task Metadata Row */}
-        <XStack
-          alignItems='center'
-          justifyContent='space-between'
-          marginTop='$1'
-        >
-          <Text fontSize='$2' color='$color9'>
-            Created {formatDate(task.createdAt)}
-          </Text>
-
-          {/* Show updated date if different from created date */}
-          {task.updatedAt &&
-            new Date(task.updatedAt).getTime() !==
-              new Date(task.createdAt).getTime() && (
-              <Text fontSize='$2' color='$color9'>
-                Updated {formatDate(task.updatedAt)}
-              </Text>
-            )}
-        </XStack>
-      </YStack>
-    </Card>
+      <Text fontSize='$5' fontWeight='600' color='$color12'>
+        {task.title}
+      </Text>
+      {task.description && (
+        <Text fontSize='$3' color='$color10' marginTop='$1'>
+          {task.description}
+        </Text>
+      )}
+      <XStack gap='$2' marginTop='$1'>
+        <Text fontSize='$2' color='$color9'>
+          {task.completed ? 'Completed' : 'Pending'}
+        </Text>
+        <Text fontSize='$2' color='$color9'>
+          {task.createdAt ? new Date(task.createdAt).toLocaleDateString() : ''}
+        </Text>
+      </XStack>
+    </YStack>
   );
 };
+
+// Export memoized component for performance optimization
+export const TaskItem = memo(TaskItemComponent);
+TaskItem.displayName = 'TaskItem';

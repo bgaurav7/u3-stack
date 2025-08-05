@@ -1,10 +1,11 @@
+'// This is a generic layout component. Do not add business or use-case-specific logic here.';
 'use client';
 
 import { StatusBar } from 'expo-status-bar';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Platform } from 'react-native';
-import { AnimatePresence, useMedia, YStack } from 'tamagui';
+import { useMedia, YStack } from 'tamagui';
 import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { useSidebarBehavior } from '../hooks/useSidebarBehavior';
@@ -13,29 +14,27 @@ import { ContentLayout } from './ContentLayout';
 import { SheetLayout } from './SheetLayout';
 
 // Sheet sizing constants
-const SHEET_WIDTH_CLAMP = 'clamp(400px, 40vw, 600px)';
 const MAIN_CONTENT_MIN_WIDTH = '300px';
 
 export interface MainLayoutProps {
   children: ReactNode;
   title?: string;
   hideSidebar?: boolean;
-  scrollable?: boolean;
   currentTheme?: 'light' | 'dark';
   onThemeToggle?: () => void;
-  onNavigate?: (href: string) => void; // Add navigation callback
-  user?: SideBarUser | null; // User data for sidebar profile
-  onSignOut?: () => void; // Sign out handler
-  // New sheet-related props
+  onNavigate?: (href: string) => void;
+  user?: SideBarUser | null;
+  onSignOut?: () => void;
   currentPath?: string;
   onSheetClose?: () => void;
+  sheetContent?: React.ReactNode;
+  sheetHeaderTitle?: string;
 }
 
 export function MainLayout({
   children,
   title,
   hideSidebar = false,
-  scrollable = true,
   currentTheme = 'dark',
   onThemeToggle,
   onNavigate,
@@ -43,6 +42,8 @@ export function MainLayout({
   onSignOut,
   currentPath,
   onSheetClose,
+  sheetContent,
+  sheetHeaderTitle,
 }: MainLayoutProps) {
   // Use Tamagui's useMedia hook for responsive behavior
   const media = useMedia();
@@ -129,14 +130,16 @@ export function MainLayout({
     if (isSheetSidePanel) {
       // On web, the sheet takes up space on the right side
       // Content layout needs to be narrower to accommodate the sheet
-      const sheetWidth = SHEET_WIDTH_CLAMP;
+      // Use a simple percentage instead of calc() to avoid animation issues
       return {
-        width: `calc(100% - ${sheetWidth})`,
+        width: '60%', // 100% - 40% (sheet width)
         minWidth: MAIN_CONTENT_MIN_WIDTH, // Ensure content doesn't get too narrow
         marginRight: 0, // No right margin since sheet is on the right
       };
     }
-    return {};
+    return {
+      width: '100%',
+    };
   }, [isSheetSidePanel]);
 
   // Memoize layout configuration
@@ -178,27 +181,24 @@ export function MainLayout({
         onThemeToggle={onThemeToggle}
       />
 
-      {/* Fixed Sidebar with AnimatePresence for smooth mount/unmount */}
-      <AnimatePresence>
-        {isVisible && (
-          <SideBar
-            key='sidebar'
-            sidebarMode={sidebarMode}
-            isSmallScreen={isSmallScreen}
-            sidebarWidth={sidebarWidth}
-            onHideSidebar={hideSidebarFn}
-            onNavigate={onNavigate}
-            user={user}
-            onSignOut={onSignOut}
-          />
-        )}
-      </AnimatePresence>
+      {/* Fixed Sidebar - no animations */}
+      {isVisible && (
+        <SideBar
+          key='sidebar'
+          sidebarMode={sidebarMode}
+          isSmallScreen={isSmallScreen}
+          sidebarWidth={sidebarWidth}
+          onHideSidebar={hideSidebarFn}
+          onNavigate={onNavigate}
+          user={user}
+          onSignOut={onSignOut}
+        />
+      )}
 
       {/* Main Content Area - with margin for sidebar and sheet */}
-      <YStack flex={1} paddingTop={60} {...mainContentStyle}>
+      <YStack flex={1} paddingTop={60} style={mainContentStyle}>
         <ContentLayout
           title={title}
-          scrollable={scrollable}
           isSmallScreen={isSmallScreen}
           sidebarWidth={sidebarWidth}
           isVisible={isVisible}
@@ -207,31 +207,24 @@ export function MainLayout({
         </ContentLayout>
       </YStack>
 
-      {/* Mobile overlay with AnimatePresence */}
-      <AnimatePresence>
-        {layoutConfig.overlayProps && (
-          <YStack
-            key='overlay'
-            {...layoutConfig.overlayProps}
-            onPress={hideSidebarFn}
-            animation='quick'
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-        )}
-      </AnimatePresence>
+      {/* Mobile overlay - no animations */}
+      {layoutConfig.overlayProps && (
+        <YStack
+          key='overlay'
+          {...layoutConfig.overlayProps}
+          onPress={hideSidebarFn}
+        />
+      )}
 
-      {/* Sheet overlay system */}
-      <AnimatePresence>
-        {sheetConfig && (
-          <SheetLayout
-            key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
-            type={sheetConfig.type}
-            id={sheetConfig.id}
-            onClose={handleSheetClose}
-          />
-        )}
-      </AnimatePresence>
+      {/* Sheet overlay system - no animations */}
+      {sheetConfig && (
+        <SheetLayout
+          key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
+          onClose={handleSheetClose}
+          content={sheetContent}
+          headerTitle={sheetHeaderTitle}
+        />
+      )}
     </YStack>
   );
 }

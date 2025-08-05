@@ -66,6 +66,7 @@ const SheetComponent = ({
         height: 'calc(100vh - 60px)', // Full height minus navbar
         borderLeftWidth: 1,
         borderLeftColor: '$color6',
+        backgroundColor: '$background', // Ensure solid background
         shadowColor: '$shadowColor',
         shadowOffset: { width: -2, height: 0 },
         shadowOpacity: 0.15,
@@ -73,25 +74,6 @@ const SheetComponent = ({
       };
     }
   }, [isSmallScreen, contentHeight]);
-
-  // Animation configuration
-  const animationConfig = useMemo(() => {
-    if (isSmallScreen) {
-      // Mobile: slide up from bottom
-      return {
-        animation: 'bouncy',
-        enterStyle: { y: '100%' },
-        exitStyle: { y: '100%' },
-      };
-    } else {
-      // Web: slide in from right
-      return {
-        animation: 'quick',
-        enterStyle: { x: '100%' },
-        exitStyle: { x: '100%' },
-      };
-    }
-  }, [isSmallScreen]);
 
   if (!isOpen) {
     return null;
@@ -111,17 +93,13 @@ const SheetComponent = ({
           opacity={0.5}
           zIndex={300}
           onPress={onClose}
-          animation='quick'
-          enterStyle={{ opacity: 0 }}
-          exitStyle={{ opacity: 0 }}
         />
       )}
 
-      {/* Sheet container */}
+      {/* Sheet container - no animations */}
       <YStack
-        {...animationConfig}
         position='absolute'
-        backgroundColor='$color1'
+        backgroundColor='$background'
         zIndex={400}
         style={{
           position: 'fixed', // Override with raw CSS

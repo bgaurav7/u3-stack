@@ -98,8 +98,6 @@ const NavBarComponent = ({
       left={0}
       right={0}
       zIndex={100}
-      animation='quick'
-      animateOnly={['marginLeft']}
       style={{ position: 'fixed' }}
     >
       {leftContent}

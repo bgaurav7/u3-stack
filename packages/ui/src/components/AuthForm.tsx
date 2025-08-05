@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  AnimatePresence,
   Button,
   Input,
   Paragraph,
@@ -143,18 +142,7 @@ export function AuthForm({
             fontWeight='600'
             onPress={onVerify}
             disabled={!canVerify}
-            icon={
-              <AnimatePresence>
-                {isLoading && (
-                  <Spinner
-                    size='small'
-                    animation='quick'
-                    enterStyle={{ opacity: 0, scale: 0.5 }}
-                    exitStyle={{ opacity: 0, scale: 0.5 }}
-                  />
-                )}
-              </AnimatePresence>
-            }
+            icon={isLoading ? <Spinner size='small' /> : undefined}
           >
             {isLoading ? 'Verifying...' : 'Verify Email'}
           </Button>
@@ -223,18 +211,9 @@ export function AuthForm({
         onPress={onSubmit}
         disabled={!canSubmit}
         icon={
-          <AnimatePresence>
-            {isLoading && (
-              <Spinner
-                size='small'
-                animation='quick'
-                position='absolute'
-                left='60%'
-                enterStyle={{ opacity: 0, scale: 0.5 }}
-                exitStyle={{ opacity: 0, scale: 0.5 }}
-              />
-            )}
-          </AnimatePresence>
+          isLoading ? (
+            <Spinner size='small' position='absolute' left='60%' />
+          ) : undefined
         }
       >
         {isLoading

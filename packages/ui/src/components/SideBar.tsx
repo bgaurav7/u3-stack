@@ -83,7 +83,7 @@ const SideBarComponent = ({
   const isOpen = sidebarMode === 'expanded';
   const isCollapsed = sidebarMode === 'collapsed';
 
-  // Memoize sidebar container styles with simplified animations
+  // Memoize sidebar container styles - fixed positioning to prevent scrolling
   const sidebarStyles = useMemo(
     () => ({
       width: sidebarWidth,
@@ -91,7 +91,7 @@ const SideBarComponent = ({
       backgroundColor: '$color2',
       borderRightWidth: isSmallScreen ? 0 : 1,
       borderRightColor: '$color6',
-      position: 'absolute' as const,
+      position: 'absolute' as const, // Tamagui position
       left: 0,
       top: 0, // Start from the very top
       zIndex: 200, // Above NavBar (100) but below Sheet (400)
@@ -100,10 +100,17 @@ const SideBarComponent = ({
       shadowOffset: isSmallScreen ? { width: 2, height: 0 } : undefined,
       shadowOpacity: isSmallScreen ? 0.1 : undefined,
       shadowRadius: isSmallScreen ? 8 : undefined,
-      // Simplified animation properties - no conflicting animations
+    }),
+    [isSmallScreen, sidebarWidth]
+  );
+
+  // CSS overrides for fixed positioning and mobile transforms
+  const cssStyles = useMemo(
+    () => ({
+      position: 'fixed' as const, // Use fixed positioning to prevent scrolling with content
       ...(isSmallScreen && {
-        x: isOpen ? 0 : -sidebarWidth,
-        // Remove enter/exit styles that might conflict
+        transform: isOpen ? 'translateX(0)' : `translateX(-${sidebarWidth}px)`,
+        transition: 'transform 0.3s ease', // Smooth slide animation for mobile
       }),
     }),
     [isSmallScreen, isOpen, sidebarWidth]
@@ -158,7 +165,7 @@ const SideBarComponent = ({
   );
 
   return (
-    <YStack {...sidebarStyles}>
+    <YStack {...sidebarStyles} style={cssStyles}>
       {/* Header Section */}
       <XStack
         height={60}

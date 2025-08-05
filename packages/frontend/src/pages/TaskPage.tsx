@@ -8,9 +8,9 @@ import {
 } from '@u3/types';
 import {
   AddTaskForm,
-  EditTaskSheet,
   LoadingLayout,
   MainLayout,
+  TaskEditor,
   TaskList,
   YStack,
 } from '@u3/ui';
@@ -43,68 +43,6 @@ export interface TaskPageProps {
    * Custom loading component passed to UI component
    */
   loadingComponent?: React.ReactNode;
-}
-
-/**
- * Internal state interface for TaskPage component
- */
-export interface TaskPageState {
-  /**
-   * Currently selected task for editing (null when no task is selected)
-   */
-  selectedTask: Todo | null;
-  /**
-   * Whether the edit sheet overlay is currently open
-   */
-  isEditSheetOpen: boolean;
-  /**
-   * Loading state for async operations
-   */
-  isLoading: boolean;
-  /**
-   * Error message for display to user (null when no error)
-   */
-  error: string | null;
-}
-
-/**
- * API response types for task operations
- */
-export interface TasksApiResponse {
-  /**
-   * Array of tasks fetched from the API
-   */
-  tasks: Todo[] | undefined;
-  /**
-   * Loading state for tasks fetch operation
-   */
-  isLoading: boolean;
-  /**
-   * Error state for tasks fetch operation
-   */
-  error: unknown;
-  /**
-   * Function to refetch tasks
-   */
-  refetch: () => void;
-}
-
-/**
- * Error state types for better error handling
- */
-export interface TasksErrorState {
-  /**
-   * User-friendly error message
-   */
-  message: string;
-  /**
-   * Whether the error is retryable
-   */
-  isRetryable: boolean;
-  /**
-   * Function to retry the failed operation
-   */
-  retry?: () => void;
 }
 
 /**
@@ -146,29 +84,69 @@ export function TaskPage({
     },
   });
 
+  // State for the currently edited task (for the sheet)
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+
+  // Fetch a single task by ID for editing
+  const {
+    data: editingTaskData,
+    isLoading: isEditingTaskLoading,
+    error: editingTaskError,
+    refetch: refetchEditingTask,
+  } = trpc.todo.getById.useQuery(
+    { id: editingTaskId! },
+    {
+      enabled: !!editingTaskId,
+      retry: (failureCount, error) => {
+        if (error?.data?.code === 'NOT_FOUND') return false;
+        return failureCount < 1;
+      },
+    }
+  );
+
+  // Mutations for update and delete
   const updateTaskMutation = trpc.todo.update.useMutation({
     onSuccess: () => {
-      // Invalidate and refetch tasks after successful update
       refetchTasks();
-      handleEditSheetClose();
+      refetchEditingTask();
+      setEditingTaskId(null);
     },
   });
-
   const deleteTaskMutation = trpc.todo.delete.useMutation({
     onSuccess: () => {
-      // Invalidate and refetch tasks after successful deletion
       refetchTasks();
-      handleEditSheetClose();
+      setEditingTaskId(null);
     },
   });
 
-  // Component state management for task operations
-  const [taskState, setTaskState] = useState<TaskPageState>({
-    selectedTask: null,
-    isEditSheetOpen: false,
-    isLoading: false,
-    error: null,
-  });
+  // Handlers for TaskEditor
+  const handleTaskSave = useCallback(
+    async (data: UpdateTodoInput) => {
+      try {
+        await updateTaskMutation.mutateAsync(data);
+      } catch (error) {
+        console.error('Failed to update task:', error);
+        throw new Error('Failed to update task. Please try again.');
+      }
+    },
+    [updateTaskMutation]
+  );
+
+  const handleTaskDelete = useCallback(
+    async (id: string) => {
+      try {
+        await deleteTaskMutation.mutateAsync({ id });
+      } catch (error) {
+        console.error('Failed to delete task:', error);
+        throw new Error('Failed to delete task. Please try again.');
+      }
+    },
+    [deleteTaskMutation]
+  );
+
+  const handleTaskCancel = useCallback(() => {
+    setEditingTaskId(null);
+  }, []);
 
   // Handle sheet close navigation
   const handleSheetClose = useCallback(() => {
@@ -183,14 +161,9 @@ export function TaskPage({
     [authProvider]
   );
 
-  // Task selection handler - opens edit sheet
+  // Task selection handler - open the editor sheet
   const handleTaskSelect = useCallback((task: Todo) => {
-    setTaskState(prev => ({
-      ...prev,
-      selectedTask: task,
-      isEditSheetOpen: true,
-      error: null,
-    }));
+    setEditingTaskId(task.id);
   }, []);
 
   // Add task handler using tRPC mutation
@@ -213,41 +186,7 @@ export function TaskPage({
     [createTaskMutation]
   );
 
-  // Edit sheet handlers
-  const handleEditSheetClose = useCallback(() => {
-    setTaskState(prev => ({
-      ...prev,
-      selectedTask: null,
-      isEditSheetOpen: false,
-      error: null,
-    }));
-  }, []);
-
-  // Task save handler using tRPC mutation
-  const handleTaskSave = useCallback(
-    async (updatedTask: UpdateTodoInput) => {
-      try {
-        await updateTaskMutation.mutateAsync(updatedTask);
-      } catch (error) {
-        console.error('Failed to update task:', error);
-        throw new Error('Failed to update task. Please try again.');
-      }
-    },
-    [updateTaskMutation]
-  );
-
-  // Task delete handler using tRPC mutation
-  const handleTaskDelete = useCallback(
-    async (taskId: string) => {
-      try {
-        await deleteTaskMutation.mutateAsync({ id: taskId });
-      } catch (error) {
-        console.error('Failed to delete task:', error);
-        throw new Error('Failed to delete task. Please try again.');
-      }
-    },
-    [deleteTaskMutation]
-  );
+  // Task save and delete handlers are now handled in the TaskEditor component via the sheet system
 
   // Handle sign out
   const handleSignOut = useCallback(async () => {
@@ -293,16 +232,21 @@ export function TaskPage({
   // Show task management interface using MainLayout
   return (
     <MainLayout
-      title='Tasks'
-      scrollable={true}
       user={sidebarUser}
       onSignOut={handleSignOut}
       // Enhanced with sheet support
       currentPath={currentPath}
       onSheetClose={handleSheetClose}
       onNavigate={handleNavigate}
+      sheetHeaderTitle={editingTaskId ? 'Edit Task' : undefined}
+      // Render TaskEditor directly in the sheet if editingTaskId is set
     >
-      <YStack flex={1} backgroundColor='$background' {...style}>
+      <YStack
+        flex={1}
+        backgroundColor='$background'
+        position='relative'
+        {...style}
+      >
         {/* Main container with responsive design */}
         <YStack
           flex={1}
@@ -310,8 +254,6 @@ export function TaskPage({
           width='100%'
           paddingHorizontal='$4'
           paddingTop='$4'
-          paddingBottom='$6'
-          gap='$4'
           // Safe area handling for mobile platforms
           $gtSm={{
             maxWidth: 1200,
@@ -322,7 +264,7 @@ export function TaskPage({
             paddingHorizontal: '$8',
           }}
         >
-          {/* Task List Container - Scrollable content area */}
+          {/* Task List Container - Scrollable content area with bottom padding for form */}
           <YStack
             flex={1}
             gap='$3'
@@ -337,23 +279,39 @@ export function TaskPage({
               onTaskClick={handleTaskSelect}
             />
           </YStack>
+        </YStack>
 
-          {/* Sticky Add Task Form Container - Fixed at bottom */}
+        {/* Sticky Add Task Form Container - Fixed at bottom of ContentLayout */}
+        <YStack
+          position='absolute'
+          bottom={0}
+          left={0}
+          right={0}
+          backgroundColor='$background'
+          borderTopWidth={1}
+          borderTopColor='$borderColor'
+          paddingHorizontal='$4'
+          paddingVertical='$3'
+          // Safe area handling for mobile platforms
+          $gtSm={{
+            paddingHorizontal: '$6',
+          }}
+          $gtMd={{
+            paddingHorizontal: '$8',
+          }}
+          // Add shadow for better separation
+          shadowColor='$shadowColor'
+          shadowOffset={{ width: 0, height: -2 }}
+          shadowOpacity={0.1}
+          shadowRadius={4}
+          elevation={4}
+        >
           <YStack
-            position='absolute'
-            bottom='$4'
-            left='$4'
-            right='$4'
-            // Responsive positioning
+            maxWidth='100%'
+            width='100%'
             $gtSm={{
-              left: '$6',
-              right: '$6',
               maxWidth: 1200,
               alignSelf: 'center',
-            }}
-            $gtMd={{
-              left: '$8',
-              right: '$8',
             }}
           >
             <AddTaskForm
@@ -361,22 +319,28 @@ export function TaskPage({
               isLoading={createTaskMutation.isLoading}
               placeholder='Enter task title...'
               buttonText='Add Task'
-              showValidation={true}
             />
           </YStack>
+        </YStack>
 
-          {/* Edit Task Sheet Overlay - Modal/sliding panel */}
-          <EditTaskSheet
-            task={taskState.selectedTask}
-            isOpen={taskState.isEditSheetOpen}
-            onClose={handleEditSheetClose}
+        {/* Edit Task Sheet (simple modal or inline for demo) */}
+        {editingTaskId && (
+          <TaskEditor
+            taskId={editingTaskId}
+            task={editingTaskData ? todoFromApi(editingTaskData) : undefined}
+            isLoading={
+              isEditingTaskLoading ||
+              updateTaskMutation.isLoading ||
+              deleteTaskMutation.isLoading
+            }
+            error={
+              editingTaskError ? handleTRPCError(editingTaskError) : undefined
+            }
             onSave={handleTaskSave}
             onDelete={handleTaskDelete}
-            isLoading={
-              updateTaskMutation.isLoading || deleteTaskMutation.isLoading
-            }
+            onCancel={handleTaskCancel}
           />
-        </YStack>
+        )}
       </YStack>
     </MainLayout>
   );

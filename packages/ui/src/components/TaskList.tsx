@@ -12,8 +12,8 @@
 
 import type { Todo } from '@u3/types';
 import type React from 'react';
-import { useCallback } from 'react';
-import { Button, ScrollView, Spinner, Text, YStack } from 'tamagui';
+import { memo } from 'react';
+import { Button, Spinner, Text, YStack } from 'tamagui';
 import { TaskItem } from './TaskItem';
 
 /**
@@ -44,12 +44,16 @@ export interface TaskListProps {
    * Callback when a task is clicked/pressed
    */
   onTaskClick: (task: Todo) => void;
+  /**
+   * Currently selected task id (optional)
+   */
+  selectedTaskId?: string;
 }
 
 /**
  * Empty state component when no tasks are available
  */
-const EmptyState: React.FC = () => (
+const EmptyState: React.FC = memo(() => (
   <YStack
     flex={1}
     alignItems='center'
@@ -65,12 +69,12 @@ const EmptyState: React.FC = () => (
       management.
     </Text>
   </YStack>
-);
+));
 
 /**
  * Loading state component
  */
-const LoadingState: React.FC = () => (
+const LoadingState: React.FC = memo(() => (
   <YStack
     flex={1}
     alignItems='center'
@@ -83,7 +87,7 @@ const LoadingState: React.FC = () => (
       Loading your tasks...
     </Text>
   </YStack>
-);
+));
 
 /**
  * Error state component with retry functionality
@@ -94,93 +98,67 @@ interface ErrorStateProps {
   onRetry?: () => void;
 }
 
-const ErrorState: React.FC<ErrorStateProps> = ({
-  message,
-  isRetryable,
-  onRetry,
-}) => (
-  <YStack
-    flex={1}
-    alignItems='center'
-    justifyContent='center'
-    paddingVertical='$8'
-    gap='$4'
-  >
-    <Text fontSize='$5' fontWeight='600' color='$red10' textAlign='center'>
-      Unable to load tasks
-    </Text>
-    <Text fontSize='$4' color='$color10' textAlign='center' maxWidth={300}>
-      {message}
-    </Text>
-    {isRetryable && onRetry && (
-      <Button
-        size='$3'
-        backgroundColor='$blue9'
-        color='$white1'
-        onPress={onRetry}
-        marginTop='$2'
-      >
-        Try Again
-      </Button>
-    )}
-  </YStack>
+const ErrorState: React.FC<ErrorStateProps> = memo(
+  ({ message, isRetryable, onRetry }) => (
+    <YStack
+      flex={1}
+      alignItems='center'
+      justifyContent='center'
+      paddingVertical='$8'
+      gap='$4'
+    >
+      <Text fontSize='$5' fontWeight='600' color='$red10' textAlign='center'>
+        Unable to load tasks
+      </Text>
+      <Text fontSize='$4' color='$color10' textAlign='center' maxWidth={300}>
+        {message}
+      </Text>
+      {isRetryable && onRetry ? (
+        <Button
+          size='$3'
+          backgroundColor='$blue9'
+          color='$white1'
+          onPress={onRetry}
+          marginTop='$2'
+        >
+          Try Again
+        </Button>
+      ) : null}
+    </YStack>
+  )
 );
 
 /**
  * TaskList component - Main component for displaying tasks
  */
-export const TaskList: React.FC<TaskListProps> = ({
+const TaskListComponent: React.FC<TaskListProps> = ({
   tasks,
   isLoading,
   error,
   isRetryable = true,
   onRetry,
   onTaskClick,
+  selectedTaskId,
 }) => {
-  // Handle task click with proper callback
-  const handleTaskClick = useCallback(
-    (task: Todo) => {
-      onTaskClick(task);
-    },
-    [onTaskClick]
-  );
-
-  // Show loading state
-  if (isLoading) {
-    return <LoadingState />;
-  }
-
-  // Show error state
-  if (error) {
+  if (isLoading) return <LoadingState />;
+  if (error)
     return (
       <ErrorState message={error} isRetryable={isRetryable} onRetry={onRetry} />
     );
-  }
-
-  // Show empty state when no tasks
-  if (!tasks || tasks.length === 0) {
-    return <EmptyState />;
-  }
-
-  // Render scrollable task list
+  if (!tasks || tasks.length === 0) return <EmptyState />;
   return (
-    <ScrollView
-      flex={1}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{
-        paddingBottom: '$4',
-      }}
-    >
-      <YStack gap='$3'>
-        {tasks.map(task => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            onPress={() => handleTaskClick(task)}
-            variant={task.completed ? 'completed' : 'default'}
-          />
-        ))}
-      </YStack>
-    </ScrollView>
+    <YStack>
+      {tasks.map(task => (
+        <TaskItem
+          key={task.id}
+          task={task}
+          onClick={() => onTaskClick(task)}
+          isSelected={selectedTaskId === task.id}
+        />
+      ))}
+    </YStack>
   );
 };
+
+// Export memoized component for performance optimization
+export const TaskList = memo(TaskListComponent);

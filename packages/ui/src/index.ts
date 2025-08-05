@@ -28,6 +28,7 @@ export {
   SignOutButton,
   type SignOutButtonProps,
 } from './components/SignOutButton';
+export { TaskEditor, type TaskEditorProps } from './components/TaskEditor';
 export { TaskItem, type TaskItemProps } from './components/TaskItem';
 export { TaskList, type TaskListProps } from './components/TaskList';
 export {

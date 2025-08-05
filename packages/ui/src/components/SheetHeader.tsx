@@ -13,31 +13,31 @@ export interface SheetHeaderProps {
 const SheetHeaderComponent = ({ title, onClose }: SheetHeaderProps) => {
   return (
     <XStack
-      height={60}
       alignItems='center'
       justifyContent='flex-start'
       paddingHorizontal='$4'
+      paddingVertical='$3'
       borderBottomWidth={1}
-      borderBottomColor='$color6'
+      borderBottomColor='$borderColor'
       backgroundColor='$color1'
+      minHeight={60}
+      gap='$3'
     >
-      {/* Close Button and Title grouped together on the left */}
-      <XStack alignItems='center' gap='$3'>
-        {/* Close Button - positioned before the title */}
+      {onClose && (
         <Button
           size='$3'
           circular
-          backgroundColor='transparent'
-          hoverStyle={{ backgroundColor: '$color4' }}
-          pressStyle={{ backgroundColor: '$color5' }}
           icon={X}
+          aria-label='Close'
           onPress={onClose}
+          backgroundColor='$color2'
+          hoverStyle={{ backgroundColor: '$color3' }}
+          pressStyle={{ backgroundColor: '$color4' }}
         />
-
-        <H2 size='$6' color='$color12' fontWeight='600'>
-          {title}
-        </H2>
-      </XStack>
+      )}
+      <H2 size='$7' fontWeight='600' color='$color12'>
+        {title}
+      </H2>
     </XStack>
   );
 };

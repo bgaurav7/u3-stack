@@ -145,21 +145,7 @@ const UserProfileComponent = ({
           </XStack>
         </Popover.Trigger>
 
-        <Popover.Content
-          borderWidth={1}
-          borderColor='$color6'
-          enterStyle={{ y: -10, opacity: 0 }}
-          exitStyle={{ y: -10, opacity: 0 }}
-          elevate
-          animation={[
-            'quick',
-            {
-              opacity: {
-                overshootClamping: true,
-              },
-            },
-          ]}
-        >
+        <Popover.Content borderWidth={1} borderColor='$color6' elevate>
           <Popover.Arrow borderWidth={1} borderColor='$color6' />
           {popoverContent}
         </Popover.Content>
