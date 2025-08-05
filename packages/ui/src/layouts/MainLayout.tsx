@@ -5,16 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Platform } from 'react-native';
-import { useMedia, YStack } from 'tamagui';
+import { useMedia, XStack, YStack } from 'tamagui';
 // import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { useSidebarBehavior } from '../hooks/useSidebarBehavior';
 import { getSheetConfig } from '../utils';
 import { ContentLayout } from './ContentLayout';
 import { SheetLayout } from './SheetLayout';
-
-// Sheet sizing constants
-const MAIN_CONTENT_MIN_WIDTH = '300px';
 
 export interface MainLayoutProps {
   children: ReactNode;
@@ -73,26 +70,18 @@ export function MainLayout({
     }
   }, [onSheetClose]);
 
-  // Memoize derived state based on screen size
+  // Sidebar width using Tamagui tokens and responsive logic
   const sidebarWidth = useMemo(() => {
-    let width: number;
     switch (sidebarMode) {
       case 'hidden':
-        width = 0;
-        break;
+        return 0;
       case 'collapsed':
-        // On small screens, there is not enough space to show a collapsed sidebar,
-        // so the sidebar is fully hidden (width = 0) instead of collapsed. On larger screens,
-        // the collapsed sidebar is shown with a width of 40px.
-        width = isSmallScreen ? 0 : 40;
-        break;
+        return isSmallScreen ? 0 : 40; // 40px for desktop, 0 for mobile
       case 'expanded':
-        width = 240;
-        break;
+        return 240; // $12 ~ 240px, but Tamagui tokens can be used in SideBar
       default:
-        width = 0;
+        return 0;
     }
-    return width;
   }, [sidebarMode, isSmallScreen]);
 
   const isVisible = useMemo(() => {
@@ -120,27 +109,7 @@ export function MainLayout({
     // When sheet closes, sidebar stays hidden (user must manually toggle)
   }, [sheetConfig, hideSidebar]);
 
-  // Calculate if sheet should be rendered as side panel (web) or overlay (mobile)
-  const isSheetSidePanel = useMemo(() => {
-    return sheetConfig && !isSmallScreen;
-  }, [sheetConfig, isSmallScreen]);
-
-  // Calculate main content width adjustment for split-screen sheet (web only)
-  const mainContentStyle = useMemo(() => {
-    if (isSheetSidePanel) {
-      // On web, the sheet takes up space on the right side
-      // Content layout needs to be narrower to accommodate the sheet
-      // Use a simple percentage instead of calc() to avoid animation issues
-      return {
-        width: '60%', // 100% - 40% (sheet width)
-        minWidth: MAIN_CONTENT_MIN_WIDTH, // Ensure content doesn't get too narrow
-        marginRight: 0, // No right margin since sheet is on the right
-      };
-    }
-    return {
-      width: '100%',
-    };
-  }, [isSheetSidePanel]);
+  const MAIN_CONTENT_MIN_WIDTH = '300px';
 
   // Memoize layout configuration
   const layoutConfig = useMemo(
@@ -172,38 +141,84 @@ export function MainLayout({
   return (
     <YStack flex={1} backgroundColor='$color1' position='relative'>
       <StatusBar {...layoutConfig.statusBarProps} />
+      <XStack flex={1} width='100%' height='100%'>
+        {/* Sidebar */}
+        {isVisible && (
+          <YStack
+            width={
+              sidebarMode === 'expanded'
+                ? '$12'
+                : sidebarMode === 'collapsed' && !isSmallScreen
+                  ? 40
+                  : 0
+            }
+            minWidth={0}
+            height='100%'
+            backgroundColor='$color2'
+          >
+            <SideBar
+              key='sidebar'
+              sidebarMode={sidebarMode}
+              isSmallScreen={isSmallScreen}
+              sidebarWidth={sidebarWidth}
+              onHideSidebar={hideSidebarFn}
+              onNavigate={onNavigate}
+              user={user}
+              onSignOut={onSignOut}
+            />
+          </YStack>
+        )}
 
-      {/* Fixed Sidebar - no animations */}
-      {isVisible && (
-        <SideBar
-          key='sidebar'
-          sidebarMode={sidebarMode}
-          isSmallScreen={isSmallScreen}
-          sidebarWidth={sidebarWidth}
-          onHideSidebar={hideSidebarFn}
-          onNavigate={onNavigate}
-          user={user}
-          onSignOut={onSignOut}
+        {/* Main Content */}
+        <YStack
+          flex={1}
+          minWidth={MAIN_CONTENT_MIN_WIDTH}
+          width={sheetConfig && !isSmallScreen ? '60%' : '100%'}
+          height='100%'
+        >
+          <ContentLayout
+            title={title}
+            isSmallScreen={isSmallScreen}
+            sidebarWidth={sidebarWidth}
+            isVisible={isVisible}
+            navBarProps={{
+              isSmallScreen,
+              onToggleSidebar: toggleSidebar,
+              currentTheme,
+              onThemeToggle,
+            }}
+          >
+            {children}
+          </ContentLayout>
+        </YStack>
+
+        {/* Sheet (web side panel) */}
+        {sheetConfig && !isSmallScreen && (
+          <YStack
+            width='40%'
+            minWidth={MAIN_CONTENT_MIN_WIDTH}
+            height='100%'
+            backgroundColor='$color3'
+          >
+            <SheetLayout
+              key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
+              onClose={handleSheetClose}
+              content={sheetContent}
+              headerTitle={sheetHeaderTitle}
+            />
+          </YStack>
+        )}
+      </XStack>
+
+      {/* Sheet (mobile modal) */}
+      {sheetConfig && isSmallScreen && (
+        <SheetLayout
+          key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
+          onClose={handleSheetClose}
+          content={sheetContent}
+          headerTitle={sheetHeaderTitle}
         />
       )}
-
-      {/* Main Content Area - with margin for sidebar and sheet */}
-      <YStack flex={1} style={mainContentStyle}>
-        <ContentLayout
-          title={title}
-          isSmallScreen={isSmallScreen}
-          sidebarWidth={sidebarWidth}
-          isVisible={isVisible}
-          navBarProps={{
-            isSmallScreen,
-            onToggleSidebar: toggleSidebar,
-            currentTheme,
-            onThemeToggle,
-          }}
-        >
-          {children}
-        </ContentLayout>
-      </YStack>
 
       {/* Mobile overlay - no animations */}
       {layoutConfig.overlayProps && (
@@ -211,16 +226,6 @@ export function MainLayout({
           key='overlay'
           {...layoutConfig.overlayProps}
           onPress={hideSidebarFn}
-        />
-      )}
-
-      {/* Sheet overlay system - no animations */}
-      {sheetConfig && (
-        <SheetLayout
-          key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
-          onClose={handleSheetClose}
-          content={sheetContent}
-          headerTitle={sheetHeaderTitle}
         />
       )}
     </YStack>

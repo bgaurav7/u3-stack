@@ -1,10 +1,10 @@
 '// This is a generic layout component. Do not add business or use-case-specific logic here.';
 'use client';
 
+import { X } from '@tamagui/lucide-icons';
 import { memo, useCallback, useMemo } from 'react';
-import { ScrollView, useMedia, YStack } from 'tamagui';
+import { Button, H2, ScrollView, XStack, YStack } from 'tamagui';
 import { Sheet } from '../components/Sheet';
-import { SheetHeader } from '../components/SheetHeader';
 
 export interface SheetLayoutProps {
   onClose?: () => void;
@@ -19,10 +19,6 @@ const SheetLayoutComponent = ({
   content,
   headerTitle,
 }: SheetLayoutProps) => {
-  // Use Tamagui's useMedia hook for responsive behavior
-  const media = useMedia();
-  const isSmallScreen = !media.gtSm; // gtSm is minWidth: 769px, so !gtSm means <= 768px
-
   // Safe close handler - memoized to prevent unnecessary re-renders
   const handleSafeClose = useCallback(() => {
     if (onClose) {
@@ -30,15 +26,37 @@ const SheetLayoutComponent = ({
     }
   }, [onClose]);
 
-  // Render sheet content
+  // Render sheet content with inline header
   const renderSheetContent = useMemo(() => {
     return (
       <YStack flex={1} backgroundColor='$background'>
-        <SheetHeader
-          title={headerTitle || ''}
-          onClose={handleSafeClose}
-          isSmallScreen={isSmallScreen}
-        />
+        <XStack
+          alignItems='center'
+          justifyContent='flex-start'
+          paddingHorizontal='$4'
+          paddingVertical='$3'
+          borderBottomWidth={1}
+          borderBottomColor='$borderColor'
+          backgroundColor='$color1'
+          minHeight={60}
+          gap='$3'
+        >
+          {onClose && (
+            <Button
+              size='$3'
+              circular
+              icon={X}
+              aria-label='Close'
+              onPress={handleSafeClose}
+              backgroundColor='$color2'
+              hoverStyle={{ backgroundColor: '$color3' }}
+              pressStyle={{ backgroundColor: '$color4' }}
+            />
+          )}
+          <H2 size='$7' fontWeight='600' color='$color12'>
+            {headerTitle}
+          </H2>
+        </XStack>
         <ScrollView
           flex={1}
           showsVerticalScrollIndicator={false}
@@ -48,7 +66,7 @@ const SheetLayoutComponent = ({
         </ScrollView>
       </YStack>
     );
-  }, [handleSafeClose, isSmallScreen, content, headerTitle]);
+  }, [handleSafeClose, headerTitle, onClose, content]);
 
   return (
     <Sheet isOpen={isOpen} onClose={onClose}>

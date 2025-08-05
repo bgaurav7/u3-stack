@@ -16,10 +16,6 @@ export {
   AuthTabs,
   type AuthTabsProps,
 } from './components/AuthTabs';
-export {
-  EditTaskSheet,
-  type EditTaskSheetProps,
-} from './components/EditTaskSheet';
 export { LogoHeader, type LogoHeaderProps } from './components/LogoHeader';
 // Navigation components
 export { NavBar, type NavBarProps } from './components/NavBar';
