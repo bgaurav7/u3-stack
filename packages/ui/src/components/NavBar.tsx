@@ -6,7 +6,6 @@ import { Button, Text, XStack } from 'tamagui';
 
 export interface NavBarProps {
   isSmallScreen: boolean;
-  sidebarWidth: number;
   onToggleSidebar: () => void;
   currentTheme?: 'light' | 'dark';
   onThemeToggle?: () => void;
@@ -23,16 +22,11 @@ const buttonStyles = {
 
 const NavBarComponent = ({
   isSmallScreen,
-  sidebarWidth,
   onToggleSidebar,
   currentTheme = 'dark',
   onThemeToggle,
 }: NavBarProps) => {
-  // Calculate navbar margin based on sidebar state
-  const navBarMargin = useMemo(() => {
-    const margin = isSmallScreen ? 0 : sidebarWidth;
-    return margin;
-  }, [isSmallScreen, sidebarWidth]);
+  // No longer need to calculate margin for NavBar; handled by ContentLayout
 
   // Memoize left side content - hamburger menu now shown on all screen sizes
   const leftContent = useMemo(
@@ -92,13 +86,7 @@ const NavBarComponent = ({
       alignItems='center'
       justifyContent='space-between'
       paddingHorizontal='$4'
-      marginLeft={navBarMargin}
-      position='absolute'
-      top={0}
-      left={0}
-      right={0}
       zIndex={100}
-      style={{ position: 'fixed' }}
     >
       {leftContent}
       {rightContent}

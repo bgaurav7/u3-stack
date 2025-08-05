@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Platform } from 'react-native';
 import { useMedia, YStack } from 'tamagui';
-import { NavBar } from '../components/NavBar';
+// import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { useSidebarBehavior } from '../hooks/useSidebarBehavior';
 import { getSheetConfig } from '../utils';
@@ -173,14 +173,6 @@ export function MainLayout({
     <YStack flex={1} backgroundColor='$color1' position='relative'>
       <StatusBar {...layoutConfig.statusBarProps} />
 
-      <NavBar
-        isSmallScreen={isSmallScreen}
-        sidebarWidth={sidebarWidth}
-        onToggleSidebar={toggleSidebar}
-        currentTheme={currentTheme}
-        onThemeToggle={onThemeToggle}
-      />
-
       {/* Fixed Sidebar - no animations */}
       {isVisible && (
         <SideBar
@@ -196,12 +188,18 @@ export function MainLayout({
       )}
 
       {/* Main Content Area - with margin for sidebar and sheet */}
-      <YStack flex={1} paddingTop={60} style={mainContentStyle}>
+      <YStack flex={1} style={mainContentStyle}>
         <ContentLayout
           title={title}
           isSmallScreen={isSmallScreen}
           sidebarWidth={sidebarWidth}
           isVisible={isVisible}
+          navBarProps={{
+            isSmallScreen,
+            onToggleSidebar: toggleSidebar,
+            currentTheme,
+            onThemeToggle,
+          }}
         >
           {children}
         </ContentLayout>
