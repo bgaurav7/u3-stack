@@ -5,11 +5,6 @@
  * and cross-platform touch targets. It uses Tamagui components for consistent
  * design and includes visual feedback for user interactions.
  *
- * Requirements addressed:
- * - 1.2: Display task with title, description, and status
- * - 1.4: Clickable task items that open edit sheet
- * - 4.2: Cross-platform touch targets and accessibility
- * - 4.4: Proper styling with Tamagui components
  */
 
 import type { Todo } from '@u3/types';
@@ -35,7 +30,40 @@ const TaskItemComponent: React.FC<TaskItemProps> = ({
   onClick,
   isSelected,
 }) => {
-  if (!task || !task.id || !task.title) return null;
+  if (!task || !task.id || !task.title || !task.title.trim()) return null;
+
+  const children = [];
+
+  // Title (always present)
+  children.push(
+    <Text key='title' fontSize='$5' fontWeight='600' color='$color12'>
+      {task.title}
+    </Text>
+  );
+
+  // Description (conditional)
+  if (task.description && task.description.trim()) {
+    children.push(
+      <Text key='description' fontSize='$3' color='$color10' marginTop='$1'>
+        {task.description}
+      </Text>
+    );
+  }
+
+  // Status and date row
+  children.push(
+    <XStack key='status' gap='$2' marginTop='$1'>
+      <Text fontSize='$2' color='$color9'>
+        {task.completed ? 'Completed' : 'Pending'}
+      </Text>
+      {task.createdAt && (
+        <Text fontSize='$2' color='$color9'>
+          {new Date(task.createdAt).toLocaleDateString()}
+        </Text>
+      )}
+    </XStack>
+  );
+
   return (
     <YStack
       padding='$3'
@@ -45,22 +73,7 @@ const TaskItemComponent: React.FC<TaskItemProps> = ({
       onPress={onClick}
       cursor='pointer'
     >
-      <Text fontSize='$5' fontWeight='600' color='$color12'>
-        {task.title}
-      </Text>
-      {task.description && (
-        <Text fontSize='$3' color='$color10' marginTop='$1'>
-          {task.description}
-        </Text>
-      )}
-      <XStack gap='$2' marginTop='$1'>
-        <Text fontSize='$2' color='$color9'>
-          {task.completed ? 'Completed' : 'Pending'}
-        </Text>
-        <Text fontSize='$2' color='$color9'>
-          {task.createdAt ? new Date(task.createdAt).toLocaleDateString() : ''}
-        </Text>
-      </XStack>
+      {children}
     </YStack>
   );
 };

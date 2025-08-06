@@ -101,6 +101,16 @@ export function TaskPage({
         if (error?.data?.code === 'NOT_FOUND') return false;
         return failureCount < 1;
       },
+      onError: error => {
+        // If task is not found, navigate back to task list
+        if (error?.data?.code === 'NOT_FOUND') {
+          console.warn(
+            `Task ${editingTaskId} not found, navigating back to task list`
+          );
+          authProvider.navigate('/t');
+          setEditingTaskId(null);
+        }
+      },
     }
   );
 
@@ -162,9 +172,13 @@ export function TaskPage({
   );
 
   // Task selection handler - open the editor sheet
-  const handleTaskSelect = useCallback((task: Todo) => {
-    setEditingTaskId(task.id);
-  }, []);
+  const handleTaskSelect = useCallback(
+    (task: Todo) => {
+      setEditingTaskId(task.id);
+      authProvider.navigate(`/t/${task.id}`);
+    },
+    [authProvider]
+  );
 
   // Add task handler using tRPC mutation
   const handleAddTask = useCallback(
@@ -232,21 +246,34 @@ export function TaskPage({
   // Show task management interface using MainLayout
   return (
     <MainLayout
+      title='Task List'
       user={sidebarUser}
       onSignOut={handleSignOut}
-      // Enhanced with sheet support
       currentPath={currentPath}
       onSheetClose={handleSheetClose}
       onNavigate={handleNavigate}
       sheetHeaderTitle={editingTaskId ? 'Edit Task' : undefined}
-      // Render TaskEditor directly in the sheet if editingTaskId is set
+      sheetContent={
+        editingTaskId ? (
+          <TaskEditor
+            taskId={editingTaskId}
+            task={editingTaskData ? todoFromApi(editingTaskData) : undefined}
+            isLoading={
+              isEditingTaskLoading ||
+              updateTaskMutation.isLoading ||
+              deleteTaskMutation.isLoading
+            }
+            error={
+              editingTaskError ? handleTRPCError(editingTaskError) : undefined
+            }
+            onSave={handleTaskSave}
+            onDelete={handleTaskDelete}
+            onCancel={handleTaskCancel}
+          />
+        ) : null
+      }
     >
-      <YStack
-        flex={1}
-        backgroundColor='$background'
-        position='relative'
-        {...style}
-      >
+      <YStack flex={1} backgroundColor='$background' position='relative'>
         {/* Main container with responsive design */}
         <YStack
           flex={1}
@@ -322,25 +349,6 @@ export function TaskPage({
             />
           </YStack>
         </YStack>
-
-        {/* Edit Task Sheet (simple modal or inline for demo) */}
-        {editingTaskId && (
-          <TaskEditor
-            taskId={editingTaskId}
-            task={editingTaskData ? todoFromApi(editingTaskData) : undefined}
-            isLoading={
-              isEditingTaskLoading ||
-              updateTaskMutation.isLoading ||
-              deleteTaskMutation.isLoading
-            }
-            error={
-              editingTaskError ? handleTRPCError(editingTaskError) : undefined
-            }
-            onSave={handleTaskSave}
-            onDelete={handleTaskDelete}
-            onCancel={handleTaskCancel}
-          />
-        )}
       </YStack>
     </MainLayout>
   );

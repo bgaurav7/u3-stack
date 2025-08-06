@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Platform } from 'react-native';
 import { useMedia, XStack, YStack } from 'tamagui';
+import { Sheet } from '../components/Sheet';
 // import { NavBar } from '../components/NavBar';
 import { SideBar, type SideBarUser } from '../components/SideBar';
 import { useSidebarBehavior } from '../hooks/useSidebarBehavior';
@@ -17,8 +18,6 @@ export interface MainLayoutProps {
   children: ReactNode;
   title?: string;
   hideSidebar?: boolean;
-  currentTheme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
   onNavigate?: (href: string) => void;
   user?: SideBarUser | null;
   onSignOut?: () => void;
@@ -32,8 +31,6 @@ export function MainLayout({
   children,
   title,
   hideSidebar = false,
-  currentTheme = 'dark',
-  onThemeToggle,
   onNavigate,
   user,
   onSignOut,
@@ -105,8 +102,6 @@ export function MainLayout({
     // When sheet closes, sidebar stays hidden (user must manually toggle)
   }, [sheetConfig, hideSidebar]);
 
-  const MAIN_CONTENT_MIN_WIDTH = '300px';
-
   // Memoize layout configuration
   const layoutConfig = useMemo(
     () => ({
@@ -160,51 +155,52 @@ export function MainLayout({
         )}
 
         {/* Main Content */}
-        <YStack
-          flex={1}
-          minWidth={MAIN_CONTENT_MIN_WIDTH}
-          width={sheetConfig && !isSmallScreen ? '60%' : '100%'}
-          height='100%'
-        >
+        <YStack flex={1} height='100%'>
           <ContentLayout
             title={title}
             navBarProps={{
               isSmallScreen,
               onToggleSidebar: toggleSidebar,
-              currentTheme,
-              onThemeToggle,
             }}
           >
             {children}
           </ContentLayout>
         </YStack>
 
-        {/* Sheet (web side panel) */}
+        {/* Sheet (web side panel) - move before main content */}
         {sheetConfig && !isSmallScreen && (
-          <YStack
-            width='40%'
-            minWidth={MAIN_CONTENT_MIN_WIDTH}
-            height='100%'
-            backgroundColor='$color3'
-          >
+          <>
+            {console.log('Rendering web side panel')}
+            <YStack
+              width={400}
+              minWidth={300}
+              height='100%'
+              backgroundColor='$color3'
+            >
+              <SheetLayout
+                key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
+                onClose={handleSheetClose}
+                content={sheetContent}
+                headerTitle={sheetHeaderTitle}
+              />
+            </YStack>
+          </>
+        )}
+      </XStack>
+
+      {/* Sheet (mobile modal) */}
+      {sheetConfig && isSmallScreen && (
+        <>
+          {console.log('Rendering mobile modal')}
+          <Sheet isOpen={true} onClose={handleSheetClose}>
             <SheetLayout
               key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
               onClose={handleSheetClose}
               content={sheetContent}
               headerTitle={sheetHeaderTitle}
             />
-          </YStack>
-        )}
-      </XStack>
-
-      {/* Sheet (mobile modal) */}
-      {sheetConfig && isSmallScreen && (
-        <SheetLayout
-          key={`sheet-${sheetConfig.type}-${sheetConfig.id}`}
-          onClose={handleSheetClose}
-          content={sheetContent}
-          headerTitle={sheetHeaderTitle}
-        />
+          </Sheet>
+        </>
       )}
 
       {/* Mobile overlay - no animations */}

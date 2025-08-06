@@ -2,20 +2,17 @@
 'use client';
 
 import { X } from '@tamagui/lucide-icons';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { Button, H2, ScrollView, XStack, YStack } from 'tamagui';
-import { Sheet } from '../components/Sheet';
 
 export interface SheetLayoutProps {
   onClose?: () => void;
-  isOpen?: boolean;
   content?: React.ReactNode;
   headerTitle?: string;
 }
 
 const SheetLayoutComponent = ({
   onClose,
-  isOpen = true,
   content,
   headerTitle,
 }: SheetLayoutProps) => {
@@ -26,52 +23,44 @@ const SheetLayoutComponent = ({
     }
   }, [onClose]);
 
-  // Render sheet content with inline header
-  const renderSheetContent = useMemo(() => {
-    return (
-      <YStack flex={1} backgroundColor='$background'>
-        <XStack
-          alignItems='center'
-          justifyContent='flex-start'
-          paddingHorizontal='$4'
-          paddingVertical='$3'
-          borderBottomWidth={1}
-          borderBottomColor='$borderColor'
-          backgroundColor='$color1'
-          minHeight={60}
-          gap='$3'
-        >
-          {onClose && (
-            <Button
-              size='$3'
-              circular
-              icon={X}
-              aria-label='Close'
-              onPress={handleSafeClose}
-              backgroundColor='$color2'
-              hoverStyle={{ backgroundColor: '$color3' }}
-              pressStyle={{ backgroundColor: '$color4' }}
-            />
-          )}
-          <H2 size='$7' fontWeight='600' color='$color12'>
-            {headerTitle}
-          </H2>
-        </XStack>
-        <ScrollView
-          flex={1}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}
-        >
-          {content}
-        </ScrollView>
-      </YStack>
-    );
-  }, [handleSafeClose, headerTitle, onClose, content]);
-
+  // Only render header and content, no Sheet wrapper
   return (
-    <Sheet isOpen={isOpen} onClose={onClose}>
-      {renderSheetContent}
-    </Sheet>
+    <YStack flex={1} backgroundColor='$background'>
+      <XStack
+        alignItems='center'
+        justifyContent='flex-start'
+        paddingHorizontal='$4'
+        paddingVertical='$3'
+        borderBottomWidth={1}
+        borderBottomColor='$borderColor'
+        backgroundColor='$color1'
+        minHeight={60}
+        gap='$3'
+      >
+        {onClose && (
+          <Button
+            size='$3'
+            circular
+            icon={X}
+            aria-label='Close'
+            onPress={handleSafeClose}
+            backgroundColor='$color2'
+            hoverStyle={{ backgroundColor: '$color3' }}
+            pressStyle={{ backgroundColor: '$color4' }}
+          />
+        )}
+        <H2 size='$7' fontWeight='600' color='$color12'>
+          {headerTitle}
+        </H2>
+      </XStack>
+      <ScrollView
+        flex={1}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        {content}
+      </ScrollView>
+    </YStack>
   );
 };
 

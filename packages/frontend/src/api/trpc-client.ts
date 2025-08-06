@@ -102,9 +102,12 @@ export function handleTRPCError(error: unknown): string {
   ) {
     // biome-ignore lint/suspicious/noExplicitAny: Zod error structure varies
     const zodError = error.data.zodError as any;
-    const fieldErrors = zodError.fieldErrors;
-    const firstError = Object.values(fieldErrors)[0];
-    return Array.isArray(firstError) ? firstError[0] : 'Validation error';
+    if (zodError && zodError.fieldErrors) {
+      const fieldErrors = zodError.fieldErrors;
+      const firstError = Object.values(fieldErrors)[0];
+      return Array.isArray(firstError) ? firstError[0] : 'Validation error';
+    }
+    return 'Validation error';
   }
 
   if (
