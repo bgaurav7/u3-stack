@@ -1,5 +1,6 @@
 import type React from 'react';
-import { Button, H1, Paragraph, Theme, YStack } from 'tamagui';
+import { H1, Paragraph, Theme, YStack } from 'tamagui';
+import { Button } from '../primitives';
 
 /**
  * Props for the HomeLayout UI component

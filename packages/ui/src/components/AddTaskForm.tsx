@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, Input, Text, XStack, YStack } from 'tamagui';
+import { Button, Input } from '../primitives';
+import { Text, XStack, YStack } from 'tamagui';
 
 /**
  * Props for the AddTaskForm component
@@ -72,9 +73,7 @@ export function AddTaskForm({
           disabled={isLoading || !title.trim()}
           minWidth={100}
         >
-          <Text color='$white1' fontWeight='600' fontSize='$3'>
-            {isLoading ? 'Adding...' : buttonText}
-          </Text>
+          {isLoading ? 'Adding...' : buttonText}
         </Button>
       </XStack>
     </YStack>

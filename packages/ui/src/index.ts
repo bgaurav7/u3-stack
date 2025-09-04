@@ -3,10 +3,15 @@
 // Import and ensure Tamagui config is loaded
 import './config';
 
+// Export Tamagui toast (this is a utility, not a primitive)
 export * from '@tamagui/toast';
 
-// Re-export Tamagui core and configuration
-export * from 'tamagui';
+// Export our themed primitives (NO raw Tamagui exports)
+export * from './primitives';
+
+// Export configuration
+export { config } from './config';
+
 // Task components
 export { AddTaskForm, type AddTaskFormProps } from './components/AddTaskForm';
 // Auth components
@@ -32,7 +37,6 @@ export {
   type UserProfileProps,
   type UserProfileUser,
 } from './components/UserProfile';
-export { config } from './config';
 
 // Hooks
 export { useSidebarBehavior } from './hooks/useSidebarBehavior';
@@ -42,7 +46,9 @@ export * from './layouts';
 // Provider
 export type { UIProviderProps } from './provider/UIProvider';
 export { UIProvider } from './provider/UIProvider';
+
+// Theme components
+export { ThemeProvider, useTheme } from './components/ThemeProvider';
+export { ThemeToggle, type ThemeToggleProps } from './components/ThemeToggle';
 // Utilities
 export * from './utils';
-
-// Layout Context removed - state is now managed directly in MainLayout

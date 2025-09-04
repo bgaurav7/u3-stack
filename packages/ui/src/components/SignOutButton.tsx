@@ -1,4 +1,5 @@
-import { Button, Theme } from 'tamagui';
+import { Theme } from 'tamagui';
+import { Button } from '../primitives';
 
 /**
  * Props for the SignOutButton component
@@ -41,10 +42,8 @@ export function SignOutButton({
   return (
     <Theme name={themeName}>
       <Button
-        size='$4'
-        backgroundColor='$background'
-        color='$color'
-        fontWeight='600'
+        size='md'
+        variant={variant}
         disabled={isLoading}
         onPress={onSignOut}
         {...style}

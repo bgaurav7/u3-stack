@@ -2,7 +2,8 @@
 
 import { Github, Menu, Moon, MoreHorizontal, Sun } from '@tamagui/lucide-icons';
 import { memo, useMemo } from 'react';
-import { Button, Text, XStack } from 'tamagui';
+import { Text, XStack } from 'tamagui';
+import { Button } from '../primitives';
 
 export interface NavBarProps {
   isSmallScreen: boolean;
@@ -13,11 +14,8 @@ export interface NavBarProps {
 
 // Memoized button styles to prevent recreation on each render
 const buttonStyles = {
-  size: '$3' as const,
-  circular: true,
-  backgroundColor: 'transparent',
-  hoverStyle: { backgroundColor: '$color4' },
-  pressStyle: { backgroundColor: '$color5' },
+  size: 'sm' as const,
+  variant: 'ghost' as const,
 };
 
 const NavBarComponent = ({
@@ -32,7 +30,9 @@ const NavBarComponent = ({
   const leftContent = useMemo(
     () => (
       <XStack alignItems='center' gap='$3'>
-        <Button {...buttonStyles} icon={Menu} onPress={onToggleSidebar} />
+        <Button {...buttonStyles} onPress={onToggleSidebar}>
+          <Menu size={16} />
+        </Button>
 
         <Text
           fontSize='$6'
@@ -54,14 +54,14 @@ const NavBarComponent = ({
         {/* Theme Toggle */}
         <Button
           {...buttonStyles}
-          icon={currentTheme === 'dark' ? Sun : Moon}
           onPress={onThemeToggle}
-        />
+        >
+          {currentTheme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        </Button>
 
         {/* GitHub Link */}
         <Button
           {...buttonStyles}
-          icon={Github}
           onPress={() =>
             window.open(
               'https://github.com/bgaurav7/u3-stack',
@@ -69,9 +69,15 @@ const NavBarComponent = ({
               'noopener,noreferrer'
             )
           }
-        />
+        >
+          <Github size={16} />
+        </Button>
 
-        {isSmallScreen && <Button {...buttonStyles} icon={MoreHorizontal} />}
+        {isSmallScreen && (
+          <Button {...buttonStyles}>
+            <MoreHorizontal size={16} />
+          </Button>
+        )}
       </XStack>
     ),
     [isSmallScreen, currentTheme, onThemeToggle]

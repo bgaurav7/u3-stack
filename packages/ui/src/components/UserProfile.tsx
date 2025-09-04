@@ -2,7 +2,8 @@
 
 import { LogOut } from '@tamagui/lucide-icons';
 import { memo, useCallback, useMemo } from 'react';
-import { Avatar, Button, Popover, Text, XStack, YStack } from 'tamagui';
+import { Avatar, Popover, Text, XStack, YStack } from 'tamagui';
+import { Button } from '../primitives';
 
 /**
  * User data interface for the profile component

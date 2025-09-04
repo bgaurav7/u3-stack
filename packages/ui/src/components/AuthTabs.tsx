@@ -1,6 +1,7 @@
 'use client';
 
-import { Button, XStack } from 'tamagui';
+import { XStack } from 'tamagui';
+import { Button } from '../primitives';
 
 export type AuthMode = 'signin' | 'signup';
 
@@ -37,10 +38,8 @@ export function AuthTabs({
     >
       <Button
         flex={1}
-        size='$3'
-        backgroundColor={mode === 'signin' ? '$background' : 'transparent'}
-        color={mode === 'signin' ? '$color' : '$color11'}
-        fontWeight={mode === 'signin' ? '600' : '400'}
+        size='sm'
+        variant={mode === 'signin' ? 'primary' : 'ghost'}
         onPress={() => onModeChange('signin')}
         disabled={disabled}
       >
@@ -48,10 +47,8 @@ export function AuthTabs({
       </Button>
       <Button
         flex={1}
-        size='$3'
-        backgroundColor={mode === 'signup' ? '$background' : 'transparent'}
-        color={mode === 'signup' ? '$color' : '$color11'}
-        fontWeight={mode === 'signup' ? '600' : '400'}
+        size='sm'
+        variant={mode === 'signup' ? 'primary' : 'ghost'}
         onPress={() => onModeChange('signup')}
         disabled={disabled}
       >

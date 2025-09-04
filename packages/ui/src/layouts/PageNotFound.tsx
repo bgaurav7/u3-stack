@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { Button, Card, Text, Theme, YStack } from 'tamagui';
+import { Text, Theme, YStack } from 'tamagui';
+import { Button, Card } from '../primitives';
 
 export interface PageNotFoundProps {
   /** Custom title for the error page */

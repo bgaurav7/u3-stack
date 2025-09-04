@@ -1,14 +1,13 @@
 'use client';
 
 import {
-  Button,
-  Input,
   Paragraph,
   Spinner,
   Text,
   Theme,
   YStack,
 } from 'tamagui';
+import { Button, Input } from '../primitives';
 import type { AuthMode } from './AuthTabs';
 
 export interface AuthFormProps {

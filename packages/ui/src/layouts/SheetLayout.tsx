@@ -3,7 +3,8 @@
 
 import { X } from '@tamagui/lucide-icons';
 import { memo, useCallback } from 'react';
-import { Button, H2, ScrollView, XStack, YStack } from 'tamagui';
+import { H2, ScrollView, XStack, YStack } from 'tamagui';
+import { Button } from '../primitives';
 
 export interface SheetLayoutProps {
   onClose?: () => void;
