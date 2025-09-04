@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { Button, Card, Text, Theme, YStack } from 'tamagui';
+import { Text, YStack } from 'tamagui';
+import { Button, Card } from '../primitives';
 
 export interface PageNotFoundProps {
   /** Custom title for the error page */
@@ -40,11 +41,9 @@ export function PageNotFound({
             {message}
           </Text>
           {actionButton || (
-            <Theme name='accent'>
-              <Button size='$4' backgroundColor='$background' color='$color'>
-                Go Home
-              </Button>
-            </Theme>
+            <Button size='md' backgroundColor='$primary' color='$primaryFg'>
+              Go Home
+            </Button>
           )}
         </YStack>
       </Card>

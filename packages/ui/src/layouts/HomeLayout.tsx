@@ -1,5 +1,6 @@
 import type React from 'react';
-import { Button, H1, Paragraph, Theme, YStack } from 'tamagui';
+import { H1, Paragraph, YStack } from 'tamagui';
+import { Button } from '../primitives';
 
 /**
  * Props for the HomeLayout UI component
@@ -63,29 +64,14 @@ export function HomeLayout({
         {subtitle}
       </Paragraph>
 
-      <Theme name='accent'>
-        <Button
-          size='$3'
-          backgroundColor='$background'
-          color='$color'
-          fontWeight='600'
-          paddingHorizontal='$4'
-          paddingVertical='$2'
-          borderRadius='$3'
-          alignSelf='center'
-          pressStyle={{
-            backgroundColor: '$backgroundPress',
-            transform: [{ translateY: -1 }],
-          }}
-          hoverStyle={{
-            backgroundColor: '$backgroundHover',
-            transform: [{ translateY: -1 }],
-          }}
-          onPress={onSignInClick}
-        >
-          {buttonText}
-        </Button>
-      </Theme>
+      <Button
+        size='md'
+        backgroundColor='$primary'
+        color='$primaryFg'
+        onPress={onSignInClick}
+      >
+        {buttonText}
+      </Button>
     </YStack>
   );
 }

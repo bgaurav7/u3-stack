@@ -8,7 +8,8 @@ import {
   Settings,
 } from '@tamagui/lucide-icons';
 import { memo, useCallback, useMemo } from 'react';
-import { Button, ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
+import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
+import { Button } from '../primitives';
 import { UserProfile, type UserProfileUser } from './UserProfile';
 
 /**

@@ -13,7 +13,8 @@
 import type { Todo } from '@u3/types';
 import type React from 'react';
 import { memo } from 'react';
-import { Button, Spinner, Text, YStack } from 'tamagui';
+import { Spinner, Text, YStack } from 'tamagui';
+import { Button } from '../primitives';
 import { TaskItem } from './TaskItem';
 
 /**

@@ -2,17 +2,8 @@
 
 import type { Todo, UpdateTodoInput } from '@u3/types';
 import { memo, useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  Input,
-  Label,
-  Spinner,
-  Switch,
-  Text,
-  TextArea,
-  XStack,
-  YStack,
-} from 'tamagui';
+import { Spinner, Text, XStack, YStack } from 'tamagui';
+import { Button, Input, Label, Switch, Textarea } from '../primitives';
 
 export interface TaskEditorProps {
   taskId?: string;
@@ -331,7 +322,7 @@ const TaskEditorComponent = ({
         >
           Description
         </Label>
-        <TextArea
+        <Textarea
           id='description'
           value={description}
           onChangeText={setDescription}

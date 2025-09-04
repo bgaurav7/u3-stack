@@ -1,24 +1,21 @@
 import { shorthands } from '@tamagui/shorthands';
-import { tokens } from '@tamagui/themes';
 import { createTamagui } from 'tamagui';
 import { animations } from './animations';
-import { bodyFont, headingFont } from './fonts';
 import { media } from './media';
 import { themes } from './themes';
+import { fonts, tokens } from './tokens';
 
-// Create the Tamagui configuration with explicit tokens
+// Create the Tamagui configuration with our custom tokens and themes
 export const config = createTamagui({
   animations,
   shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,
-  fonts: {
-    body: bodyFont,
-    heading: headingFont,
-  },
+  fonts,
   themes,
   tokens,
   media,
+  defaultTheme: 'light',
 });
 
 // Default export for webpack loader compatibility

@@ -1,14 +1,7 @@
 'use client';
 
-import {
-  Button,
-  Input,
-  Paragraph,
-  Spinner,
-  Text,
-  Theme,
-  YStack,
-} from 'tamagui';
+import { Paragraph, Spinner, Text, YStack } from 'tamagui';
+import { Button, Input } from '../primitives';
 import type { AuthMode } from './AuthTabs';
 
 export interface AuthFormProps {
@@ -129,11 +122,9 @@ export function AuthForm({
         />
 
         {error && (
-          <Theme name='error'>
-            <Text fontSize='$3' textAlign='center' color='$color'>
-              {error}
-            </Text>
-          </Theme>
+          <Text fontSize='$3' textAlign='center' color='$destructive'>
+            {error}
+          </Text>
         )}
 
         <YStack gap='$3'>
@@ -198,11 +189,9 @@ export function AuthForm({
       </YStack>
 
       {error && (
-        <Theme name='error'>
-          <Text fontSize='$3' textAlign='center' color='$color'>
-            {error}
-          </Text>
-        </Theme>
+        <Text fontSize='$3' textAlign='center' color='$destructive'>
+          {error}
+        </Text>
       )}
 
       <Button

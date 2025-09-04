@@ -17,7 +17,8 @@
     "format:fix": "biome format --write .",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist .turbo node_modules tsconfig.tsbuildinfo",
-    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format"
+    "check-imports": "./scripts/check-tamagui-imports.sh",
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format && pnpm run check-imports"
   },
   "dependencies": {
     "@tamagui/animations-react-native": "^1.132.12",
