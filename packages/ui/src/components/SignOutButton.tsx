@@ -1,4 +1,3 @@
-import { Theme } from 'tamagui';
 import { Button } from '../primitives';
 
 /**
@@ -37,19 +36,16 @@ export function SignOutButton({
   style,
   variant = 'destructive',
 }: SignOutButtonProps) {
-  const themeName = variant === 'destructive' ? 'error' : 'accent';
-
   return (
-    <Theme name={themeName}>
-      <Button
-        size='md'
-        variant={variant}
-        disabled={isLoading}
-        onPress={onSignOut}
-        {...style}
-      >
-        {isLoading ? 'Signing Out...' : text}
-      </Button>
-    </Theme>
+    <Button
+      size='md'
+      backgroundColor={variant === 'destructive' ? '$destructive' : '$primary'}
+      color={variant === 'destructive' ? '$destructiveFg' : '$primaryFg'}
+      disabled={isLoading}
+      onPress={onSignOut}
+      {...style}
+    >
+      {isLoading ? 'Signing Out...' : text}
+    </Button>
   );
 }

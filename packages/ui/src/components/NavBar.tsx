@@ -15,7 +15,8 @@ export interface NavBarProps {
 // Memoized button styles to prevent recreation on each render
 const buttonStyles = {
   size: 'sm' as const,
-  variant: 'ghost' as const,
+  backgroundColor: 'transparent' as const,
+  color: '$foreground' as const,
 };
 
 const NavBarComponent = ({
@@ -52,10 +53,7 @@ const NavBarComponent = ({
     () => (
       <XStack alignItems='center' gap='$2'>
         {/* Theme Toggle */}
-        <Button
-          {...buttonStyles}
-          onPress={onThemeToggle}
-        >
+        <Button {...buttonStyles} onPress={onThemeToggle}>
           {currentTheme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </Button>
 

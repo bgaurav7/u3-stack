@@ -8,7 +8,8 @@ module.exports = {
         patterns: [
           {
             group: ['tamagui'],
-            message: 'Direct imports from "tamagui" are not allowed. Use primitives from "../primitives" instead.',
+            message:
+              'Direct imports from "tamagui" are not allowed. Use primitives from "../primitives" instead.',
             allowTypeImports: true,
           },
         ],
@@ -24,4 +25,4 @@ module.exports = {
       },
     },
   ],
-}
+};

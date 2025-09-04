@@ -39,7 +39,8 @@ export function AuthTabs({
       <Button
         flex={1}
         size='sm'
-        variant={mode === 'signin' ? 'primary' : 'ghost'}
+        backgroundColor={mode === 'signin' ? '$primary' : 'transparent'}
+        color={mode === 'signin' ? '$primaryFg' : '$foreground'}
         onPress={() => onModeChange('signin')}
         disabled={disabled}
       >
@@ -48,7 +49,8 @@ export function AuthTabs({
       <Button
         flex={1}
         size='sm'
-        variant={mode === 'signup' ? 'primary' : 'ghost'}
+        backgroundColor={mode === 'signup' ? '$primary' : 'transparent'}
+        color={mode === 'signup' ? '$primaryFg' : '$foreground'}
         onPress={() => onModeChange('signup')}
         disabled={disabled}
       >

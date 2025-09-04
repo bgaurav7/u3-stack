@@ -1,73 +1,68 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { TamaguiProvider } from 'tamagui'
-import { config } from '../config'
+import type React from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { TamaguiProvider } from 'tamagui';
+import { config } from '../config';
 
-type ThemeName = 'light' | 'dark'
+type ThemeName = 'light' | 'dark';
 
 interface ThemeContextType {
-  theme: ThemeName
-  setTheme: (theme: ThemeName) => void
-  toggleTheme: () => void
+  theme: ThemeName;
+  setTheme: (theme: ThemeName) => void;
+  toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const useTheme = () => {
-  const context = useContext(ThemeContext)
+  const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return context
-}
+  return context;
+};
 
-interface ThemeProviderProps {
-  children: React.ReactNode
-  defaultTheme?: ThemeName
-  storageKey?: string
-}
-
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  defaultTheme = 'light',
-  storageKey = 'ui-theme',
-}) => {
-  const [theme, setThemeState] = useState<ThemeName>(defaultTheme)
+export const ThemeProvider: React.FC<{
+  children: React.ReactNode;
+  defaultTheme?: ThemeName;
+  storageKey?: string;
+}> = ({ children, defaultTheme = 'light', storageKey = 'ui-theme' }) => {
+  const [theme, setThemeState] = useState<ThemeName>(defaultTheme);
 
   useEffect(() => {
     // Load theme from localStorage on mount
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(storageKey) as ThemeName
+      const stored = localStorage.getItem(storageKey) as ThemeName;
       if (stored && (stored === 'light' || stored === 'dark')) {
-        setThemeState(stored)
+        setThemeState(stored);
       }
     }
-  }, [storageKey])
+  }, [storageKey]);
 
   useEffect(() => {
     // Apply theme to document
     if (typeof document !== 'undefined') {
-      const root = document.documentElement
-      root.classList.remove('t_light', 't_dark')
-      root.classList.add(`t_${theme}`)
-      
+      const root = document.documentElement;
+      root.classList.remove('t_light', 't_dark');
+      root.classList.add(`t_${theme}`);
+
       // Store theme in localStorage
-      localStorage.setItem(storageKey, theme)
+      localStorage.setItem(storageKey, theme);
     }
-  }, [theme, storageKey])
+  }, [theme, storageKey]);
 
   const setTheme = (newTheme: ThemeName) => {
-    setThemeState(newTheme)
-  }
+    setThemeState(newTheme);
+  };
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
-  }
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const value: ThemeContextType = {
     theme,
     setTheme,
     toggleTheme,
-  }
+  };
 
   return (
     <ThemeContext.Provider value={value}>
@@ -75,7 +70,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         {children}
       </TamaguiProvider>
     </ThemeContext.Provider>
-  )
-}
+  );
+};
 
-export type ThemeProviderProps = React.ComponentProps<typeof ThemeProvider>
+export type ThemeProviderProps = React.ComponentProps<typeof ThemeProvider>;

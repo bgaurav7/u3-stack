@@ -1,10 +1,10 @@
-import { createFont, createTokens } from 'tamagui'
+import { createFont, createTokens } from 'tamagui';
 
 export const tokens = createTokens({
   color: {
     // Gray palette (neutral colors)
     gray1: '#fcfcfc',
-    gray2: '#f9f9f9', 
+    gray2: '#f9f9f9',
     gray3: '#f3f3f3',
     gray4: '#ededed',
     gray5: '#e6e6e6',
@@ -127,7 +127,7 @@ export const tokens = createTokens({
     slow: 300,
     slower: 500,
   },
-})
+});
 
 export const fonts = {
   body: createFont({
@@ -221,4 +221,4 @@ export const fonts = {
       5: 1.5,
     },
   }),
-}
+};
